@@ -17,6 +17,11 @@
         <managed-bean-name>customer</managed-bean-name>
         <managed-bean-class>Customer</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>user</managed-bean-name>
+        <managed-bean-class>User</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>    
     <managed-bean>
         <managed-bean-name>login</managed-bean-name>
@@ -30,6 +35,10 @@
         <navigation-case>
             <from-outcome>success</from-outcome>
             <to-view-id>start.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>createAccount</from-outcome>
+            <to-view-id>newUser.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule> 
     <navigation-rule>
