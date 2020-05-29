@@ -1,7 +1,9 @@
 
 h1 {
-    margin-left: 40px;
-    color: blue;
+    margin: auto;
+    width: 50%;
+    color: #4CAF50;
+    text-align: center;
 }
 
 body {
@@ -10,6 +12,39 @@ body {
     margin: 50px;
     color: #444;
 }
+
+.centeredForm {
+  text-align: center;
+}
+
+.panel {
+    margin: auto;
+}
+
+.centerImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.loginButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px 20px;
+  margin: auto;
+  cursor: pointer;
+  width: 30%;
+}
+
+.inputText {
+  padding: 12px 10px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  margin-right: 100px;
+  width: 90%;
+}
+
 
 h4 { margin: 10px 0 }
 
