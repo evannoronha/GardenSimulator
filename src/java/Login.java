@@ -89,4 +89,8 @@ public class Login implements Serializable {
     public String createAccount() {
         return "createAccount";
     }
+
+    public int DELETE_THIS_GET_GRID_COLUMNS() {
+        return 10;
+    }
 }
