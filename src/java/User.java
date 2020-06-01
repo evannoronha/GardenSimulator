@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import javax.annotation.ManagedBean;
+import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -38,7 +39,7 @@ public class User implements Serializable {
         con.setAutoCommit(false);
 
         //DEFAULT accounts for serial column
-        PreparedStatement preparedStatement = con.prepareStatement("Insert into Users values(DEFAULT,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement preparedStatement = con.prepareStatement("Insert into users values(DEFAULT,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
         preparedStatement.setString(1, login);
         preparedStatement.setString(2, password);
@@ -68,13 +69,13 @@ public class User implements Serializable {
 
         PreparedStatement ps
                 = con.prepareStatement(
-                        "select * from user where users.id = " + userid);
+                        "select * from users where users.id = " + Util.getIDFromLogin());
 
         //get user data from database
         ResultSet result = ps.executeQuery();
-
         result.next();
 
+        userid = result.getInt("id");
         login = result.getString("login");
         password = result.getString("password");
         cash = result.getDouble("cash");
@@ -93,7 +94,7 @@ public class User implements Serializable {
         con.setAutoCommit(false);
 
         Statement statement = con.createStatement();
-        statement.executeUpdate("Delete from Users where Users.id = " + userid);
+        statement.executeUpdate("Delete from users where users.id = " + userid);
         statement.close();
         con.commit();
         con.close();
@@ -116,7 +117,7 @@ public class User implements Serializable {
             throw new SQLException("Can't get database connection");
         }
 
-        PreparedStatement ps = con.prepareStatement("select * from Users where Users.id = " + id);
+        PreparedStatement ps = con.prepareStatement("select * from users where users.id = " + id);
 
         ResultSet result = ps.executeQuery();
         if (result.next()) {
@@ -135,7 +136,7 @@ public class User implements Serializable {
             throw new SQLException("Can't get database connection");
         }
 
-        PreparedStatement ps = con.prepareStatement("select * from Users where Users.login = ?");
+        PreparedStatement ps = con.prepareStatement("select * from users where users.login = ?");
         ps.setString(1, login);
         ResultSet result = ps.executeQuery();
         if (result.next()) {
@@ -179,5 +180,10 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getGardenSize()
+    {
+        return gardenSize;
     }
 }

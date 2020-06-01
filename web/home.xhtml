@@ -11,22 +11,32 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <link href="css/stylesheet_2.css" rel="stylesheet" type="text/css" />
-        <h1>Welcome #{login.getLogin()}</h1>
+        <h1>
+            <ui:insert name="header">
+                Welcome #{user.get().login}!
+            </ui:insert>
+        </h1>
         
     </h:head>
     
     <body class="home-page">
         
-      <div id="grid" class="grid-container" data-gridcolumns="#{login.DELETE_THIS_GET_GRID_COLUMNS()}">       
+        <div id="grid" class="grid-container" data-gridcolumns="#{user.get().gardenSize}">       
       </div>
         
       <script>
             document.body.onload = addElement;
                         
             function addElement () { 
+                
+                //Set # of columns              
+                const gridContainer = document.querySelector(".grid-container");
+                const GRID_COLUMNS = gridContainer.dataset.gridcolumns;
+                gridContainer.style.setProperty('--grid-columns', GRID_COLUMNS);
+                
                 //Generate grid
                 var i;
-                for (i = 0; i &lt; 100; i++) {
+                for (i = 0; i &lt; GRID_COLUMNS * GRID_COLUMNS; i++) {
                   var newDiv = document.createElement("div"); 
                   const id = i + 1;
                   newDiv.textContent = id;
@@ -40,10 +50,7 @@ and open the template in the editor.
                   document.getElementById('grid').appendChild(newDiv);
                 }
 
-                //Set # of columns              
-                const gridContainer = document.querySelector(".grid-container");
-                const GRID_COLUMNS = gridContainer.dataset.gridcolumns;
-                gridContainer.style.setProperty('--grid-columns', GRID_COLUMNS);           
+                           
             }
         </script>
         
