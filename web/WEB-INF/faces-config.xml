@@ -34,7 +34,7 @@
         </from-view-id>
         <navigation-case>
             <from-outcome>success</from-outcome>
-            <to-view-id>start.xhtml</to-view-id>
+            <to-view-id>home.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>createAccount</from-outcome>
@@ -65,11 +65,11 @@
     
     <navigation-rule>
         <from-view-id>
-            /newCustomer.xhtml
+            /newUser.xhtml
         </from-view-id>
         <navigation-case>
-            <from-outcome>main</from-outcome>
-            <to-view-id>start.xhtml</to-view-id>
+            <from-outcome>createUser</from-outcome>
+            <to-view-id>home.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     

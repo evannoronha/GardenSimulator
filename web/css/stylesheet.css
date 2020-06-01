@@ -9,7 +9,7 @@ h1 {
 body {
     font-family: Helvetica, sans-serif;
     background-color: #f9f9f9;
-    margin: 100px;
+    margin: 80px;
     color: #444;
     
 }
@@ -28,6 +28,27 @@ body {
     align-items: center;
 }
 
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    align-items: center;
+}
+
+.loginField {
+    display: flex;
+    align-items: center;
+}
+
+.inputLabel {
+    width: 80px;
+}
+
+.inputTextField {
+    width: 300px;
+    height: 30px;
+}
+
 .loginButton {
   background-color: #4CAF50;
   color: white;
@@ -37,6 +58,23 @@ body {
   width: 400px;
 }
 
+.home-page {
+    background-color: #2196F3;
+}
+
+.grid-container {
+  display: grid;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
 
 
 h4 { margin: 10px 0 }

@@ -72,6 +72,11 @@ public class Login implements Serializable {
                 throw new ValidatorException(errorMessage);
             }
         }
+        else
+        {
+            FacesMessage errorMessage = new FacesMessage("Login not found");
+            throw new ValidatorException(errorMessage);
+        }
         result.close();
         con.close();
     }

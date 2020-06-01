@@ -56,7 +56,7 @@ public class User implements Serializable {
         con.commit();
         con.close();
 
-        return "main";
+        return "createUser";
     }
 
     public User get() throws SQLException {
