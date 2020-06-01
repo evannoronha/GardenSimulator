@@ -15,8 +15,34 @@ and open the template in the editor.
         
     </h:head>
     
-    
     <body class="home-page">
+        <script>
+            document.body.onload = addElement;
+
+            function addElement () { 
+              // create a new div element 
+              var newDiv = document.createElement("div"); 
+              // and give it some content 
+              var newContent = document.createTextNode("Hi there and greetings!"); 
+              // add the text node to the newly created div
+              newDiv.appendChild(document.createTextNode("Hi there and greetings!"));
+              
+              
+             
+              
+              var i;
+              for (i = 0; i &lt; 10; i++) {
+                newDiv.appendChild(document.createTextNode("Hi there and greetings!"));
+              }
+                
+
+              // add the newly created element and its content into the DOM 
+              var currentDiv = document.getElementById("div1"); 
+              document.body.insertBefore(newDiv, currentDiv); 
+            }
+        </script>
+        <div id="div1">The text above has been created dynamically.</div>
+        
        <div class="grid-container">
         <div class="grid-item">1</div>
         <div class="grid-item">2</div>
@@ -29,6 +55,6 @@ and open the template in the editor.
         <div class="grid-item">9</div>
         <div class="grid-item">10</div>
       </div>
-
+        
     </body>
 </html>
