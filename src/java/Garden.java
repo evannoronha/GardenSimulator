@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
@@ -21,6 +22,7 @@ import javax.inject.Named;
 public class Garden implements Serializable{
 
     private static DBConnect dbConnect = new DBConnect();
+    private static ArrayList<GrowBox> growBoxList;
 
     public static void initalizeGarden(int userid, int startingGardenSize) throws SQLException
     {
@@ -56,6 +58,37 @@ public class Garden implements Serializable{
 
        con.commit();
        con.close();
+    }
+
+    public static ArrayList<GrowBox> getBoxes() throws SQLException
+    {
+        int userid = Util.getIDFromLogin();
+        Connection con = dbConnect.getConnection();
+        growBoxList = new ArrayList<>();
+
+        PreparedStatement ps = con.prepareStatement(
+                        "select * from grow_boxes where grow_boxes.user_id = ?");
+
+        ps.setInt(1, userid);
+
+        ResultSet result = ps.executeQuery();
+        while(result.next())
+        {
+            int boxid = result.getInt("box_id");
+            int plantid = result.getInt("plant_id");
+            int location = result.getInt("location");
+            int waterlevel = result.getInt("water_level");
+
+            GrowBox growBoxToCreate = new GrowBox(boxid, userid, plantid, location, waterlevel);
+            growBoxList.add(growBoxToCreate);
+        }
+
+        for (GrowBox box : growBoxList)
+        {
+            System.out.println(box.boxid + " " + box.userid + " " + box.plantid + " " + box.location + " " + box.waterlevel);
+        }
+
+       return growBoxList;
     }
 
 }

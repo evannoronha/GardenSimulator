@@ -21,7 +21,7 @@ and open the template in the editor.
     
     <body class="home-page">
         
-        <div id="grid" class="grid-container" data-gridcolumns="#{user.get().gardenSize}">       
+        <div id="grid" class="grid-container" data-gridcolumns="#{user.get().gardenSize}" data-imgjson="#{util.getBoxesJson()}">       
       </div>
         
       <script>
@@ -34,22 +34,36 @@ and open the template in the editor.
                 const GRID_COLUMNS = gridContainer.dataset.gridcolumns;
                 gridContainer.style.setProperty('--grid-columns', GRID_COLUMNS);
                 
-                //Generate grid
+                //parse json for user's boxes
+                //
+                //generate grid off that json
+                var json = JSON.parse(gridContainer.dataset.imgjson);
                 var i;
-                for (i = 0; i &lt; GRID_COLUMNS * GRID_COLUMNS; i++) {
+                for (i = 0; i &lt; GRID_COLUMNS * GRID_COLUMNS /* user boxes length */; i++) {
                   var newDiv = document.createElement("div"); 
                   const id = i + 1;
-                  newDiv.textContent = id;
+//                  newDiv.textContent = id;
                   newDiv.dataset.id = id;
-                  newDiv.setAttribute('class', 'grid-item');                  
+                  newDiv.dataset.plantid = json[id].plant_id;
+                  newDiv.setAttribute('class', 'grid-item');
                   
+                  var newImg = document.createElement("img");
+                  newImg.src = json[id].plant_url;
+                  newImg.style.width = "40px";
+                  newImg.style.height = "40px";
+
                   newDiv.onclick = e => {                   
                       console.log(e.target.dataset.id + " was clicked on!");
                   }
                   
+                  
                   document.getElementById('grid').appendChild(newDiv);
+                  document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
                 }
-
+                
+                console.log(document.querySelector(".grid-container").dataset.imgjson);
+                
+                
                            
             }
         </script>

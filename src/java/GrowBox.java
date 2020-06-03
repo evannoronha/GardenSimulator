@@ -31,8 +31,9 @@ public class GrowBox implements Serializable {
     protected int location;
     protected int waterlevel;
 
-    public GrowBox(int userid, int plantid, int location, int waterlevel)
+    public GrowBox(int boxid, int userid, int plantid, int location, int waterlevel)
     {
+        this.boxid = boxid;
         this.userid = userid;
         this.plantid = plantid;
         this.location = location;

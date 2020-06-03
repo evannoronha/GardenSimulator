@@ -16,6 +16,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 
 @Named(value = "util")
 @SessionScoped
@@ -64,5 +69,46 @@ public class Util implements Serializable {
 
     }
 
-  
+    public static String getBoxesJson() throws JSONException, SQLException
+    {
+        DBConnect dbConnect = new DBConnect();
+        Connection con = dbConnect.getConnection();
+
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+
+        //DEFAULT accounts for serial column
+        PreparedStatement preparedStatement = con.prepareStatement("select species_id, plant_image_url from plant_species;");
+
+        ResultSet result = preparedStatement.executeQuery();
+
+        HashMap<Integer, String> plantImgMap = new HashMap<>();
+
+        while(result.next())
+        {
+            plantImgMap.put(result.getInt("species_id"), result.getString("plant_image_url"));
+        }
+
+
+
+        JSONArray array = new JSONArray();
+        JSONObject json = new JSONObject();
+
+        ArrayList<GrowBox> growBoxList = Garden.getBoxes();
+        for (GrowBox box : growBoxList)
+        {
+            JSONObject item = new JSONObject();
+            item.put("plant_id", box.plantid);
+            item.put("water_level", box.waterlevel);
+            item.put("plant_url", plantImgMap.get(box.plantid));
+            json.put(Integer.toString(box.location), item);
+        }
+
+//        item.put("url", "https://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/ballot-box-with-check.png");
+//        item.put("url", "https://imgur.com/fJORZNV");
+
+
+        return json.toString();
+    }
 }
