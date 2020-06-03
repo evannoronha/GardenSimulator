@@ -27,7 +27,12 @@
         <managed-bean-name>login</managed-bean-name>
         <managed-bean-class>Login</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>  
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>growbox</managed-bean-name>
+        <managed-bean-class>GrowBox</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>    
     <navigation-rule>
         <from-view-id>
             /index.xhtml

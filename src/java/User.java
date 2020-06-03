@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
@@ -20,15 +22,15 @@ import javax.inject.Named;
 public class User implements Serializable {
 
     private final Double STARTING_CASH = 1000.00;
-    private final int STARTING_GARDEN_SIZE = 10;
+    private final static int STARTING_GARDEN_SIZE = 5;
 
     private DBConnect dbConnect = new DBConnect();
-    protected int userid;
+    protected static int userid;
     protected String login;
     protected String password;
     protected Double cash;
     protected int farmAge;
-    protected int gardenSize;
+    protected static int gardenSize;
 
     public String create() throws SQLException, ParseException {
         Connection con = dbConnect.getConnection();
@@ -57,6 +59,7 @@ public class User implements Serializable {
         con.commit();
         con.close();
 
+        generateUserGarden();
         return "createUser";
     }
 
@@ -158,6 +161,77 @@ public class User implements Serializable {
         }
     }
 
+    public void generateUserGarden() throws SQLException
+    {
+
+        Connection con = dbConnect.getConnection();
+
+        if (con == null) {
+            try {
+                throw new SQLException("Can't get database connection");
+            } catch (SQLException ex) {
+                System.out.println("SQLException");
+            }
+        }
+        con.setAutoCommit(false);
+        PreparedStatement preparedStatement = con.prepareStatement("Insert into grow_boxes values(DEFAULT,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+        int startingPlantId = 0;
+        int startingLocation = 1;
+        int startingWaterLevel = 0;
+        preparedStatement.setInt(1, userid);
+        preparedStatement.setInt(2, startingPlantId);
+        preparedStatement.setInt(3, startingLocation);
+        preparedStatement.setInt(4, startingWaterLevel);
+
+        preparedStatement.executeUpdate();
+
+        int boxid = -2;
+        ResultSet rs = preparedStatement.getGeneratedKeys();
+        if (rs.next()) {
+            boxid = rs.getInt(1);
+        }
+
+        con.commit();
+
+
+        System.out.println(STARTING_GARDEN_SIZE);
+        String bulkInsert = "Insert into grow_boxes (box_id, user_id, plant_id, location, water_level) values";
+
+        for (int i = 2; i < STARTING_GARDEN_SIZE * STARTING_GARDEN_SIZE; i++)
+        {
+            boxid++;
+            bulkInsert += ("(DEFAULT, " + userid + ", " + startingPlantId + ", " + i + ", " + startingWaterLevel + "),");
+        }
+
+        boxid++;
+        bulkInsert += ("(DEFAULT, " + userid + ", " + startingPlantId + ", " +
+                (STARTING_GARDEN_SIZE * STARTING_GARDEN_SIZE) + ", " + startingWaterLevel + ");");
+
+
+       preparedStatement = con.prepareStatement(bulkInsert);
+       preparedStatement.executeUpdate();
+
+
+       con.commit();
+       con.close();
+//        System.out.println(STARTING_GARDEN_SIZE);
+//        for (int i = 0; i < STARTING_GARDEN_SIZE * STARTING_GARDEN_SIZE; i++)
+//        {
+//            //Starting plant id = 0
+//            //Starting waterlevel = 0
+//            GrowBox boxToAdd = new GrowBox(userid, 0, i + 1, 0);
+//            try {
+//                boxToAdd.create();
+//            } catch (SQLException ex) {
+//                System.out.println("SQLException");
+//            } catch (ParseException ex) {
+//                System.out.println("ParseException");
+//            }
+//        }
+    }
+
+
     public Integer getUserid() {
         return userid;
     }
@@ -186,4 +260,6 @@ public class User implements Serializable {
     {
         return gardenSize;
     }
+
+
 }

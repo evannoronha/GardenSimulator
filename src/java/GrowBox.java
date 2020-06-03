@@ -31,6 +31,14 @@ public class GrowBox implements Serializable {
     protected int location;
     protected int waterlevel;
 
+    public GrowBox(int userid, int plantid, int location, int waterlevel)
+    {
+        this.userid = userid;
+        this.plantid = plantid;
+        this.location = location;
+        this.waterlevel = waterlevel;
+    }
+
     public String create() throws SQLException, ParseException {
         Connection con = dbConnect.getConnection();
 
