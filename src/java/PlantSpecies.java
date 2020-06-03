@@ -59,7 +59,7 @@ public class PlantSpecies implements Serializable {
     }
 
     public String getImageURL() {
-        return "https://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/ballot-box-with-check.png";
+        return this.imageURL;
     }
 
     public void setImageURL(String imageURL) {

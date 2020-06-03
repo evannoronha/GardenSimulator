@@ -39,7 +39,7 @@ and open the template in the editor.
                 //generate grid off that json
                 var json = JSON.parse(gridContainer.dataset.imgjson);
                 var i;
-                for (i = 0; i &lt; GRID_COLUMNS * GRID_COLUMNS /* user boxes length */; i++) {
+                for (i = 0; i &lt; GRID_COLUMNS * GRID_COLUMNS; i++) {
                   var newDiv = document.createElement("div"); 
                   const id = i + 1;
 //                  newDiv.textContent = id;
@@ -49,11 +49,11 @@ and open the template in the editor.
                   
                   var newImg = document.createElement("img");
                   newImg.src = json[id].plant_url;
-                  newImg.style.width = "40px";
-                  newImg.style.height = "40px";
+                  newImg.style.width = "80px";
+                  newImg.style.height = "80px";
 
                   newDiv.onclick = e => {                   
-                      console.log(e.target.dataset.id + " was clicked on!");
+                      console.log(e.target.parentNode.dataset.id + " was clicked on!");
                   }
                   
                   
