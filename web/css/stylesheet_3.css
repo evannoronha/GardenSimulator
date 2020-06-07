@@ -64,7 +64,7 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(var(--grid-columns), 1fr);  
+  //grid-template-columns: repeat(var(--grid-columns), 1fr);  
   background-color: #2196F3;
   padding: 10px; 
   margin: 10px;
@@ -88,4 +88,9 @@ h4 { margin: 10px 0 }
 .greyBox {
     background-color: #f5f5f5;
     border: 1px solid #ccc;
+}
+
+.seedBox{
+    height:100px; 
+    width:85px
 }
