@@ -20,7 +20,11 @@ import javax.inject.Named;
 @ManagedBean
 public class FruitingPlant extends PlantSpecies implements Serializable {
 
-    private static DBConnect dbConnect = new DBConnect();
+    private DBConnect dbConnect = new DBConnect();
+
+    public FruitingPlant(){
+        super();
+    }
 
     public FruitingPlant(Integer speciesid, String name, String lifespanType, Integer harvestQuantity, String imageURL) {
         super(speciesid, name, lifespanType, harvestQuantity, imageURL);
@@ -78,10 +82,11 @@ public class FruitingPlant extends PlantSpecies implements Serializable {
     }
 
     public static boolean isInstance(int id) throws SQLException {
-        Connection con = dbConnect.getConnection();
+        DBConnect tempDBConnect = new DBConnect();
+        Connection con = tempDBConnect.getConnection();
         PreparedStatement ps = con.prepareStatement(
                 "select count(*) from fruiting_plants "
-                + "where speciesid = ?");
+                + "where species_id = ?");
         ps.setInt(1, id);
         ResultSet result = ps.executeQuery();
 

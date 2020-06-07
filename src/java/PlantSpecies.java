@@ -23,7 +23,7 @@ public abstract class PlantSpecies implements Serializable {
     protected Integer speciesid;
     protected String name;
     protected String lifespanType;
-    protected int harvestQuantity;
+    protected Integer harvestQuantity;
     protected String imageURL;
 
     public PlantSpecies(int speciesid, String name, String lifespanType, int harvestQuantity, String imageURL){
@@ -32,6 +32,14 @@ public abstract class PlantSpecies implements Serializable {
         this.lifespanType = lifespanType;
         this.harvestQuantity = harvestQuantity;
         this.imageURL = imageURL;
+    }
+
+    public PlantSpecies(){
+        this.speciesid = null;
+        this.name = null;
+        this.lifespanType = null;
+        this.harvestQuantity = null;
+        this.imageURL = null;
     }
 
     public static PlantSpecies makePlant(int speciesid, String name, String lifespanType, int harvestQuantity, String imageURL) throws SQLException{
@@ -211,6 +219,10 @@ public abstract class PlantSpecies implements Serializable {
             return PlantType.FRUITING;
         }
         return null;
+    }
+
+    public String toString(){
+        return speciesid + " " + name + " " + lifespanType + " " + harvestQuantity + " " + imageURL;
     }
 
 }

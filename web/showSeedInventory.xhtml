@@ -5,19 +5,18 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <link href="css/stylesheet.css" rel="stylesheet" type="text/css" />
-        <h1>Customers</h1>
+        <h1>Seed Inventory</h1>
     </h:head>
 
     <h:body>
         <h:dataTable value="#{seeds.getSeeds()}" var="s" border="1">
             <h:column>
                 <f:facet name="header"> Seed Type </f:facet>
-                    #{s.getName()}
+                    #{s.plantSpecies.name}
             </h:column>
-
             <h:column>
                 <f:facet name="header"> Seed Amount </f:facet>
-                    #{s.getQuantity()}
+                    #{s.quantity}
             </h:column>
         </h:dataTable>
     </h:body>

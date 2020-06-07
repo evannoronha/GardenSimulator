@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
@@ -25,45 +26,48 @@ public class Seeds implements Serializable {
     protected PlantSpecies ps;
     protected Integer quantity;
 
+    public Seeds(){
+        ps = null;
+        quantity = 0;
+    }
+
     public Seeds(PlantSpecies ps, int quantity){
         this.ps = ps;
         this.quantity = quantity;
-    }
-
-    public String getName() {
-        return ps.getName();
-    }
-
-    public String getLifespanType() {
-        return ps.getLifespanType();
-    }
-
-    public Integer getHarvestQuantity() {
-        return ps.getHarvestQuantity();
     }
 
     public Integer getQuantity(){
         return quantity;
     }
 
-    public ArrayList<Seeds> getSeeds() throws SQLException
+    public PlantSpecies getPlantSpecies(){
+        return ps;
+    }
+
+    public List<Seeds> getSeeds() throws SQLException
     {
         int userid = Util.getIDFromLogin();
+        System.out.println("user id" + userid);
         Connection con = dbConnect.getConnection();
         ArrayList<Seeds> seedsList = new ArrayList<>();
 
         PreparedStatement ps = con.prepareStatement(
                         "select * from has_seeds join plant_species "
-                                + "on has_seeds.seed_id = plant_species.species_id"
+                                + "on has_seeds.seed_id = plant_species.species_id "
                                 + "where has_seeds.user_id = ?");
 
         ps.setInt(1, userid);
 
+        System.out.println("Sucessful seed query");
+
         ResultSet result = ps.executeQuery();
         while(result.next())
         {
+            System.out.println("starting to make a new seed");
+            System.out.println(result.toString());
+            System.out.println();
             PlantSpecies thisPlant;
-            Integer speciesId = result.getInt("speciesId");
+            Integer speciesId = result.getInt("species_id");
             String name = result.getString("name");
             String lifespan = result.getString("lifespan_type");
             Integer harvestQuantity = result.getInt("harvest_quantity");
@@ -71,9 +75,19 @@ public class Seeds implements Serializable {
 
             thisPlant = PlantSpecies.makePlant(speciesId, name, lifespan, harvestQuantity, url);
 
+            System.out.print(thisPlant);
+
             Seeds newSeeds = new Seeds(thisPlant, result.getInt("quantity"));
+
+            System.out.println(newSeeds);
             seedsList.add(newSeeds);
         }
+
+        result.close();
+        con.close();
+
+
+        System.out.println("bout to return a seeds list." + seedsList.size());
 
        return seedsList;
     }
@@ -82,6 +96,12 @@ public class Seeds implements Serializable {
         return "showSeedInventory";
     }
 
+    public String toString(){
+        return quantity + " " + "of  " + ps.toString();
+    }
 
+    public String foo(String s){
+        return "This is a sample button : " + s;
+    }
 
 }
