@@ -25,6 +25,7 @@ public class Seeds implements Serializable {
     ///int userid = Util.getIDFromLogin();
     protected PlantSpecies ps;
     protected Integer quantity;
+    protected Integer sellQuantity;
 
     public Seeds(){
         ps = null;
@@ -36,8 +37,20 @@ public class Seeds implements Serializable {
         this.quantity = quantity;
     }
 
+    public void setQuantity(Integer q){
+        this.quantity = q;
+    }
+
     public Integer getQuantity(){
         return quantity;
+    }
+
+    public void setSellQuantity(Integer q){
+        this.sellQuantity = q;
+    }
+
+    public Integer getSellQuantity(){
+        return sellQuantity;
     }
 
     public PlantSpecies getPlantSpecies(){
@@ -100,8 +113,44 @@ public class Seeds implements Serializable {
         return quantity + " " + "of  " + ps.toString();
     }
 
-    public String foo(String s){
-        return "This is a sample button : " + s;
+    //TODO
+    public void plantSeeds(){
+        //set the current type of seed to active
+        return;
+    }
+
+    //TODO
+    public void sellSeeds(){
+        //subtract this amount of seeds from the database
+        return;
+    }
+
+    public void userOwnsSeeds(FacesContext context, UIComponent componentToValidate, Object value) throws SQLException, ValidatorException {
+        int currentUserId = Util.getIDFromLogin();
+        int seedId = (Integer) (value);
+
+        Connection con = dbConnect.getConnection();
+
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        con.setAutoCommit(false);
+
+        Statement statement = con.createStatement();
+
+        //DEFAULT accounts for serial column
+        PreparedStatement preparedStatement = con.prepareStatement("select * from has_seeds where seed_id = ? ");
+        preparedStatement.setInt(1, seedId);
+
+        ResultSet result = preparedStatement.executeQuery();
+        if (!result.next()) {
+            FacesMessage errorMessage = new FacesMessage("User does not own any of this seed");
+            throw new ValidatorException(errorMessage);
+        }
+    }
+
+    public void userHasSeedQuantity(){
+
     }
 
 }
