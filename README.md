@@ -1,4 +1,9 @@
+<p align="center">
+  <img width="460" height="300" src="https://cdn.givingcompass.org/wp-content/uploads/2019/07/25081720/The-Plastic-Problem-in-Organic-Farming1.jpg">
+</p>
+
 # GardenSimulator
+
 
 ## Summary
 
