@@ -89,3 +89,8 @@ h4 { margin: 10px 0 }
     background-color: #f5f5f5;
     border: 1px solid #ccc;
 }
+
+.seedBox{
+    height:100px; 
+    width:85px
+}

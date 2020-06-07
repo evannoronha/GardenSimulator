@@ -161,9 +161,6 @@ public class User implements Serializable {
         }
     }
 
-
-
-
     public Integer getUserid() {
         return userid;
     }
@@ -192,6 +189,5 @@ public class User implements Serializable {
     {
         return gardenSize;
     }
-
 
 }

@@ -22,6 +22,14 @@ public class DecorativePlant extends PlantSpecies implements Serializable {
 
     private DBConnect dbConnect = new DBConnect();
 
+    public DecorativePlant(){
+        super();
+    }
+
+    public DecorativePlant(Integer speciesid, String name, String lifespanType, Integer harvestQuantity, String imageURL) {
+        super(speciesid, name, lifespanType, harvestQuantity, imageURL);
+    }
+
     public DBConnect getDbConnect() {
         return dbConnect;
     }
@@ -67,5 +75,24 @@ public class DecorativePlant extends PlantSpecies implements Serializable {
         result.next();
 
         return this;
+    }
+
+    public PlantSpecies getInstance(){
+        return this;
+    }
+
+    public static boolean isInstance(int id) throws SQLException {
+        DBConnect tempDBConnect = new DBConnect();
+        Connection con = tempDBConnect.getConnection();
+        PreparedStatement ps = con.prepareStatement(
+                "select count(*) from root_plants "
+                + "where species_id = ?");
+        ps.setInt(1, id);
+        ResultSet result = ps.executeQuery();
+
+        if (result.next() && result.getInt(1) == 1) {
+            return true;
+        }
+        return false;
     }
 }

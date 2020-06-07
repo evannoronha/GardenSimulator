@@ -14,17 +14,53 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
-@Named(value = "plantSpecies")
-@SessionScoped
-@ManagedBean
-public class PlantSpecies implements Serializable {
+//@Named(value = "plantSpecies")
+//@SessionScoped
+//@ManagedBean
+public abstract class PlantSpecies implements Serializable {
 
     private DBConnect dbConnect = new DBConnect();
-    protected int speciesid;
+    protected Integer speciesid;
     protected String name;
     protected String lifespanType;
-    protected int harvestQuantity;
+    protected Integer harvestQuantity;
     protected String imageURL;
+
+    public PlantSpecies(int speciesid, String name, String lifespanType, int harvestQuantity, String imageURL){
+        this.speciesid = speciesid;
+        this.name = name;
+        this.lifespanType = lifespanType;
+        this.harvestQuantity = harvestQuantity;
+        this.imageURL = imageURL;
+    }
+
+    public PlantSpecies(){
+        this.speciesid = null;
+        this.name = null;
+        this.lifespanType = null;
+        this.harvestQuantity = null;
+        this.imageURL = null;
+    }
+
+    public static PlantSpecies makePlant(int speciesid, String name, String lifespanType, int harvestQuantity, String imageURL) throws SQLException{
+
+        PlantSpecies newPlant = null;
+        switch(getPlantType(speciesid)){
+            case ROOT:
+                newPlant = new RootPlant(speciesid,name, lifespanType, harvestQuantity, imageURL);
+                break;
+            case DECORATIVE:
+                newPlant = new DecorativePlant(speciesid,name, lifespanType, harvestQuantity, imageURL);
+                break;
+            case FRUITING:
+                newPlant= new FruitingPlant(speciesid,name, lifespanType, harvestQuantity, imageURL);
+                break;
+            default:
+                System.out.println("Couldn't find any plant in subtable with that id");
+        }
+
+        return newPlant;
+    }
 
     public Integer getSpeciesid() {
         return speciesid;
@@ -66,6 +102,10 @@ public class PlantSpecies implements Serializable {
         this.imageURL = imageURL;
     }
 
+    //public abstract String create() throws SQLException, ParseException;
+
+    //should NEVER insert into plant species without inserting into the sub table.
+    //also, this should never be called? not sure how to do that
     public String create() throws SQLException, ParseException {
         Connection con = dbConnect.getConnection();
 
@@ -163,6 +203,26 @@ public class PlantSpecies implements Serializable {
         result.close();
         con.close();
         return false;
+    }
+
+    abstract PlantSpecies getInstance();
+
+    //cant have static classes implement abstract method
+    //abstract boolean isInstance() throws SQLException;
+
+    public static PlantType getPlantType(int id) throws SQLException{
+        if(RootPlant.isInstance(id)){
+            return PlantType.ROOT;
+        }else if (DecorativePlant.isInstance(id)){
+            return PlantType.DECORATIVE;
+        } else if (FruitingPlant.isInstance(id)){
+            return PlantType.FRUITING;
+        }
+        return null;
+    }
+
+    public String toString(){
+        return speciesid + " " + name + " " + lifespanType + " " + harvestQuantity + " " + imageURL;
     }
 
 }
