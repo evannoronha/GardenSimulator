@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <title>New Customer</title>
+    <h:head>
+        <link href="css/stylesheet.css" rel="stylesheet" type="text/css" />
+        <h1>Create Account</h1>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGrid columns="3">
+
+                Login: <h:inputText value="#{user.login}" required ="true"
+                                    requiredMessage="Your must enter User login"
+                                    validatorMessage="Login already exists. Pick a unique one"
+                                    validator="#{user.validateUniqueLogin}"
+                                    id="login"/>
+                <h:message for="login" style="color:red;margin:8px;"/>
+
+                Password: <h:inputText value="#{user.password}" required ="true"
+                                       requiredMessage="Your must enter a password"
+                                       id="userPassword"/>
+                <h:message for="userPassword" style="color:red;margin:8px;"/>
+            </h:panelGrid>
+            
+            <h:panelGrid>
+                <h:commandButton value="Go" action="#{user.create}"/>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

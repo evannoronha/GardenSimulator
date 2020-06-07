@@ -3,23 +3,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author stanchev
- */
 public class DBConnect {
 
     public Connection getConnection() {
         Connection connection = null;
+
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://ambari-node5.csc.calpoly.edu/lubo", "lubo",
-                    "secret"); //not actual password
+                    "jdbc:postgresql://ambari-node5.csc.calpoly.edu/team1", "team1",
+                    "csc366"); //Was going to make .env for token but private repo so who cares
+
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();

@@ -1,7 +1,9 @@
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
@@ -12,23 +14,15 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author stanchev
- */
 @Named(value = "login")
 @SessionScoped
 @ManagedBean
 public class Login implements Serializable {
 
+    private DBConnect dbConnect = new DBConnect();
+
     private String login;
 
-   
     private String password;
     private UIInput loginUI;
 
@@ -41,7 +35,7 @@ public class Login implements Serializable {
     }
 
     public String getLogin() {
-        return login;
+        return this.login;
     }
 
     public void setLogin(String login) {
@@ -49,7 +43,7 @@ public class Login implements Serializable {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -58,18 +52,42 @@ public class Login implements Serializable {
 
     public void validate(FacesContext context, UIComponent component, Object value)
             throws ValidatorException, SQLException {
-        login = loginUI.getLocalValue().toString();
-        password = value.toString();
+        this.login = loginUI.getLocalValue().toString();
+        this.password = value.toString();
 
-        if (!((login.equals("lubo") && password.equals("secret")))) {
-            FacesMessage errorMessage = new FacesMessage("Wrong login/password");
+        Connection con = dbConnect.getConnection();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+
+        PreparedStatement ps = con.prepareStatement("select password from users where login = ?");
+        ps.setString(1, this.login);
+        ResultSet result = ps.executeQuery();
+
+        if (result.next()) {
+            if (!password.equals(result.getString("password"))) {
+                result.close();
+                con.close();
+                FacesMessage errorMessage = new FacesMessage("Wrong login/password");
+                throw new ValidatorException(errorMessage);
+            }
+        }
+        else
+        {
+            FacesMessage errorMessage = new FacesMessage("Login not found");
             throw new ValidatorException(errorMessage);
         }
+        result.close();
+        con.close();
     }
 
-    public String go() {
-        //Util.invalidateUserSession();
+
+    public String go() throws SQLException {
         return "success";
+    }
+
+    public String createAccount() {
+        return "createAccount";
     }
 
 }
