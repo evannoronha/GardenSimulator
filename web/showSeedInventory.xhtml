@@ -2,12 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp">
     <h:head>
         <link href="css/global.css" rel="stylesheet" type="text/css" />
     </h:head>
 
     <h:body>
+        <ezcomp:header></ezcomp:header>
         <h1>Seed Inventory</h1>
         <h:dataTable value="#{seeds.getSeeds()}" var="seed" border="1">
             <h:column>

@@ -109,8 +109,12 @@
 
     <navigation-rule>
         <from-view-id>
-            /home.xhtml
+            /*
         </from-view-id>
+        <navigation-case>
+            <from-outcome>visitMarketplace</from-outcome>
+            <to-view-id>marketplaceHome.xhtml</to-view-id>
+        </navigation-case>
         <navigation-case>
             <from-outcome>showSeedInventory</from-outcome>
             <to-view-id>showSeedInventory.xhtml</to-view-id>
@@ -119,16 +123,9 @@
             <from-outcome>showCropInventory</from-outcome>
             <to-view-id>showCropInventory.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>
-
-
-    <navigation-rule>
-        <from-view-id>
-            /home.xhtml
-        </from-view-id>
         <navigation-case>
-            <from-outcome>visitMarketplace</from-outcome>
-            <to-view-id>marketplaceHome.xhtml</to-view-id>
+            <from-outcome>ViewGarden</from-outcome>
+            <to-view-id>home.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 
@@ -180,3 +177,5 @@
         </navigation-case>
     </navigation-rule>
 </faces-config>
+
+

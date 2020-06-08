@@ -50,4 +50,7 @@ public class Garden implements Serializable {
         return result;
     }
 
+    public String viewGarden() {
+        return "ViewGarden";
+    }
 }
