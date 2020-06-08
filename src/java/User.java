@@ -4,12 +4,9 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
+import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -50,7 +47,7 @@ public class User implements Serializable {
         return DaoManager.createDao(cs, User.class);
     }
 
-    public String create() throws SQLException, ParseException {
+    public String create() throws SQLException, ParseException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<User, Integer> userDao = getDao(cs);
 
@@ -63,34 +60,17 @@ public class User implements Serializable {
         user.setScore(STARTING_SCORE);
 
         userDao.create(user);
+        cs.close();
         Garden.initalizeGarden(user.user_id, STARTING_GARDEN_SIZE);
         return "createUser";
     }
 
-    public User getLoggedIn() throws SQLException {
-        Connection con = dbConnect.getConnection();
-
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-
-        PreparedStatement ps
-                = con.prepareStatement(
-                        "select * from users where users.user_id = " + Util.getIDFromLogin());
-
-        //get user data from database
-        ResultSet result = ps.executeQuery();
-        result.next();
-
-        user_id = result.getInt("user_id");
-        login = result.getString("login");
-        password = result.getString("password");
-        cash = result.getDouble("cash");
-        farmAge = result.getInt("farm_age");
-        gardenSize = result.getInt("garden_size");
-        score = result.getInt("score");
-
-        return this;
+    public User getLoggedIn() throws SQLException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = getDao(cs);
+        User user = userDao.queryForId(user_id);
+        cs.close();
+        return user;
     }
 
     public static User getByUserid(Integer userid) throws SQLException {
@@ -100,59 +80,17 @@ public class User implements Serializable {
         return userDao.queryForId(userid);
     }
 
-    public String delete() throws SQLException, ParseException {
-        Connection con = dbConnect.getConnection();
-
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        con.setAutoCommit(false);
-
-        Statement statement = con.createStatement();
-        statement.executeUpdate("Delete from users where users.id = " + user_id);
-        statement.close();
-        con.commit();
-        con.close();
-
-        return "main";
-    }
-
-    public void userIDExists(FacesContext context, UIComponent componentToValidate, Object value)
-            throws ValidatorException, SQLException {
-
-        if (!existsUserId((Integer) value)) {
-            FacesMessage errorMessage = new FacesMessage("ID does not exist");
-            throw new ValidatorException(errorMessage);
-        }
-    }
-
-    private boolean existsUserId(int id) throws SQLException {
-        Connection con = dbConnect.getConnection();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-
-        PreparedStatement ps = con.prepareStatement("select * from users where users.id = " + id);
-
-        ResultSet result = ps.executeQuery();
-        if (result.next()) {
-            result.close();
-            con.close();
-            return true;
-        }
-        result.close();
-        con.close();
-        return false;
-    }
-
     public void validateUniqueLogin(FacesContext context, UIComponent componentToValidate, Object value)
-            throws ValidatorException, SQLException {
+            throws ValidatorException, SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<User, Integer> userDao = getDao(cs);
 
         if (userDao.queryForEq("login", value).size() > 0) {
             FacesMessage errorMessage = new FacesMessage("Login is not unique");
+            cs.close();
             throw new ValidatorException(errorMessage);
+        } else {
+            cs.close();
         }
     }
 

@@ -1,4 +1,6 @@
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.support.ConnectionSource;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,23 +47,11 @@ public class Util implements Serializable {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         Login elLogin = (Login) elContext.getELResolver().getValue(elContext, null, "login");
 
-        DBConnect dbConnect = new DBConnect();
-        Connection con = dbConnect.getConnection();
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = User.getDao(cs);
 
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-
-        //DEFAULT accounts for serial column
-        PreparedStatement preparedStatement = con.prepareStatement("select user_id from users where users.login = ?;");
-
-        preparedStatement.setString(1, elLogin.getLogin());
-        ResultSet result = preparedStatement.executeQuery();
-
-        if (!result.next()) {
-            return -1;
-        }
-        return result.getInt("user_id");
+        List<User> users = userDao.queryForEq("login", elLogin.getLogin());
+        return users.get(0).user_id;
     }
 
     public static String getBoxesJson() throws JSONException, SQLException {

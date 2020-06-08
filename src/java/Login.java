@@ -1,9 +1,10 @@
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.support.ConnectionSource;
+import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
@@ -50,32 +51,22 @@ public class Login implements Serializable {
     }
 
     public void validate(FacesContext context, UIComponent component, Object value)
-            throws ValidatorException, SQLException {
+            throws ValidatorException, SQLException, IOException {
         this.login = loginUI.getLocalValue().toString();
         this.password = value.toString();
 
-        Connection con = dbConnect.getConnection();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = User.getDao(cs);
 
-        PreparedStatement ps = con.prepareStatement("select password from users where login = ?");
-        ps.setString(1, this.login);
-        ResultSet result = ps.executeQuery();
-
-        if (result.next()) {
-            if (!password.equals(result.getString("password"))) {
-                result.close();
-                con.close();
-                FacesMessage errorMessage = new FacesMessage("Wrong login/password");
-                throw new ValidatorException(errorMessage);
-            }
-        } else {
+        List<User> user = userDao.queryForEq("login", this.login);
+        cs.close();
+        if (user.size() == 0) {
             FacesMessage errorMessage = new FacesMessage("Login not found");
             throw new ValidatorException(errorMessage);
+        } else if (!user.get(0).password.equals(this.password)) {
+            FacesMessage errorMessage = new FacesMessage("Wrong login/password");
+            throw new ValidatorException(errorMessage);
         }
-        result.close();
-        con.close();
     }
 
     public String go() throws SQLException {
