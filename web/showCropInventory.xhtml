@@ -29,7 +29,9 @@
         <h:panelGrid columns="3">
             Crop ID:       <h:inputText value="#{crops.saleSpeciesId}" required ="true"
                                         requiredMessage="Your must enter a crop id"
+                                        validator="#{crops.userOwnsCrops}"
                                         id="sellId"/>
+
             <h:message for="sellId" style="color:red;margin:8px;"/>
         </h:panelGrid>
         <h:panelGrid columns="3">
@@ -45,7 +47,7 @@
             <h:message for="salePrice" style="color:red;margin:8px;"/>
         </h:panelGrid>
         <h:panelGrid>
-            <h:commandButton value="Sell Crops" action="#{crops.sellCrops()}"/>
+            <h:commandButton value="Sell Crops" action="#{crops.sell()}"/>
         </h:panelGrid>
     </h:form>
 </html>

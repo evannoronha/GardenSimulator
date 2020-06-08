@@ -1,4 +1,6 @@
 
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -30,5 +32,11 @@ public class DBConnect {
             e.printStackTrace();
             return;
         }
+    }
+
+    public static ConnectionSource getConnectionSource() throws SQLException {
+        String databaseUrl = "jdbc:postgresql://ambari-node5.csc.calpoly.edu/team1";
+        // create a connection source to our database
+        return new JdbcConnectionSource(databaseUrl, "team1", "csc366");
     }
 }

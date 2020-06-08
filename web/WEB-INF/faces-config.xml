@@ -48,6 +48,11 @@
         <managed-bean-class>Crops</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>marketplace</managed-bean-name>
+        <managed-bean-class>Marketplace</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
     <!--    <managed-bean>
         <managed-bean-name>plantSpecies</managed-bean-name>
         <managed-bean-class>PlantSpecies</managed-bean-class>
@@ -116,6 +121,18 @@
         </navigation-case>
     </navigation-rule>
 
+
+    <navigation-rule>
+        <from-view-id>
+            /home.xhtml
+        </from-view-id>
+        <navigation-case>
+            <from-outcome>visitMarketplace</from-outcome>
+            <to-view-id>marketplaceHome.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+
     <navigation-rule>
         <from-view-id>
             /showSeedInventory.xhtml
@@ -130,6 +147,19 @@
         </navigation-case>
     </navigation-rule>
 
+    <navigation-rule>
+        <from-view-id>
+            /showCropInventory.xhtml
+        </from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>home.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>insufficientSeeds.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
     <navigation-rule>
         <from-view-id>
             /insufficientseeds.xhtml

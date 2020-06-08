@@ -1,11 +1,15 @@
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.support.ConnectionSource;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -18,65 +22,17 @@ import javax.inject.Named;
 @Named(value = "seeds")
 @SessionScoped
 @ManagedBean
-public class Seeds implements Serializable {
+public class Seeds extends Harvestable implements Serializable {
 
-    private DBConnect dbConnect = new DBConnect();
-    protected PlantSpecies plantSpecies;
-    protected Integer quantity;
-    protected Integer saleQuantity;
-    protected Double salePrice;
-    protected Integer saleSpeciesId;
+    public static String typeName = "seeds";
+    public static String plantIdColumn = "seed_id";
 
     public Seeds() {
-        plantSpecies = null;
-        quantity = 0;
-        this.saleQuantity = 0;
-        this.salePrice = 0.0;
-        this.saleSpeciesId = null;
+        super();
     }
 
     public Seeds(PlantSpecies ps, int quantity) {
-        this.plantSpecies = ps;
-        this.quantity = quantity;
-        this.saleQuantity = 0;
-        this.salePrice = 0.0;
-        this.saleSpeciesId = null;
-    }
-
-    public void setQuantity(Integer q) {
-        this.quantity = q;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setSaleQuantity(Integer q) {
-        this.saleQuantity = q;
-    }
-
-    public Integer getSaleQuantity() {
-        return saleQuantity;
-    }
-
-    public PlantSpecies getPlantSpecies() {
-        return plantSpecies;
-    }
-
-    public Double getSalePrice() {
-        return salePrice;
-    }
-
-    public void setSalePrice(Double s) {
-        salePrice = s;
-    }
-
-    public Integer getSaleSpeciesId() {
-        return this.saleSpeciesId;
-    }
-
-    public void setSaleSpeciesId(Integer s) {
-        this.saleSpeciesId = s;
+        super(ps, quantity);
     }
 
     public List<Seeds> getSeeds() throws SQLException {
@@ -133,10 +89,6 @@ public class Seeds implements Serializable {
         return "showSeedInventory";
     }
 
-    public String home() {
-        return "home";
-    }
-
     public String toString() {
         return String.valueOf(quantity) + " " + "of  " + plantSpecies.toString();
     }
@@ -147,92 +99,79 @@ public class Seeds implements Serializable {
         return;
     }
 
-    public String sellSeeds() throws SQLException {
-        if (!userHasSeedQuantity()) {
+    public String sell() throws SQLException, IOException {
+        if (!this.userHasQuantity()) {
             return "fail";
         }
 
         int userid = Util.getIDFromLogin();
-        Connection con = dbConnect.getConnection();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        con.setAutoCommit(false);
 
-        PreparedStatement ps = con.prepareStatement(
-                "update has_seeds set quantity = quantity - ? "
-                + "where user_id = ? and "
-                + "seed_id = ?");
+        ConnectionSource cs = DBConnect.getConnectionSource();
 
-        ps.setInt(1, saleQuantity);
-        ps.setInt(2, userid);
-        ps.setInt(3, saleSpeciesId);
+        Dao<MarketListing, Integer> listingDao
+                = DaoManager.createDao(cs, MarketListing.class);
 
-        ps.executeUpdate();
+        MarketListing listing = new MarketListing();
 
-        PreparedStatement ps2 = con.prepareStatement("insert into market_listings values(DEFAULT,?,?,?,?,?)");
+        listing.setSeller_id(userid);
+        listing.setPlant_id(saleSpeciesId);
+        listing.setPrice(salePrice);
+        listing.setQuantity(saleQuantity);
+        listing.setListing_type(this.typeName);
+        listingDao.create(listing);
 
-        ps2.setInt(1, userid);
-        ps2.setInt(2, saleSpeciesId);
-        ps2.setDouble(3, salePrice);
-        ps2.setInt(4, saleQuantity);
-        ps2.setObject(5, "seeds", Types.OTHER);
+        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
 
-        ps2.executeUpdate();
+        HashMap<String, Object> params = new HashMap();
+        params.put("user_id", userid);
+        params.put(this.plantIdColumn, saleSpeciesId);
+        SeedInventory inv = inventoryDao.queryForFieldValues(params).get(0);
+        inv.setQuantity(inv.getQuantity() - saleQuantity);
+        inventoryDao.update(inv);
 
-        con.commit();
-        con.close();
-
-        System.out.println("Sucessful seed query");
+        cs.close();
         return "success";
     }
 
-    public void userOwnsSeeds(FacesContext context, UIComponent componentToValidate, Object value) throws SQLException, ValidatorException {
-        int currentUserId = Util.getIDFromLogin();
+    public Dao<SeedInventory, Integer> getDao(ConnectionSource cs) throws SQLException {
+        return DaoManager.createDao(cs, SeedInventory.class);
+    }
+
+    public void userOwnsSeeds(FacesContext context, UIComponent componentToValidate, Object value) throws SQLException, ValidatorException, IOException {
+        int userid = Util.getIDFromLogin();
         int seedId = (Integer) (value);
 
-        Connection con = dbConnect.getConnection();
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        HashMap<String, Object> params = new HashMap();
 
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        con.setAutoCommit(false);
+        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
 
-        //DEFAULT accounts for serial column
-        PreparedStatement preparedStatement = con.prepareStatement("select * from has_seeds where seed_id = ? ");
-        preparedStatement.setInt(1, seedId);
-
-        ResultSet result = preparedStatement.executeQuery();
-        if (!result.next()) {
-            FacesMessage errorMessage = new FacesMessage("User does not own any of this seed");
+        params.put("user_id", userid);
+        params.put(this.plantIdColumn, seedId);
+        List<SeedInventory> result = inventoryDao.queryForFieldValues(params);
+        if (result.size() == 0) {
+            FacesMessage errorMessage = new FacesMessage("You don't have any of those.");
             throw new ValidatorException(errorMessage);
         }
+        cs.close();
     }
 
     //validate that the user can sell this many seeds
-    public boolean userHasSeedQuantity() throws SQLException {
+    public boolean userHasQuantity() throws SQLException, IOException {
         int userid = Util.getIDFromLogin();
-        Connection con = dbConnect.getConnection();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        HashMap<String, Object> params = new HashMap();
+        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
+        params.put("user_id", userid);
+        params.put(this.plantIdColumn, saleSpeciesId);
+        List<SeedInventory> result = inventoryDao.queryForFieldValues(params);
+        cs.close();
+        if (result.size() == 0) {
+            return false;
+        } else if (result.get(0).getQuantity() < saleQuantity) {
+            return false;
+        } else {
+            return true;
         }
-        con.setAutoCommit(false);
-
-        PreparedStatement ps = con.prepareStatement(
-                "select * from has_seeds where user_id = ? and seed_id = ?");
-
-        ps.setInt(1, userid);
-        ps.setInt(2, saleSpeciesId);
-
-        ResultSet result = ps.executeQuery();
-
-        while (result.next()) {
-            Integer seedQuantity = result.getInt("quantity");
-            if (seedQuantity >= saleQuantity) {
-                return true;
-            }
-        }
-        con.close();
-        return false;
     }
 }
