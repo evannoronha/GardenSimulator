@@ -21,8 +21,8 @@ public class RootPlant extends PlantSpecies implements Serializable {
     }
 
     //no idea why java is making me add this, should be default
-    public RootPlant(Integer speciesid, String name, String lifespanType, Integer harvestQuantity, String imageURL) {
-        super(speciesid, name, lifespanType, harvestQuantity, imageURL);
+    public RootPlant(Integer speciesid, String name, String lifespanType, Integer harvestQuantity, String imageURL, Integer daysToHarvest) {
+        super(speciesid, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
     }
 
     public DBConnect getDbConnect() {
