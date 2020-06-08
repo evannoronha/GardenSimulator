@@ -1,72 +1,41 @@
 
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.ParseException;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
-//@Named(value = "plantSpecies")
-//@SessionScoped
-//@ManagedBean
-public abstract class PlantSpecies implements Serializable {
+@DatabaseTable(tableName = "plant_species")
+public class PlantSpecies {
 
-    private DBConnect dbConnect = new DBConnect();
-    protected Integer speciesId;
+    @DatabaseField(generatedId = true)
+    protected Integer species_id;
+    @DatabaseField(canBeNull = false)
     protected String name;
-    protected String lifespanType;
-    protected Integer harvestQuantity;
-    protected Integer daysToHarvest;
-    protected String imageURL;
-
-    public PlantSpecies(int speciesId, String name, String lifespanType, int harvestQuantity, String imageURL, Integer daysToHarvest) {
-        this.speciesId = speciesId;
-        this.name = name;
-        this.lifespanType = lifespanType;
-        this.harvestQuantity = harvestQuantity;
-        this.daysToHarvest = daysToHarvest;
-        this.imageURL = imageURL;
-    }
+    @DatabaseField(canBeNull = false)
+    protected String lifespan_type;
+    @DatabaseField(canBeNull = false)
+    protected Integer harvest_quantity;
+    @DatabaseField(canBeNull = false)
+    protected Integer days_to_harvest;
+    @DatabaseField
+    protected String plant_image_url;
 
     public PlantSpecies() {
-        this.speciesId = null;
-        this.name = null;
-        this.lifespanType = null;
-        this.harvestQuantity = null;
-        this.daysToHarvest = null;
-        this.imageURL = null;
     }
 
-    public static PlantSpecies makePlant(Integer speciesId, String name, String lifespanType, Integer harvestQuantity, String imageURL, Integer daysToHarvest) throws SQLException {
-
-        PlantSpecies newPlant = null;
-        switch(getPlantType(speciesId)) {
-            case ROOT:
-                newPlant = new RootPlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
-                break;
-            case DECORATIVE:
-                newPlant = new DecorativePlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
-                break;
-            case FRUITING:
-                newPlant= new FruitingPlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
-                break;
-            default:
-                System.out.println("Couldn't find any plant in subtable with that id");
-        }
-        return newPlant;
+    public PlantSpecies(Integer species_id, String name, String lifespan_type, Integer harvest_quantity, Integer days_to_harvest, String plant_image_url) {
+        this.species_id = species_id;
+        this.name = name;
+        this.lifespan_type = lifespan_type;
+        this.harvest_quantity = harvest_quantity;
+        this.days_to_harvest = days_to_harvest;
+        this.plant_image_url = plant_image_url;
     }
 
-    public Integer getSpeciesId() {
-        return speciesId;
+    public Integer getSpecies_id() {
+        return species_id;
     }
 
-    public void setSpeciesId(Integer speciesId) {
-        this.speciesId = speciesId;
+    public void setSpecies_id(Integer species_id) {
+        this.species_id = species_id;
     }
 
     public String getName() {
@@ -77,159 +46,35 @@ public abstract class PlantSpecies implements Serializable {
         this.name = name;
     }
 
-    public String getLifespanType() {
-        return lifespanType;
+    public String getLifespan_type() {
+        return lifespan_type;
     }
 
-    public void setLifespanType(String lifespanType) {
-        this.lifespanType = lifespanType;
+    public void setLifespan_type(String lifespan_type) {
+        this.lifespan_type = lifespan_type;
     }
 
-    public Integer getHarvestQuantity() {
-        return harvestQuantity;
+    public Integer getHarvest_quantity() {
+        return harvest_quantity;
     }
 
-    public void setHarvestQuantity(Integer harvestQuantity) {
-        this.harvestQuantity = harvestQuantity;
+    public void setHarvest_quantity(Integer harvest_quantity) {
+        this.harvest_quantity = harvest_quantity;
     }
 
-    public String getImageURL() {
-        return this.imageURL;
+    public Integer getDays_to_harvest() {
+        return days_to_harvest;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setDays_to_harvest(Integer days_to_harvest) {
+        this.days_to_harvest = days_to_harvest;
     }
 
-    public Integer getDaysToHarvest(){
-        return this.daysToHarvest;
+    public String getPlant_image_url() {
+        return plant_image_url;
     }
 
-    public void setDaysToHarvest(Integer days){
-        this.daysToHarvest = days;
+    public void setPlant_image_url(String plant_image_url) {
+        this.plant_image_url = plant_image_url;
     }
-
-    //public abstract String create() throws SQLException, ParseException;
-    //should NEVER insert into plant species without inserting into the sub table.
-    //also, this should never be called? not sure how to do that
-    public String create() throws SQLException, ParseException {
-        Connection con = dbConnect.getConnection();
-
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        con.setAutoCommit(false);
-
-        //DEFAULT accounts for serial column
-        PreparedStatement preparedStatement = con.prepareStatement("Insert into plant_species values(DEFAULT,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-
-        preparedStatement.setString(1, name);
-        preparedStatement.setString(2, lifespanType);
-        preparedStatement.setInt(3, harvestQuantity);
-        preparedStatement.setString(4, imageURL);
-        preparedStatement.setInt(5, daysToHarvest);
-
-        preparedStatement.executeUpdate();
-
-        ResultSet rs = preparedStatement.getGeneratedKeys();
-
-        if (rs.next()) {
-            speciesId = rs.getInt(1);
-        }
-
-        con.commit();
-        con.close();
-
-        return "main";
-    }
-
-    public PlantSpecies get() throws SQLException {
-        Connection con = dbConnect.getConnection();
-
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-
-        PreparedStatement ps
-                = con.prepareStatement(
-                        "select * from plant_species where plant_species.species_id = " + speciesId);
-
-        //get user data from database
-        ResultSet result = ps.executeQuery();
-
-        result.next();
-
-        name = result.getString("name");
-        lifespanType = result.getString("lifespan_type");
-        harvestQuantity = result.getInt("harvest_quantity");
-        imageURL = result.getString("plant_image_url");
-        daysToHarvest = result.getInt("days_to_harvest");
-
-        return this;
-    }
-
-    public String delete() throws SQLException, ParseException {
-        Connection con = dbConnect.getConnection();
-
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        con.setAutoCommit(false);
-
-        Statement statement = con.createStatement();
-        statement.executeUpdate("Delete from plant_species where plant_species.species_id = " + speciesId);
-        statement.close();
-        con.commit();
-        con.close();
-
-        return "main";
-    }
-
-    public void speciesIDExists(FacesContext context, UIComponent componentToValidate, Object value)
-            throws ValidatorException, SQLException {
-
-        if (!existSpeciesId((Integer) value)) {
-            FacesMessage errorMessage = new FacesMessage("ID does not exist");
-            throw new ValidatorException(errorMessage);
-        }
-    }
-
-    private boolean existSpeciesId(int id) throws SQLException {
-        Connection con = dbConnect.getConnection();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-
-        PreparedStatement ps = con.prepareStatement("select * plant_species where plant_species.species_id = " + id);
-
-        ResultSet result = ps.executeQuery();
-        if (result.next()) {
-            result.close();
-            con.close();
-            return true;
-        }
-        result.close();
-        con.close();
-        return false;
-    }
-
-    abstract PlantSpecies getInstance();
-
-    //cant have static classes implement abstract method
-    //abstract boolean isInstance() throws SQLException;
-    public static PlantType getPlantType(int id) throws SQLException {
-        if (RootPlant.isInstance(id)) {
-            return PlantType.ROOT;
-        } else if (DecorativePlant.isInstance(id)) {
-            return PlantType.DECORATIVE;
-        } else if (FruitingPlant.isInstance(id)) {
-            return PlantType.FRUITING;
-        }
-        return null;
-    }
-
-    public String toString() {
-        return speciesId + " " + name + " " + lifespanType + " " + String.valueOf(harvestQuantity) + " " + imageURL;
-    }
-
 }

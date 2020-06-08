@@ -31,7 +31,7 @@ public class Crops extends Harvestable implements Serializable {
         super(ps, quantity);
     }
 
-    public List<CropInventory> getCrops() throws SQLException {
+    public List<CropInventory> getCrops() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<CropInventory, Integer> inventoryDao = getDao(cs);
         int userid = Util.getIDFromLogin();

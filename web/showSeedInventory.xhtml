@@ -5,7 +5,6 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <link href="css/global.css" rel="stylesheet" type="text/css" />
-        <h1>Seed Inventory</h1>
     </h:head>
 
     <h:body>
@@ -13,7 +12,11 @@
         <h:dataTable value="#{seeds.getSeeds()}" var="seed" border="1">
             <h:column>
                 <f:facet name="header"> Seed Id </f:facet>
-                    #{seed.seed_id}
+                    #{seed.seed_id.species_id}
+            </h:column>
+            <h:column>
+                <f:facet name="header"> Seed Name </f:facet>
+                    #{seed.seed_id.name}
             </h:column>
             <h:column>
                 <f:facet name="header"> Seed Quantity </f:facet>

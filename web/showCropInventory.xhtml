@@ -12,7 +12,11 @@
         <h:dataTable value="#{crops.getCrops()}" var="crop" border="1">
             <h:column>
                 <f:facet name="header"> Crop Id </f:facet>
-                    #{crop.crop_id}
+                    #{crop.crop_id.species_id}
+            </h:column>
+            <h:column>
+                <f:facet name="header"> Crop Name </f:facet>
+                    #{crop.crop_id.name}
             </h:column>
             <h:column>
                 <f:facet name="header"> Crop Amount </f:facet>
