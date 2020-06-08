@@ -62,7 +62,6 @@ public class Util implements Serializable {
             return -1;
         }
         return result.getInt("id");
-
     }
 
     public static String getBoxesJson() throws JSONException, SQLException {
@@ -91,7 +90,7 @@ public class Util implements Serializable {
         for (GrowBox box : growBoxList) {
             JSONObject item = new JSONObject();
             item.put("plant_id", box.plantid);
-            item.put("water_level", box.waterlevel);
+            item.put("whenPlanted", box.whenPlanted);
             item.put("plant_url", plantImgMap.get(box.plantid));
             json.put(Integer.toString(box.location), item);
         }
