@@ -167,12 +167,16 @@ public class Seeds implements Serializable {
         ps.setInt(2, userid);
         ps.setInt(3, saleSpeciesId);
 
-        PreparedStatement ps2 = con.prepareStatement("insert into market_listings values('DEFAULT',?,?,?,?,?)");
+        ps.executeUpdate();
+
+        PreparedStatement ps2 = con.prepareStatement("insert into market_listings values(DEFAULT,?,?,?,?)");
 
         ps2.setInt(1, userid);
         ps2.setInt(2, saleSpeciesId);
         ps2.setDouble(3, salePrice);
-        ps2.setInt(3, saleQuantity);
+        ps2.setInt(4, saleQuantity);
+
+        ps2.executeUpdate();
 
         con.commit();
         con.close();
