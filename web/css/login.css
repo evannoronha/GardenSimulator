@@ -24,12 +24,3 @@
     width: 300px;
     height: 30px;
 }
-
-.loginButton {
-    background-color: #4CAF50;
-    color: white;
-    padding: 20px 20px;
-    margin: auto;
-    cursor: pointer;
-    width: 400px;
-}
