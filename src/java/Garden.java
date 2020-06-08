@@ -37,15 +37,29 @@ public class Garden implements Serializable {
 
         System.out.println(startingGardenSize);
         con.setAutoCommit(false);
-        String bulkInsert = "Insert into grow_boxes (box_id, user_id, plant_id, location, water_level) values";
+        String bulkInsert = "Insert into grow_boxes (box_id, user_id, plant_id, location, when_planted) values";
 
         for (int i = 1; i < startingGardenSize * startingGardenSize; i++) {
-
-            bulkInsert += ("(DEFAULT, " + userid + ", " + startingPlantId + ", " + i + ", " + startingWaterLevel + "),");
+            bulkInsert += ("(DEFAULT, "
+                    + userid
+                    + ", "
+                    + startingPlantId
+                    + ", "
+                    + i
+                    + ", "
+                    + User.getByUserid(userid).farmAge
+                    + "),");
         }
 
-        bulkInsert += ("(DEFAULT, " + userid + ", " + startingPlantId + ", "
-                + (startingGardenSize * startingGardenSize) + ", " + startingWaterLevel + ");");
+        bulkInsert += ("(DEFAULT, "
+                + userid
+                + ", "
+                + startingPlantId
+                + ", "
+                + (startingGardenSize * startingGardenSize)
+                + ", "
+                + User.getByUserid(userid).farmAge
+                + ");");
 
         PreparedStatement preparedStatement = con.prepareStatement(bulkInsert);
         preparedStatement.executeUpdate();
@@ -69,14 +83,14 @@ public class Garden implements Serializable {
             int boxid = result.getInt("box_id");
             int plantid = result.getInt("plant_id");
             int location = result.getInt("location");
-            int waterlevel = result.getInt("water_level");
+            int whenPlanted = result.getInt("location");
 
-            GrowBox growBoxToCreate = new GrowBox(boxid, userid, plantid, location, waterlevel);
+            GrowBox growBoxToCreate = new GrowBox(boxid, userid, plantid, location);
             growBoxList.add(growBoxToCreate);
         }
 
         for (GrowBox box : growBoxList) {
-            System.out.println(box.boxid + " " + box.userid + " " + box.plantid + " " + box.location + " " + box.waterlevel);
+            System.out.println(box.boxid + " " + box.userid + " " + box.plantid + " " + box.location);
         }
 
         return growBoxList;

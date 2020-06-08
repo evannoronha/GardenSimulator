@@ -86,6 +86,31 @@ public class User implements Serializable {
         return this;
     }
 
+    public static User getByUserid(Integer userid) throws SQLException {
+        Connection con = new DBConnect().getConnection();
+
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+
+        PreparedStatement ps
+                = con.prepareStatement(
+                        "select * from users where users.id = " + userid);
+
+        //get user data from database
+        ResultSet result = ps.executeQuery();
+        result.next();
+        User user = new User();
+        user.userid = result.getInt("id");
+        user.login = result.getString("login");
+        user.password = result.getString("password");
+        user.cash = result.getDouble("cash");
+        user.farmAge = result.getInt("farm_age");
+        user.gardenSize = result.getInt("garden_size");
+
+        return user;
+    }
+
     public String delete() throws SQLException, ParseException {
         Connection con = dbConnect.getConnection();
 

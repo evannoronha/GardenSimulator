@@ -24,22 +24,22 @@ public class GrowBox implements Serializable {
     protected int userid;
     protected int plantid;
     protected int location;
-    protected int waterlevel;
+    protected int whenPlanted;
 
     public GrowBox() {
         this.boxid = 0;
         this.userid = 0;
         this.plantid = 0;
         this.location = 0;
-        this.waterlevel = 0;
+        this.whenPlanted = 0;
     }
 
-    public GrowBox(int boxid, int userid, int plantid, int location, int waterlevel) {
+    public GrowBox(int boxid, int userid, int plantid, int location) throws SQLException {
         this.boxid = boxid;
         this.userid = userid;
         this.plantid = plantid;
         this.location = location;
-        this.waterlevel = waterlevel;
+        this.whenPlanted = User.getByUserid(userid).farmAge;
     }
 
     public String create() throws SQLException, ParseException {
@@ -56,7 +56,7 @@ public class GrowBox implements Serializable {
         preparedStatement.setInt(1, userid);
         preparedStatement.setInt(2, plantid);
         preparedStatement.setInt(3, location);
-        preparedStatement.setInt(4, waterlevel);
+        preparedStatement.setInt(4, whenPlanted);
 
         preparedStatement.executeUpdate();
 
@@ -90,7 +90,7 @@ public class GrowBox implements Serializable {
         userid = result.getInt("user_id");
         plantid = result.getInt("plant_id");
         location = result.getInt("location");
-        waterlevel = result.getInt("water_level");
+        whenPlanted = result.getInt("whenPlanted");
 
         return this;
     }
