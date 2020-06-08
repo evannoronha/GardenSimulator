@@ -22,8 +22,8 @@ import javax.inject.Named;
 @DatabaseTable(tableName = "grow_boxes")
 public class GrowBox implements Serializable {
 
-    @DatabaseField(generatedId = true, columnName = "box_id")
-    protected int boxid;
+    @DatabaseField(id = true, columnName = "box_uuid", canBeNull = true, readOnly = true)
+    protected String boxid;
     @DatabaseField(columnName = "user_id", foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
     protected User userid;
     @DatabaseField(columnName = "plant_id", foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
@@ -43,13 +43,13 @@ public class GrowBox implements Serializable {
         this.day_planted = day_planted;
     }
 
-    public static Dao<GrowBox, Integer> getDao(ConnectionSource cs) throws SQLException {
+    public static Dao<GrowBox, String> getDao(ConnectionSource cs) throws SQLException {
         return DaoManager.createDao(cs, GrowBox.class);
     }
 
     public String create() throws SQLException, ParseException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, Integer> growBoxDao = getDao(cs);
+        Dao<GrowBox, String> growBoxDao = getDao(cs);
 
         GrowBox box = new GrowBox();
         box.setUserid(userid);
@@ -62,11 +62,11 @@ public class GrowBox implements Serializable {
         return "createGardenBox";
     }
 
-    public int getBoxid() {
+    public String getBoxid() {
         return boxid;
     }
 
-    public void setBoxid(int boxid) {
+    public void setBoxid(String boxid) {
         this.boxid = boxid;
     }
 
@@ -104,7 +104,7 @@ public class GrowBox implements Serializable {
 
     public GrowBox get() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, Integer> growBoxDao = getDao(cs);
+        Dao<GrowBox, String> growBoxDao = getDao(cs);
 
         GrowBox result = growBoxDao.queryForId(this.boxid);
         cs.close();
