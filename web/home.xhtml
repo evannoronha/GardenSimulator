@@ -15,7 +15,11 @@ and open the template in the editor.
         <link href="css/garden.css" rel="stylesheet" type="text/css" />
     </h:head>
     <h1>
-        Welcome #{user.getLoggedIn().login}! <br/>You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
+        Welcome #{user.getLoggedIn().login}!
+        <br/>
+        You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
+        <br/>
+        Your garden is #{user.getLoggedIn().farmAge} days old!
     </h1>
     <body class="home-page">
         <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
