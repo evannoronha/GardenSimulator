@@ -19,7 +19,6 @@ import javax.inject.Named;
 @ManagedBean
 public class Garden implements Serializable {
 
-    private static DBConnect dbConnect = new DBConnect();
     private static ArrayList<GrowBox> growBoxList;
 
     public static void initalizeGarden(User userid, int startingGardenSize) throws SQLException, IOException {

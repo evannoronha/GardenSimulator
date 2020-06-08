@@ -3,7 +3,6 @@ public abstract class Harvestable {
 
     public static String typeName;
 
-    protected DBConnect dbConnect = new DBConnect();
     protected PlantSpecies plantSpecies;
     protected Integer quantity;
     protected Integer saleQuantity;

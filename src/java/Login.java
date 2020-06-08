@@ -19,8 +19,6 @@ import javax.inject.Named;
 @ManagedBean
 public class Login implements Serializable {
 
-    private DBConnect dbConnect = new DBConnect();
-
     private String login;
 
     private String password;

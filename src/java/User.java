@@ -26,8 +26,6 @@ public class User implements Serializable {
     private final static int STARTING_GARDEN_SIZE = 5;
     private final static int STARTING_SCORE = 5;
 
-    private DBConnect dbConnect = new DBConnect();
-
     @DatabaseField(generatedId = true)
     protected int user_id;
     @DatabaseField
