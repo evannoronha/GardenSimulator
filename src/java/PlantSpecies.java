@@ -17,15 +17,15 @@ import javax.faces.validator.ValidatorException;
 public abstract class PlantSpecies implements Serializable {
 
     private DBConnect dbConnect = new DBConnect();
-    protected Integer speciesid;
+    protected Integer speciesId;
     protected String name;
     protected String lifespanType;
     protected Integer harvestQuantity;
     protected Integer daysToHarvest;
     protected String imageURL;
 
-    public PlantSpecies(int speciesid, String name, String lifespanType, int harvestQuantity, String imageURL, Integer daysToHarvest) {
-        this.speciesid = speciesid;
+    public PlantSpecies(int speciesId, String name, String lifespanType, int harvestQuantity, String imageURL, Integer daysToHarvest) {
+        this.speciesId = speciesId;
         this.name = name;
         this.lifespanType = lifespanType;
         this.harvestQuantity = harvestQuantity;
@@ -34,7 +34,7 @@ public abstract class PlantSpecies implements Serializable {
     }
 
     public PlantSpecies() {
-        this.speciesid = null;
+        this.speciesId = null;
         this.name = null;
         this.lifespanType = null;
         this.harvestQuantity = null;
@@ -42,31 +42,31 @@ public abstract class PlantSpecies implements Serializable {
         this.imageURL = null;
     }
 
-    public static PlantSpecies makePlant(Integer speciesid, String name, String lifespanType, Integer harvestQuantity, String imageURL, Integer daysToHarvest) throws SQLException {
+    public static PlantSpecies makePlant(Integer speciesId, String name, String lifespanType, Integer harvestQuantity, String imageURL, Integer daysToHarvest) throws SQLException {
+
         PlantSpecies newPlant = null;
-        switch (getPlantType(speciesid)) {
+        switch(getPlantType(speciesId)) {
             case ROOT:
-                newPlant = new RootPlant(speciesid, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
+                newPlant = new RootPlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             case DECORATIVE:
-                newPlant = new DecorativePlant(speciesid, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
+                newPlant = new DecorativePlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             case FRUITING:
-                newPlant= new FruitingPlant(speciesid, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
+                newPlant= new FruitingPlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             default:
                 System.out.println("Couldn't find any plant in subtable with that id");
         }
-
         return newPlant;
     }
 
-    public Integer getSpeciesid() {
-        return speciesid;
+    public Integer getSpeciesId() {
+        return speciesId;
     }
 
-    public void setSpeciesid(Integer speciesid) {
-        this.speciesid = speciesid;
+    public void setSpeciesId(Integer speciesId) {
+        this.speciesId = speciesId;
     }
 
     public String getName() {
@@ -134,7 +134,7 @@ public abstract class PlantSpecies implements Serializable {
         ResultSet rs = preparedStatement.getGeneratedKeys();
 
         if (rs.next()) {
-            speciesid = rs.getInt(1);
+            speciesId = rs.getInt(1);
         }
 
         con.commit();
@@ -152,7 +152,7 @@ public abstract class PlantSpecies implements Serializable {
 
         PreparedStatement ps
                 = con.prepareStatement(
-                        "select * from plant_species where plant_species.species_id = " + speciesid);
+                        "select * from plant_species where plant_species.species_id = " + speciesId);
 
         //get user data from database
         ResultSet result = ps.executeQuery();
@@ -177,7 +177,7 @@ public abstract class PlantSpecies implements Serializable {
         con.setAutoCommit(false);
 
         Statement statement = con.createStatement();
-        statement.executeUpdate("Delete from plant_species where plant_species.species_id = " + speciesid);
+        statement.executeUpdate("Delete from plant_species where plant_species.species_id = " + speciesId);
         statement.close();
         con.commit();
         con.close();
@@ -229,7 +229,7 @@ public abstract class PlantSpecies implements Serializable {
     }
 
     public String toString() {
-        return speciesid + " " + name + " " + lifespanType + " " + harvestQuantity + " " + imageURL;
+        return speciesId + " " + name + " " + lifespanType + " " + String.valueOf(harvestQuantity) + " " + imageURL;
     }
 
 }
