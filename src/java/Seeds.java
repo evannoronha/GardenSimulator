@@ -70,10 +70,14 @@ public class Seeds extends Harvestable implements Serializable {
         Dao<MarketListing, Integer> listingDao
                 = DaoManager.createDao(cs, MarketListing.class);
 
+        Dao<PlantSpecies, Integer> plantDao
+                = DaoManager.createDao(cs, PlantSpecies.class);
+        PlantSpecies saleSpecies = plantDao.queryForId(saleSpeciesId);
+
         MarketListing listing = new MarketListing();
 
         listing.setSeller_id(userid);
-        listing.setPlant_id(saleSpeciesId);
+        listing.setPlant_id(saleSpecies);
         listing.setPrice(salePrice);
         listing.setQuantity(saleQuantity);
         listing.setListing_type(this.typeName);

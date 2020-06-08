@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -37,13 +38,23 @@ public class Marketplace {
         return "visitMarketplace";
     }
 
-    public List<MarketListing> getListings() throws SQLException {
+    public List<MarketListing> getListings() throws SQLException, IOException {
+        int userid = Util.getIDFromLogin();
         ConnectionSource cs = DBConnect.getConnectionSource();
 
         Dao<MarketListing, Integer> listingDao
                 = DaoManager.createDao(cs, MarketListing.class);
 
-        return listingDao.queryForAll();
+        //unsure how to query for not this user
+        List<MarketListing> allListings = listingDao.queryForAll();
+        List<MarketListing> otherUserListings = new ArrayList<>();
+        for (MarketListing ml : allListings) {
+            if (ml.getSeller_id() != userid) {
+                otherUserListings.add(ml);
+            }
+        }
+        cs.close();
+        return otherUserListings;
     }
 
     public String purchaseListing() throws SQLException, IOException {
@@ -60,7 +71,8 @@ public class Marketplace {
 
         Double salePrice = thisListing.getPrice();
         String type = thisListing.getListing_type();
-        Integer speciesId = thisListing.getPlant_id();
+        PlantSpecies species = thisListing.getPlant_id();
+        Integer speciesId = species.getSpecies_id();
         Integer quantity = thisListing.getQuantity();
         Integer sellerId = thisListing.getSeller_id();
 
