@@ -85,8 +85,9 @@ public class Seeds implements Serializable {
             String lifespan = result.getString("lifespan_type");
             Integer harvestQuantity = result.getInt("harvest_quantity");
             String url = result.getString("plant_image_url");
+            Integer daysToHarvest = result.getInt("days_to_harvest");
 
-            thisPlant = PlantSpecies.makePlant(speciesId, name, lifespan, harvestQuantity, url);
+            thisPlant = PlantSpecies.makePlant(speciesId, name, lifespan, harvestQuantity, url, daysToHarvest);
 
             System.out.print(thisPlant);
 

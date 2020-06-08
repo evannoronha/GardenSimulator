@@ -24,13 +24,15 @@ public abstract class PlantSpecies implements Serializable {
     protected String name;
     protected String lifespanType;
     protected Integer harvestQuantity;
+    protected Integer daysToHarvest;
     protected String imageURL;
 
-    public PlantSpecies(int speciesid, String name, String lifespanType, int harvestQuantity, String imageURL){
+    public PlantSpecies(int speciesid, String name, String lifespanType, int harvestQuantity, String imageURL, Integer daysToHarvest){
         this.speciesid = speciesid;
         this.name = name;
         this.lifespanType = lifespanType;
         this.harvestQuantity = harvestQuantity;
+        this.daysToHarvest = daysToHarvest;
         this.imageURL = imageURL;
     }
 
@@ -39,21 +41,22 @@ public abstract class PlantSpecies implements Serializable {
         this.name = null;
         this.lifespanType = null;
         this.harvestQuantity = null;
+        this.daysToHarvest = null;
         this.imageURL = null;
     }
 
-    public static PlantSpecies makePlant(int speciesid, String name, String lifespanType, int harvestQuantity, String imageURL) throws SQLException{
+    public static PlantSpecies makePlant(Integer speciesid, String name, String lifespanType, Integer harvestQuantity, String imageURL, Integer daysToHarvest) throws SQLException{
 
         PlantSpecies newPlant = null;
         switch(getPlantType(speciesid)){
             case ROOT:
-                newPlant = new RootPlant(speciesid,name, lifespanType, harvestQuantity, imageURL);
+                newPlant = new RootPlant(speciesid,name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             case DECORATIVE:
-                newPlant = new DecorativePlant(speciesid,name, lifespanType, harvestQuantity, imageURL);
+                newPlant = new DecorativePlant(speciesid,name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             case FRUITING:
-                newPlant= new FruitingPlant(speciesid,name, lifespanType, harvestQuantity, imageURL);
+                newPlant= new FruitingPlant(speciesid,name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             default:
                 System.out.println("Couldn't find any plant in subtable with that id");
@@ -102,6 +105,14 @@ public abstract class PlantSpecies implements Serializable {
         this.imageURL = imageURL;
     }
 
+    public Integer getDaysToHarvest(){
+        return this.daysToHarvest;
+    }
+
+    public void setDaysToHarvest(Integer days){
+        this.daysToHarvest = days;
+    }
+
     //public abstract String create() throws SQLException, ParseException;
 
     //should NEVER insert into plant species without inserting into the sub table.
@@ -115,12 +126,13 @@ public abstract class PlantSpecies implements Serializable {
         con.setAutoCommit(false);
 
         //DEFAULT accounts for serial column
-        PreparedStatement preparedStatement = con.prepareStatement("Insert into plant_species values(DEFAULT,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement preparedStatement = con.prepareStatement("Insert into plant_species values(DEFAULT,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
         preparedStatement.setString(1, name);
         preparedStatement.setString(2, lifespanType);
         preparedStatement.setInt(3, harvestQuantity);
         preparedStatement.setString(4, imageURL);
+        preparedStatement.setInt(5, daysToHarvest);
 
         preparedStatement.executeUpdate();
 
@@ -156,6 +168,7 @@ public abstract class PlantSpecies implements Serializable {
         lifespanType = result.getString("lifespan_type");
         harvestQuantity = result.getInt("harvest_quantity");
         imageURL = result.getString("plant_image_url");
+        daysToHarvest = result.getInt("days_to_harvest");
 
         return this;
     }

@@ -26,8 +26,8 @@ public class FruitingPlant extends PlantSpecies implements Serializable {
         super();
     }
 
-    public FruitingPlant(Integer speciesid, String name, String lifespanType, Integer harvestQuantity, String imageURL) {
-        super(speciesid, name, lifespanType, harvestQuantity, imageURL);
+    public FruitingPlant(Integer speciesid, String name, String lifespanType, Integer harvestQuantity, String imageURL, Integer daysToHarvest) {
+        super(speciesid, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
     }
 
     public DBConnect getDbConnect() {
