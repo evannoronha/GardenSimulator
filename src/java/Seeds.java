@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -33,7 +32,7 @@ public class Seeds implements Serializable {
         quantity = 0;
     }
 
-    public Seeds(PlantSpecies ps, int quantity){
+    public Seeds(PlantSpecies ps, int quantity) {
         this.plantSpecies = ps;
         this.quantity = quantity;
     }
@@ -132,8 +131,8 @@ public class Seeds implements Serializable {
         return "home";
     }
 
-    public String toString(){
-        return String.valueOf(quantity) + " " +  "of  " + plantSpecies.toString();
+    public String toString() {
+        return String.valueOf(quantity) + " " + "of  " + plantSpecies.toString();
     }
 
     //TODO
@@ -143,7 +142,7 @@ public class Seeds implements Serializable {
     }
 
     public String sellSeeds() throws SQLException {
-        if(!userHasSeedQuantity()){
+        if (!userHasSeedQuantity()) {
             return "fail";
         }
 
@@ -155,9 +154,9 @@ public class Seeds implements Serializable {
         con.setAutoCommit(false);
 
         PreparedStatement ps = con.prepareStatement(
-                        "update has_seeds set quantity = quantity - ? "
-                                + "where user_id = ? and "
-                                + "seed_id = ?");
+                "update has_seeds set quantity = quantity - ? "
+                + "where user_id = ? and "
+                + "seed_id = ?");
 
         ps.setInt(1, saleQuantity);
         ps.setInt(2, userid);
@@ -204,7 +203,7 @@ public class Seeds implements Serializable {
     }
 
     //validate that the user can sell this many seeds
-    public boolean userHasSeedQuantity() throws SQLException{
+    public boolean userHasSeedQuantity() throws SQLException {
         int userid = Util.getIDFromLogin();
         Connection con = dbConnect.getConnection();
         if (con == null) {
@@ -213,7 +212,7 @@ public class Seeds implements Serializable {
         con.setAutoCommit(false);
 
         PreparedStatement ps = con.prepareStatement(
-                        "select * from has_seeds where user_id = ? and seed_id = ?");
+                "select * from has_seeds where user_id = ? and seed_id = ?");
 
         ps.setInt(1, userid);
         ps.setInt(2, saleSpeciesId);
