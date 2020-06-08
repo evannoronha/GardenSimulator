@@ -1,3 +1,4 @@
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -5,10 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
-import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -185,8 +183,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public int getGardenSize()
-    {
+    public int getGardenSize() {
         return gardenSize;
     }
 

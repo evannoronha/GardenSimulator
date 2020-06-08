@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -27,55 +26,53 @@ public class Seeds implements Serializable {
     protected Integer quantity;
     protected Integer sellQuantity;
 
-    public Seeds(){
+    public Seeds() {
         ps = null;
         quantity = 0;
     }
 
-    public Seeds(PlantSpecies ps, int quantity){
+    public Seeds(PlantSpecies ps, int quantity) {
         this.ps = ps;
         this.quantity = quantity;
     }
 
-    public void setQuantity(Integer q){
+    public void setQuantity(Integer q) {
         this.quantity = q;
     }
 
-    public Integer getQuantity(){
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setSellQuantity(Integer q){
+    public void setSellQuantity(Integer q) {
         this.sellQuantity = q;
     }
 
-    public Integer getSellQuantity(){
+    public Integer getSellQuantity() {
         return sellQuantity;
     }
 
-    public PlantSpecies getPlantSpecies(){
+    public PlantSpecies getPlantSpecies() {
         return ps;
     }
 
-    public List<Seeds> getSeeds() throws SQLException
-    {
+    public List<Seeds> getSeeds() throws SQLException {
         int userid = Util.getIDFromLogin();
         System.out.println("user id" + userid);
         Connection con = dbConnect.getConnection();
         ArrayList<Seeds> seedsList = new ArrayList<>();
 
         PreparedStatement ps = con.prepareStatement(
-                        "select * from has_seeds join plant_species "
-                                + "on has_seeds.seed_id = plant_species.species_id "
-                                + "where has_seeds.user_id = ?");
+                "select * from has_seeds join plant_species "
+                + "on has_seeds.seed_id = plant_species.species_id "
+                + "where has_seeds.user_id = ?");
 
         ps.setInt(1, userid);
 
         System.out.println("Sucessful seed query");
 
         ResultSet result = ps.executeQuery();
-        while(result.next())
-        {
+        while (result.next()) {
             System.out.println("starting to make a new seed");
             System.out.println(result.toString());
             System.out.println();
@@ -100,28 +97,27 @@ public class Seeds implements Serializable {
         result.close();
         con.close();
 
-
         System.out.println("bout to return a seeds list." + seedsList.size());
 
-       return seedsList;
+        return seedsList;
     }
 
-    public String showSeedInventory(){
+    public String showSeedInventory() {
         return "showSeedInventory";
     }
 
-    public String toString(){
+    public String toString() {
         return quantity + " " + "of  " + ps.toString();
     }
 
     //TODO
-    public void plantSeeds(){
+    public void plantSeeds() {
         //set the current type of seed to active
         return;
     }
 
     //TODO
-    public void sellSeeds(){
+    public void sellSeeds() {
         //subtract this amount of seeds from the database
         return;
     }
@@ -150,7 +146,7 @@ public class Seeds implements Serializable {
         }
     }
 
-    public void userHasSeedQuantity(){
+    public void userHasSeedQuantity() {
 
     }
 
