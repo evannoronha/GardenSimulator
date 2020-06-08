@@ -23,7 +23,7 @@ public class Garden implements Serializable {
 
     public static void initalizeGarden(User userid, int startingGardenSize) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, Integer> growBoxDao = GrowBox.getDao(cs);
+        Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
         Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
 
         int startingPlantId = 0;
@@ -43,7 +43,7 @@ public class Garden implements Serializable {
     public static List<GrowBox> getBoxes() throws SQLException, IOException {
         int userid = Util.getIDFromLogin();
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, Integer> growBoxDao = GrowBox.getDao(cs);
+        Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
 
         List<GrowBox> result = growBoxDao.queryForEq("user_id", userid);
         cs.close();
