@@ -199,6 +199,18 @@ public class User implements Serializable {
         return login;
     }
 
+    public String getCashAsDecimal() {
+        return String.format("%.2f", this.cash);
+    }
+
+    public Double getCash() {
+        return cash;
+    }
+
+    public void setCash(Double cash) {
+        this.cash = cash;
+    }
+
     public void setLogin(String login) {
         this.login = login;
     }

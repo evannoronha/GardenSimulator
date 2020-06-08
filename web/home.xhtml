@@ -13,7 +13,7 @@ and open the template in the editor.
         <link href="css/stylesheet_3.css" rel="stylesheet" type="text/css" />
         <h1>
             <ui:insert name="header">
-                Welcome #{user.getLoggedIn().login}!
+                Welcome #{user.getLoggedIn().login}! <br/>You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
             </ui:insert>
         </h1>
         <style>
