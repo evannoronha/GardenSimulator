@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <link href="css/global.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h1>Crop Inventory</h1>
+    <h:body>
+        <h:dataTable value="#{crops.getCrops()}" var="c" border="1">
+            <h:column>
+                <f:facet name="header"> Crop Id </f:facet>
+                    #{c.plantSpecies.speciesId}
+            </h:column>
+            <h:column>
+                <f:facet name="header"> Crop Type </f:facet>
+                    #{c.plantSpecies.name}
+            </h:column>
+            <h:column>
+                <f:facet name="header"> Crop Amount </f:facet>
+                    #{c.quantity}
+            </h:column>
+        </h:dataTable>
+    </h:body>
+    <h3>Sell Crops</h3>
+    <h:form>
+        <h:panelGrid columns="3">
+            Crop ID:       <h:inputText value="#{crops.saleSpeciesId}" required ="true"
+                                        requiredMessage="Your must enter a crop id"
+                                        id="sellId"/>
+            <h:message for="sellId" style="color:red;margin:8px;"/>
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            Crop Quantity: <h:inputText value="#{crops.saleQuantity}" required ="true"
+                                        requiredMessage="Your must enter a number of crops to sell"
+                                        id="saleNumber"/>
+            <h:message for="saleNumber" style="color:red;margin:8px;"/>
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            Sale Price: <h:inputText value="#{crops.salePrice}" required ="true"
+                                     requiredMessage="Your must enter a sale price"
+                                     id="salePrice"/>
+            <h:message for="salePrice" style="color:red;margin:8px;"/>
+        </h:panelGrid>
+        <h:panelGrid>
+            <h:commandButton value="Sell Crops" action="#{crops.sellCrops()}"/>
+        </h:panelGrid>
+    </h:form>
+</html>
