@@ -145,29 +145,12 @@ public class User implements Serializable {
         return false;
     }
 
-    private boolean loginExists(String login) throws SQLException {
-        Connection con = dbConnect.getConnection();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-
-        PreparedStatement ps = con.prepareStatement("select * from users where users.login = ?");
-        ps.setString(1, login);
-        ResultSet result = ps.executeQuery();
-        if (result.next()) {
-            result.close();
-            con.close();
-            return true;
-        }
-        result.close();
-        con.close();
-        return false;
-    }
-
     public void validateUniqueLogin(FacesContext context, UIComponent componentToValidate, Object value)
             throws ValidatorException, SQLException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = getDao(cs);
 
-        if (loginExists((value.toString()))) {
+        if (userDao.queryForEq("login", value).size() > 0) {
             FacesMessage errorMessage = new FacesMessage("Login is not unique");
             throw new ValidatorException(errorMessage);
         }
