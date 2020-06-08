@@ -28,19 +28,19 @@
     <h:form>
         <h:panelGrid columns="3">
             Crop ID:       <h:inputText value="#{crops.saleSpeciesId}" required ="true"
-                                        requiredMessage="Your must enter a seed id"
+                                        requiredMessage="Your must enter a crop id"
                                         id="sellId"/>
             <h:message for="sellId" style="color:red;margin:8px;"/>
         </h:panelGrid>
         <h:panelGrid columns="3">
             Crop Quantity: <h:inputText value="#{crops.saleQuantity}" required ="true"
-                                        requiredMessage="Your must enter a number of seeds to sell"
+                                        requiredMessage="Your must enter a number of crops to sell"
                                         id="saleNumber"/>
             <h:message for="saleNumber" style="color:red;margin:8px;"/>
         </h:panelGrid>
         <h:panelGrid columns="3">
             Sale Price: <h:inputText value="#{crops.salePrice}" required ="true"
-                                     requiredMessage="Your must enter a number of seeds to sell"
+                                     requiredMessage="Your must enter a sale price"
                                      id="salePrice"/>
             <h:message for="salePrice" style="color:red;margin:8px;"/>
         </h:panelGrid>
