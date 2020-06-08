@@ -18,7 +18,7 @@ body {
     padding: 20px 20px;
     margin: auto;
     cursor: pointer;
-    width: 400px;
+    width: auto;
 }
 
 .grid-container {
