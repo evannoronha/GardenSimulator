@@ -13,7 +13,7 @@ and open the template in the editor.
         <link href="css/stylesheet_3.css" rel="stylesheet" type="text/css" />
         <h1>
             <ui:insert name="header">
-                Welcome #{user.get().login}!
+                Welcome #{user.getLoggedIn().login}!
             </ui:insert>
         </h1>
         <style>
@@ -28,8 +28,8 @@ and open the template in the editor.
     </h:head>
     
     <body class="home-page">
-        
-        <div id="grid" class="grid-container" data-gridcolumns="#{user.get().gardenSize}" data-imgjson="#{util.getBoxesJson()}">       
+
+        <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
       </div>
         
       <script>

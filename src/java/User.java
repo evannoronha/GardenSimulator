@@ -62,7 +62,7 @@ public class User implements Serializable {
         return "createUser";
     }
 
-    public User get() throws SQLException {
+    public User getLoggedIn() throws SQLException {
         Connection con = dbConnect.getConnection();
 
         if (con == null) {
