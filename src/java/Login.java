@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
-
 @Named(value = "login")
 @SessionScoped
 @ManagedBean
@@ -71,16 +70,13 @@ public class Login implements Serializable {
                 FacesMessage errorMessage = new FacesMessage("Wrong login/password");
                 throw new ValidatorException(errorMessage);
             }
-        }
-        else
-        {
+        } else {
             FacesMessage errorMessage = new FacesMessage("Login not found");
             throw new ValidatorException(errorMessage);
         }
         result.close();
         con.close();
     }
-
 
     public String go() throws SQLException {
         return "success";

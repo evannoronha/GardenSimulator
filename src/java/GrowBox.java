@@ -11,12 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import javax.annotation.ManagedBean;
-import javax.el.ELContext;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
 @Named(value = "growbox")
@@ -31,7 +26,7 @@ public class GrowBox implements Serializable {
     protected int location;
     protected int waterlevel;
 
-    public GrowBox(){
+    public GrowBox() {
         this.boxid = 0;
         this.userid = 0;
         this.plantid = 0;
@@ -39,8 +34,7 @@ public class GrowBox implements Serializable {
         this.waterlevel = 0;
     }
 
-    public GrowBox(int boxid, int userid, int plantid, int location, int waterlevel)
-    {
+    public GrowBox(int boxid, int userid, int plantid, int location, int waterlevel) {
         this.boxid = boxid;
         this.userid = userid;
         this.plantid = plantid;
@@ -63,7 +57,6 @@ public class GrowBox implements Serializable {
         preparedStatement.setInt(2, plantid);
         preparedStatement.setInt(3, location);
         preparedStatement.setInt(4, waterlevel);
-
 
         preparedStatement.executeUpdate();
 
@@ -99,10 +92,7 @@ public class GrowBox implements Serializable {
         location = result.getInt("location");
         waterlevel = result.getInt("water_level");
 
-
         return this;
     }
-
-
 
 }

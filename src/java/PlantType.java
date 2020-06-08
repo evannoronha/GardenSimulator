@@ -1,3 +1,4 @@
-public enum PlantType{
+
+public enum PlantType {
     ROOT, DECORATIVE, FRUITING
-}
+};
