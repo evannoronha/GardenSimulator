@@ -7,16 +7,18 @@ import com.j256.ormlite.table.DatabaseTable;
 public class CropInventory {
 
     @DatabaseField(generatedId = true)
-    private Integer user_id;
+    private Integer crops_inventory_id;
     @DatabaseField(canBeNull = false)
-    private Integer crop_id;
+    private Integer user_id;
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "crop_id")
+    private PlantSpecies crop_id;
     @DatabaseField(canBeNull = false)
     private Integer quantity;
 
     public CropInventory() {
     }
 
-    public CropInventory(Integer user_id, Integer crop_id, Integer quantity) {
+    public CropInventory(Integer user_id, PlantSpecies crop_id, Integer quantity) {
         this.user_id = user_id;
         this.crop_id = crop_id;
         this.quantity = quantity;
@@ -30,11 +32,11 @@ public class CropInventory {
         this.user_id = user_id;
     }
 
-    public Integer getCrop_id() {
+    public PlantSpecies getCrop_id() {
         return crop_id;
     }
 
-    public void setCrop_id(Integer crop_id) {
+    public void setCrop_id(PlantSpecies crop_id) {
         this.crop_id = crop_id;
     }
 

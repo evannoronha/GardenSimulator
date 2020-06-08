@@ -15,16 +15,18 @@ import com.j256.ormlite.table.DatabaseTable;
 public class SeedInventory {
 
     @DatabaseField(generatedId = true)
+    private Integer seed_inventory_id;
+    @DatabaseField
     private Integer user_id;
-    @DatabaseField(canBeNull = false)
-    private Integer seed_id;
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "seed_id")
+    private PlantSpecies seed_id;
     @DatabaseField(canBeNull = false)
     private Integer quantity;
 
     public SeedInventory() {
     }
 
-    public SeedInventory(Integer user_id, Integer seed_id, Integer quantity) {
+    public SeedInventory(Integer user_id, PlantSpecies seed_id, Integer quantity) {
         this.user_id = user_id;
         this.seed_id = seed_id;
         this.quantity = quantity;
@@ -38,11 +40,11 @@ public class SeedInventory {
         this.user_id = user_id;
     }
 
-    public Integer getSeed_id() {
+    public PlantSpecies getSeed_id() {
         return seed_id;
     }
 
-    public void setSeed_id(Integer seed_id) {
+    public void setSeed_id(PlantSpecies seed_id) {
         this.seed_id = seed_id;
     }
 

@@ -4,11 +4,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -35,54 +31,15 @@ public class Seeds extends Harvestable implements Serializable {
         super(ps, quantity);
     }
 
-    public List<Seeds> getSeeds() throws SQLException {
+    public List<SeedInventory> getSeeds() throws SQLException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
         int userid = Util.getIDFromLogin();
-        System.out.println("user id" + userid);
-        Connection con = dbConnect.getConnection();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        con.setAutoCommit(false);
-        ArrayList<Seeds> seedsList = new ArrayList<>();
 
-        PreparedStatement ps = con.prepareStatement(
-                "select * from has_seeds join plant_species "
-                + "on has_seeds.seed_id = plant_species.species_id "
-                + "where has_seeds.user_id = ?");
-
-        ps.setInt(1, userid);
-
-        System.out.println("Sucessful seed query");
-
-        ResultSet result = ps.executeQuery();
-        while (result.next()) {
-            System.out.println("starting to make a new seed");
-            System.out.println(result.toString());
-            System.out.println();
-            PlantSpecies thisPlant;
-            Integer speciesId = result.getInt("species_id");
-            String name = result.getString("name");
-            String lifespan = result.getString("lifespan_type");
-            Integer harvestQuantity = result.getInt("harvest_quantity");
-            String url = result.getString("plant_image_url");
-            Integer daysToHarvest = result.getInt("days_to_harvest");
-
-            thisPlant = PlantSpecies.makePlant(speciesId, name, lifespan, harvestQuantity, url, daysToHarvest);
-
-            System.out.print(thisPlant);
-
-            Seeds newSeeds = new Seeds(thisPlant, result.getInt("quantity"));
-
-            System.out.println(newSeeds);
-            seedsList.add(newSeeds);
-        }
-
-        result.close();
-        con.close();
-
-        System.out.println("bout to return a seeds list." + seedsList.size());
-
-        return seedsList;
+        HashMap<String, Object> params = new HashMap();
+        params.put("user_id", userid);
+        cs.close();
+        return inventoryDao.queryForFieldValues(params);
     }
 
     public String showSeedInventory() {
