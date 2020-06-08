@@ -23,12 +23,13 @@ public class User implements Serializable {
     private final static int STARTING_GARDEN_SIZE = 5;
 
     private DBConnect dbConnect = new DBConnect();
-    protected static int userid;
+    protected int userid;
     protected String login;
     protected String password;
     protected Double cash;
     protected int farmAge;
-    protected static int gardenSize;
+    protected int gardenSize;
+    protected int score;
 
     public String create() throws SQLException, ParseException {
         Connection con = dbConnect.getConnection();
