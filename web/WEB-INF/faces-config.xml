@@ -106,7 +106,7 @@
             <to-view-id>showSeedInventory.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
+
     <navigation-rule>
         <from-view-id>
             /showSeedInventory.xhtml
@@ -120,7 +120,7 @@
             <to-view-id>insufficientSeeds.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
+
     <navigation-rule>
         <from-view-id>
             /insufficientseeds.xhtml
@@ -130,5 +130,4 @@
             <to-view-id>home.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-
 </faces-config>
