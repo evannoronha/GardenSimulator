@@ -149,6 +149,19 @@
 
     <navigation-rule>
         <from-view-id>
+            /showCropInventory.xhtml
+        </from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>home.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>insufficientSeeds.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>
             /insufficientseeds.xhtml
         </from-view-id>
         <navigation-case>

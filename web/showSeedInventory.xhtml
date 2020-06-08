@@ -25,25 +25,13 @@
             </h:column>
         </h:dataTable>
     </h:body>
-    <!--    <h3>Plant Seeds</h3>
-        <h:form>
-                <h:panelGrid columns="3">
-                    Seed ID: <h:inputText value="{seeds.plantSpecies.speciesId}" required ="true"
-                                                 requiredMessage="Your must enter a seed id"
-                                                 validator="{seeds.userOwnsSeeds}"
-                                                 validatorMessage="You do not own a seed with that id"
-                                                 id="seedId"/>
-                    <h:message for="seedId" style="color:red;margin:8px;"/>
-                </h:panelGrid>
-                <h:panelGrid>
-                    <h:commandButton value="Plant Seed" action="{seeds.plantSeed}"/>
-                </h:panelGrid>
-        </h:form>-->
+
     <h3>Sell Seeds</h3>
     <h:form>
         <h:panelGrid columns="3">
             Seed ID:       <h:inputText value="#{seeds.saleSpeciesId}" required ="true"
                                         requiredMessage="Your must enter a seed id"
+                                        validator="#{seeds.userOwnsSeeds}"
                                         id="sellId"/>
             <h:message for="sellId" style="color:red;margin:8px;"/>
         </h:panelGrid>
@@ -60,7 +48,7 @@
             <h:message for="salePrice" style="color:red;margin:8px;"/>
         </h:panelGrid>
         <h:panelGrid>
-            <h:commandButton value="Sell Seed" action="#{seeds.sellSeeds}"/>
+            <h:commandButton value="Sell Seed" action="#{seeds.sell}"/>
         </h:panelGrid>
     </h:form>
 </html>

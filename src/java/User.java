@@ -1,4 +1,6 @@
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,18 +19,27 @@ import javax.inject.Named;
 @Named(value = "user")
 @SessionScoped
 @ManagedBean
+@DatabaseTable(tableName = "users")
 public class User implements Serializable {
 
     private final Double STARTING_CASH = 1000.00;
     private final static int STARTING_GARDEN_SIZE = 5;
 
     private DBConnect dbConnect = new DBConnect();
+
+    @DatabaseField(id = true)
     protected int userid;
+    @DatabaseField
     protected String login;
+    @DatabaseField
     protected String password;
+    @DatabaseField
     protected Double cash;
+    @DatabaseField(columnName = "farm_age")
     protected int farmAge;
+    @DatabaseField(columnName = "garden_size")
     protected int gardenSize;
+    @DatabaseField
     protected int score;
 
     public String create() throws SQLException, ParseException {
