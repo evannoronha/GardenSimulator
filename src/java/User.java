@@ -61,14 +61,14 @@ public class User implements Serializable {
 
         userDao.create(user);
         cs.close();
-        Garden.initalizeGarden(user.user_id, STARTING_GARDEN_SIZE);
+        Garden.initalizeGarden(user, STARTING_GARDEN_SIZE);
         return "createUser";
     }
 
     public User getLoggedIn() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<User, Integer> userDao = getDao(cs);
-        User user = userDao.queryForId(user_id);
+        User user = userDao.queryForId(Util.getIDFromLogin());
         cs.close();
         return user;
     }
