@@ -38,8 +38,10 @@ public class Seeds extends Harvestable implements Serializable {
 
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
+
+        List<SeedInventory> listSeeds = inventoryDao.queryForFieldValues(params);
         cs.close();
-        return inventoryDao.queryForFieldValues(params);
+        return listSeeds;
     }
 
     public String showSeedInventory() {
@@ -131,4 +133,21 @@ public class Seeds extends Harvestable implements Serializable {
             return true;
         }
     }
+
+    @Override
+    public void addToInventory() throws SQLException, IOException {
+        //do I do quantity here? or pass in quantity as a variable
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        int userid = Util.getIDFromLogin();
+        Dao<SeedInventory, Integer> inventoryDao
+                = DaoManager.createDao(cs, SeedInventory.class);
+        HashMap<String, Object> params = new HashMap();
+        params.put("user_id", userid);
+        params.put(plantIdColumn, plantSpecies.getSpecies_id());
+        SeedInventory inv = inventoryDao.queryForFieldValues(params).get(0);
+        inv.setQuantity(inv.getQuantity() + quantity);
+        inventoryDao.update(inv);
+        cs.close();
+    }
+
 }

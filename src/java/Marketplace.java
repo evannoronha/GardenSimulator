@@ -2,6 +2,7 @@
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -22,6 +23,16 @@ import javax.inject.Named;
 @ManagedBean
 public class Marketplace {
 
+    public Integer purchaseListingId;
+
+    public void setPurchaseListingId(Integer i) {
+        purchaseListingId = i;
+    }
+
+    public Integer getPurchaseListingId() {
+        return purchaseListingId;
+    }
+
     public String visitMarketplace() {
         return "visitMarketplace";
     }
@@ -34,4 +45,49 @@ public class Marketplace {
 
         return listingDao.queryForAll();
     }
+
+    public String purchaseListing() throws SQLException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+
+        int userid = Util.getIDFromLogin();
+        System.out.println(purchaseListingId);
+
+        //get values from current listing
+        Dao<MarketListing, Integer> listingDao
+                = DaoManager.createDao(cs, MarketListing.class);
+
+        MarketListing thisListing = listingDao.queryForId(purchaseListingId);
+
+        Double salePrice = thisListing.getPrice();
+        String type = thisListing.getListing_type();
+        Integer speciesId = thisListing.getPlant_id();
+        Integer quantity = thisListing.getQuantity();
+        Integer sellerId = thisListing.getSeller_id();
+
+        //add to the current user's seed or crops
+        if (type.equals("seeds")) {
+            Seeds s = new Seeds(new PlantSpecies(speciesId), quantity);
+            s.addToInventory();
+        } else if (type.equals("crops")) {
+            Crops c = new Crops(new PlantSpecies(speciesId), quantity);
+            c.addToInventory();
+        }
+
+        //pay the seller
+        Dao<User, Integer> userDao
+                = DaoManager.createDao(cs, User.class);
+        User seller = userDao.queryForId(sellerId);
+        seller.setCash(seller.getCash() + salePrice);
+        userDao.update(seller);
+        User buyer = userDao.queryForId(userid);
+        buyer.setCash(buyer.getCash() - salePrice);
+        userDao.update(buyer);
+
+        listingDao.deleteById(purchaseListingId);
+
+        cs.close();
+
+        return "success";
+    }
+
 }

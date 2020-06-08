@@ -30,7 +30,7 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header"> Seller Id </f:facet>
-                        #{listing.listing_id}
+                        #{listing.seller_id}
                 </h:column>
                 <h:column>
                     <f:facet name="header"> Plant Id </f:facet>
@@ -51,5 +51,18 @@
             </h:dataTable>
         </div>
     </h:body>
+
+    <h3>Purchase Seeds</h3>
+    <h:form>
+        <h:panelGrid columns="3">
+            Listing ID:       <h:inputText value="#{marketplace.purchaseListingId}" required ="true"
+                                           requiredMessage="Your must enter a seed id"
+                                           id="sellId"/>
+            <h:message for="sellId" style="color:red;margin:8px;"/>
+        </h:panelGrid>
+        <h:panelGrid>
+            <h:commandButton value="Buy Items" action="#{marketplace.purchaseListing}"/>
+        </h:panelGrid>
+    </h:form>
 
 </html>

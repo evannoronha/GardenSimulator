@@ -123,4 +123,19 @@ public class Crops extends Harvestable implements Serializable {
             return true;
         }
     }
+
+    @Override
+    public void addToInventory() throws SQLException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        int userid = Util.getIDFromLogin();
+        Dao<CropInventory, Integer> inventoryDao
+                = DaoManager.createDao(cs, CropInventory.class);
+        HashMap<String, Object> params = new HashMap();
+        params.put("user_id", userid);
+        params.put(plantIdColumn, plantSpecies.getSpecies_id());
+        CropInventory inv = inventoryDao.queryForFieldValues(params).get(0);
+        inv.setQuantity(inv.getQuantity() + quantity);
+        inventoryDao.update(inv);
+        cs.close();
+    }
 }

@@ -1,4 +1,7 @@
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 public abstract class Harvestable {
 
     public static String typeName;
@@ -65,5 +68,8 @@ public abstract class Harvestable {
     public String home() {
         return "home";
     }
+
+    //do I do this from given inventory or do I pass a param?
+    public abstract void addToInventory() throws SQLException, IOException;
 
 }
