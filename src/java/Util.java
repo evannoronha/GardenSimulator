@@ -53,7 +53,7 @@ public class Util implements Serializable {
         }
 
         //DEFAULT accounts for serial column
-        PreparedStatement preparedStatement = con.prepareStatement("select id from users where users.login = ?;");
+        PreparedStatement preparedStatement = con.prepareStatement("select user_id from users where users.login = ?;");
 
         preparedStatement.setString(1, elLogin.getLogin());
         ResultSet result = preparedStatement.executeQuery();
@@ -61,7 +61,7 @@ public class Util implements Serializable {
         if (!result.next()) {
             return -1;
         }
-        return result.getInt("id");
+        return result.getInt("user_id");
     }
 
     public static String getBoxesJson() throws JSONException, SQLException {

@@ -1,5 +1,8 @@
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -22,13 +25,14 @@ import javax.inject.Named;
 @DatabaseTable(tableName = "users")
 public class User implements Serializable {
 
-    private final Double STARTING_CASH = 1000.00;
+    private final static Double STARTING_CASH = 1000.00;
     private final static int STARTING_GARDEN_SIZE = 5;
+    private final static int STARTING_SCORE = 5;
 
     private DBConnect dbConnect = new DBConnect();
 
-    @DatabaseField(id = true)
-    protected int userid;
+    @DatabaseField(generatedId = true)
+    protected int user_id;
     @DatabaseField
     protected String login;
     @DatabaseField
@@ -42,34 +46,24 @@ public class User implements Serializable {
     @DatabaseField
     protected int score;
 
+    public static Dao<User, Integer> getDao(ConnectionSource cs) throws SQLException {
+        return DaoManager.createDao(cs, User.class);
+    }
+
     public String create() throws SQLException, ParseException {
-        Connection con = dbConnect.getConnection();
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = getDao(cs);
 
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        con.setAutoCommit(false);
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setCash(STARTING_CASH);
+        user.setFarmAge(farmAge);
+        user.setGardenSize(STARTING_GARDEN_SIZE);
+        user.setScore(STARTING_SCORE);
 
-        //DEFAULT accounts for serial column
-        PreparedStatement preparedStatement = con.prepareStatement("Insert into users values(DEFAULT,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-
-        preparedStatement.setString(1, login);
-        preparedStatement.setString(2, password);
-        preparedStatement.setDouble(3, STARTING_CASH);
-        preparedStatement.setInt(4, 0); //Starting Day
-        preparedStatement.setInt(5, STARTING_GARDEN_SIZE);
-
-        preparedStatement.executeUpdate();
-
-        ResultSet rs = preparedStatement.getGeneratedKeys();
-        if (rs.next()) {
-            userid = rs.getInt(1);
-        }
-
-        con.commit();
-        con.close();
-
-        Garden.initalizeGarden(userid, STARTING_GARDEN_SIZE);
+        userDao.create(user);
+        Garden.initalizeGarden(user.user_id, STARTING_GARDEN_SIZE);
         return "createUser";
     }
 
@@ -82,13 +76,13 @@ public class User implements Serializable {
 
         PreparedStatement ps
                 = con.prepareStatement(
-                        "select * from users where users.id = " + Util.getIDFromLogin());
+                        "select * from users where users.user_id = " + Util.getIDFromLogin());
 
         //get user data from database
         ResultSet result = ps.executeQuery();
         result.next();
 
-        userid = result.getInt("id");
+        user_id = result.getInt("user_id");
         login = result.getString("login");
         password = result.getString("password");
         cash = result.getDouble("cash");
@@ -100,29 +94,10 @@ public class User implements Serializable {
     }
 
     public static User getByUserid(Integer userid) throws SQLException {
-        Connection con = new DBConnect().getConnection();
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = getDao(cs);
 
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-
-        PreparedStatement ps
-                = con.prepareStatement(
-                        "select * from users where users.id = " + userid);
-
-        //get user data from database
-        ResultSet result = ps.executeQuery();
-        result.next();
-        User user = new User();
-        user.userid = result.getInt("id");
-        user.login = result.getString("login");
-        user.password = result.getString("password");
-        user.cash = result.getDouble("cash");
-        user.farmAge = result.getInt("farm_age");
-        user.gardenSize = result.getInt("garden_size");
-        user.score = result.getInt("score");
-
-        return user;
+        return userDao.queryForId(userid);
     }
 
     public String delete() throws SQLException, ParseException {
@@ -134,7 +109,7 @@ public class User implements Serializable {
         con.setAutoCommit(false);
 
         Statement statement = con.createStatement();
-        statement.executeUpdate("Delete from users where users.id = " + userid);
+        statement.executeUpdate("Delete from users where users.id = " + user_id);
         statement.close();
         con.commit();
         con.close();
@@ -198,28 +173,20 @@ public class User implements Serializable {
         }
     }
 
-    public Integer getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
     public String getCashAsDecimal() {
         return String.format("%.2f", this.cash);
     }
 
-    public Double getCash() {
-        return cash;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setCash(Double cash) {
-        this.cash = cash;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getLogin() {
+        return login;
     }
 
     public void setLogin(String login) {
@@ -234,8 +201,28 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public Double getCash() {
+        return cash;
+    }
+
+    public void setCash(Double cash) {
+        this.cash = cash;
+    }
+
+    public int getFarmAge() {
+        return farmAge;
+    }
+
+    public void setFarmAge(int farmAge) {
+        this.farmAge = farmAge;
+    }
+
     public int getGardenSize() {
         return gardenSize;
+    }
+
+    public void setGardenSize(int gardenSize) {
+        this.gardenSize = gardenSize;
     }
 
     public int getScore() {
@@ -245,4 +232,5 @@ public class User implements Serializable {
     public void setScore(int score) {
         this.score = score;
     }
+
 }

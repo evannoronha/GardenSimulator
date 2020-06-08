@@ -37,7 +37,7 @@ public class Garden implements Serializable {
 
         System.out.println(startingGardenSize);
         con.setAutoCommit(false);
-        String bulkInsert = "Insert into grow_boxes (box_id, user_id, plant_id, location, when_planted) values";
+        String bulkInsert = "Insert into grow_boxes (box_id, user_id, plant_id, location, day_planted) values";
 
         for (int i = 1; i < startingGardenSize * startingGardenSize; i++) {
             bulkInsert += ("(DEFAULT, "
