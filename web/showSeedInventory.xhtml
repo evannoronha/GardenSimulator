@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <link href="css/stylesheet.css" rel="stylesheet" type="text/css" />
+        <link href="css/global.css" rel="stylesheet" type="text/css" />
         <h1>Seed Inventory</h1>
     </h:head>
 
@@ -21,45 +21,45 @@
             <h:column>
                 <f:facet name="header"> Seed Amount </f:facet>
                     #{s.quantity}
-            </h:column>            
+            </h:column>
         </h:dataTable>
     </h:body>
     <h3>Plant Seeds</h3>
     <h:form>
-            <h:panelGrid columns="3">
-                Seed ID: <h:inputText value="#{seeds.plantSpecies.speciesid}" required ="true"
-                                             requiredMessage="Your must enter a seed id"
-                                             validator="#{seeds.userOwnsSeeds}"
-                                             validatorMessage="You do not own a seed with that id"
-                                             id="seedId"/>
-                <h:message for="seedId" style="color:red;margin:8px;"/>
-            </h:panelGrid>
-            <h:panelGrid>
-                <h:commandButton value="Plant Seed" action="#{seeds.plantSeed}"/>
-            </h:panelGrid>
+        <h:panelGrid columns="3">
+            Seed ID: <h:inputText value="#{seeds.plantSpecies.speciesid}" required ="true"
+                                  requiredMessage="Your must enter a seed id"
+                                  validator="#{seeds.userOwnsSeeds}"
+                                  validatorMessage="You do not own a seed with that id"
+                                  id="seedId"/>
+            <h:message for="seedId" style="color:red;margin:8px;"/>
+        </h:panelGrid>
+        <h:panelGrid>
+            <h:commandButton value="Plant Seed" action="#{seeds.plantSeed}"/>
+        </h:panelGrid>
     </h:form>
     <h3>Sell Seeds</h3>
     <h:form>
-            <h:panelGrid columns="3">
-                Seed ID: <h:inputText value="#{seeds.plantSpecies.speciesid}" required ="true"
-                                             requiredMessage="Your must enter a seed id"
-                                             validator="#{seeds.userOwnsSeeds}"
-                                             validatorMessage="You do not own a seed with that id"
-                                             id="sellId"/>
-                <h:message for="sellId" style="color:red;margin:8px;"/>
-            </h:panelGrid>
-            <h:panelGrid>
-                <h:commandButton value="Sell Seed" action="#{seeds.plantSeeds}"/>
-            </h:panelGrid>
+        <h:panelGrid columns="3">
+            Seed ID: <h:inputText value="#{seeds.plantSpecies.speciesid}" required ="true"
+                                  requiredMessage="Your must enter a seed id"
+                                  validator="#{seeds.userOwnsSeeds}"
+                                  validatorMessage="You do not own a seed with that id"
+                                  id="sellId"/>
+            <h:message for="sellId" style="color:red;margin:8px;"/>
+        </h:panelGrid>
+        <h:panelGrid>
+            <h:commandButton value="Sell Seed" action="#{seeds.plantSeeds}"/>
+        </h:panelGrid>
     </h:form>
     <h:form>
         <h:panelGrid columns="3">
-                Seed Quantity: <h:inputText value="#{seeds.sellQuantity}" required ="true"
-                                             requiredMessage="Your must enter a number of seeds to sell"
-                                             validator="#{seeds.userHasSeedQuantity}"
-                                             validatorMessage="You do not have enough seeds"
-                                             id="sellNumber"/>
-                <h:message for="sellNumber" style="color:red;margin:8px;"/>
+            Seed Quantity: <h:inputText value="#{seeds.sellQuantity}" required ="true"
+                                        requiredMessage="Your must enter a number of seeds to sell"
+                                        validator="#{seeds.userHasSeedQuantity}"
+                                        validatorMessage="You do not have enough seeds"
+                                        id="sellNumber"/>
+            <h:message for="sellNumber" style="color:red;margin:8px;"/>
         </h:panelGrid>
         <h:panelGrid>
             <h:commandButton value="Sell Seed" action="#{seeds.sellSeeds}"/>

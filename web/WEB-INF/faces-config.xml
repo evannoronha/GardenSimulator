@@ -8,7 +8,7 @@
         <managed-bean-class>Selector</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-     <managed-bean>
+    <managed-bean>
         <managed-bean-name>util</managed-bean-name>
         <managed-bean-class>Util</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
@@ -22,7 +22,7 @@
         <managed-bean-name>user</managed-bean-name>
         <managed-bean-class>User</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>
     <managed-bean>
         <managed-bean-name>login</managed-bean-name>
         <managed-bean-class>Login</managed-bean-class>
@@ -32,7 +32,7 @@
         <managed-bean-name>growbox</managed-bean-name>
         <managed-bean-class>GrowBox</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>
     <managed-bean>
         <managed-bean-name>garden</managed-bean-name>
         <managed-bean-class>Garden</managed-bean-class>
@@ -75,29 +75,8 @@
             <from-outcome>createAccount</from-outcome>
             <to-view-id>newUser.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule> 
-    <navigation-rule>
-        <from-view-id>
-            /start.xhtml
-        </from-view-id>
-        <navigation-case>
-            <from-outcome>newCustomer</from-outcome>
-            <to-view-id>newCustomer.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>listCustomers</from-outcome>
-            <to-view-id>showAllCustomers.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>findCustomer</from-outcome>
-            <to-view-id>findCustomer.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>deleteCustomer</from-outcome>
-            <to-view-id>deleteCustomer.xhtml</to-view-id>
-        </navigation-case>
     </navigation-rule>
-    
+
     <navigation-rule>
         <from-view-id>
             /newUser.xhtml
@@ -107,7 +86,7 @@
             <to-view-id>index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
+
     <navigation-rule>
         <from-view-id>
             /findCustomer.xhtml
@@ -117,17 +96,7 @@
             <to-view-id>displayCustomer.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
-    <navigation-rule>
-        <from-view-id>
-            /deleteCustomer.xhtml
-        </from-view-id>
-        <navigation-case>
-            <from-outcome>main</from-outcome>
-            <to-view-id>start.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    
+
     <navigation-rule>
         <from-view-id>
             /home.xhtml
@@ -137,5 +106,5 @@
             <to-view-id>showSeedInventory.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
+
 </faces-config>

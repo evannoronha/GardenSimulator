@@ -23,12 +23,13 @@ public class User implements Serializable {
     private final static int STARTING_GARDEN_SIZE = 5;
 
     private DBConnect dbConnect = new DBConnect();
-    protected static int userid;
+    protected int userid;
     protected String login;
     protected String password;
     protected Double cash;
     protected int farmAge;
-    protected static int gardenSize;
+    protected int gardenSize;
+    protected int score;
 
     public String create() throws SQLException, ParseException {
         Connection con = dbConnect.getConnection();
@@ -61,7 +62,7 @@ public class User implements Serializable {
         return "createUser";
     }
 
-    public User get() throws SQLException {
+    public User getLoggedIn() throws SQLException {
         Connection con = dbConnect.getConnection();
 
         if (con == null) {
@@ -82,6 +83,7 @@ public class User implements Serializable {
         cash = result.getDouble("cash");
         farmAge = result.getInt("farm_age");
         gardenSize = result.getInt("garden_size");
+        score = result.getInt("score");
 
         return this;
     }
@@ -107,6 +109,7 @@ public class User implements Serializable {
         user.cash = result.getDouble("cash");
         user.farmAge = result.getInt("farm_age");
         user.gardenSize = result.getInt("garden_size");
+        user.score = result.getInt("score");
 
         return user;
     }
@@ -196,6 +199,18 @@ public class User implements Serializable {
         return login;
     }
 
+    public String getCashAsDecimal() {
+        return String.format("%.2f", this.cash);
+    }
+
+    public Double getCash() {
+        return cash;
+    }
+
+    public void setCash(Double cash) {
+        this.cash = cash;
+    }
+
     public void setLogin(String login) {
         this.login = login;
     }
@@ -212,4 +227,11 @@ public class User implements Serializable {
         return gardenSize;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }

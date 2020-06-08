@@ -5,11 +5,12 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <link href="css/stylesheet_1.css" rel="stylesheet" type="text/css" />
+        <link href="css/global.css" rel="stylesheet" type="text/css" />
+        <link href="css/login.css" rel="stylesheet" type="text/css" />
         <h1>Farming Is Fun</h1>
-        
+
     </h:head>
-    
+
     <h:body class="loginPage">
         <img src="https://image.shutterstock.com/image-vector/panorama-summer-landscape-fence-trees-260nw-1350680588.jpg" style="padding-top:10px;padding-bottom:10px;"/>
         <h:form class="loginForm">
@@ -17,32 +18,30 @@
                 <div class="loginField">
                     <span class="inputLabel">login:</span>
                     <h:inputText value="#{login.login}" required="true"
-                                        binding="#{login.loginUI}"
-                                        requiredMessage="You must enter login"
-                                        id="login" class="inputTextField"/>
+                                 binding="#{login.loginUI}"
+                                 requiredMessage="You must enter login"
+                                 id="login" class="inputTextField"/>
                     <h:message for="login" style="color:red;margin:8px;"/>
                 </div>
                 <div class="loginField">
-                    <span class="inputLabel">password:</span> 
+                    <span class="inputLabel">password:</span>
                     <h:inputSecret value="#{login.password}" required ="true"
-                                             requiredMessage="You must enter password"
-                                             validatorMessage="Login/Password incorrect"
-                                             validator="#{login.validate}"
-                                             id="password" class="inputTextField"/>
+                                   requiredMessage="You must enter password"
+                                   validatorMessage="Login/Password incorrect"
+                                   validator="#{login.validate}"
+                                   id="password" class="inputTextField"/>
                     <h:message for="password" style="color:red;margin:8px;"/>
                 </div>
             </div>
-                
-            
             <div style="padding-top:20px;align-self: center;">
-                <h:commandButton value="Sign In" action="#{login.go}" styleClass="loginButton"/>
+                <h:commandButton value="Sign In" action="#{login.go}" styleClass="greenButton"/>
             </div>
-            
+
         </h:form>
         <h:form class="">
-            <h:commandButton value="Create New Account" action="#{login.createAccount()}" styleClass="loginButton"/>
+            <h:commandButton value="Create New Account" action="#{login.createAccount()}" styleClass="greenButton"/>
         </h:form>
-       
+
 
     </h:body>
 </html>
