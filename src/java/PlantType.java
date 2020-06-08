@@ -1,4 +1,4 @@
 
 public enum PlantType {
-    ROOT, DECORATIVE, FRUITING
-};
+    ROOT, DECORATIVE, FRUITING,
+}

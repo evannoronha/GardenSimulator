@@ -1,5 +1,4 @@
 
-
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
@@ -16,8 +17,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
-import java.util.Date;
-import java.util.TimeZone;
 
 @Named(value = "customer")
 @SessionScoped
@@ -29,7 +28,6 @@ public class Customer implements Serializable {
     private String name;
     private String address;
     private Date created_date;
-
 
     public Integer getCustomerID() throws SQLException {
         if (customerID == null) {
