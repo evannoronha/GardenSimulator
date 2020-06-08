@@ -2,13 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp">
     <h:head>
         <link href="css/global.css" rel="stylesheet" type="text/css" />
     </h:head>
 
-    <h1>Crop Inventory</h1>
     <h:body>
+        <ezcomp:header></ezcomp:header>
+
+
+        <h1>Crop Inventory</h1>
         <h:dataTable value="#{crops.getCrops()}" var="crop" border="1">
             <h:column>
                 <f:facet name="header"> Crop Id </f:facet>
@@ -21,6 +25,10 @@
             <h:column>
                 <f:facet name="header"> Crop Amount </f:facet>
                     #{crop.quantity}
+            </h:column>
+            <h:column>
+                <f:facet name="header"> Points For Eating </f:facet>
+                    #{crop.crop_id.pointsForEating}
             </h:column>
         </h:dataTable>
     </h:body>

@@ -94,6 +94,15 @@ public class User implements Serializable {
         }
     }
 
+    public String advanceTime() throws SQLException {
+        this.farmAge += 1;
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = getDao(cs);
+
+        userDao.update(this);
+        return "ViewGarden";
+    }
+
     public String getCashAsDecimal() {
         return String.format("%.2f", this.cash);
     }
