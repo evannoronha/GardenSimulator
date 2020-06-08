@@ -26,17 +26,17 @@ public class GrowBox implements Serializable {
     protected int boxid;
     @DatabaseField(columnName = "user_id", foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
     protected User userid;
-    @DatabaseField(columnName = "plant_id")
-    protected int plantid;
+    @DatabaseField(columnName = "plant_id", foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
+    protected PlantSpecies plantid;
     @DatabaseField
     protected int location;
-    @DatabaseField()
+    @DatabaseField
     protected int day_planted;
 
     public GrowBox() {
     }
 
-    public GrowBox(User userid, int plantid, int location, int day_planted) {
+    public GrowBox(User userid, PlantSpecies plantid, int location, int day_planted) {
         this.userid = userid;
         this.plantid = plantid;
         this.location = location;
@@ -78,11 +78,11 @@ public class GrowBox implements Serializable {
         this.userid = userid;
     }
 
-    public int getPlantid() {
+    public PlantSpecies getPlantid() {
         return plantid;
     }
 
-    public void setPlantid(int plantid) {
+    public void setPlantid(PlantSpecies plantid) {
         this.plantid = plantid;
     }
 
@@ -106,7 +106,7 @@ public class GrowBox implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, Integer> growBoxDao = getDao(cs);
 
-        GrowBox result = growBoxDao.queryForId(boxid);
+        GrowBox result = growBoxDao.queryForId(this.boxid);
         cs.close();
         return result;
     }

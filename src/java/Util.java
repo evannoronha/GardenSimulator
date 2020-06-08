@@ -63,7 +63,7 @@ public class Util implements Serializable {
             JSONObject item = new JSONObject();
             item.put("plant_id", box.plantid);
             item.put("day_planted", box.day_planted);
-            item.put("plant_url", plantSpeciesDao.queryForId(box.plantid).getPlant_image_url());
+            item.put("plant_url", box.plantid.getPlant_image_url());
             json.put(Integer.toString(box.location), item);
         }
         cs.close();

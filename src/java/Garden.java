@@ -25,13 +25,14 @@ public class Garden implements Serializable {
     public static void initalizeGarden(User userid, int startingGardenSize) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, Integer> growBoxDao = GrowBox.getDao(cs);
+        Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
 
         int startingPlantId = 0;
 
         for (int i = 1; i <= startingGardenSize * startingGardenSize; i++) {
             GrowBox box = new GrowBox();
             box.setUserid(userid);
-            box.setPlantid(startingPlantId);
+            box.setPlantid(plantSpeciesDao.queryForId(startingPlantId));
             box.setLocation(i);
             box.setDay_planted(userid.getFarmAge());
 
