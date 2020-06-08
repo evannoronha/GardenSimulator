@@ -36,7 +36,7 @@ and open the template in the editor.
         </select>
 
         <h:selectOneMenu value="#{seeds.getSeeds()}">
-            <f:selectItems value="#{seeds.getSeeds()}" var="user" itemLabel="#{user.name}"/>
+            <f:selectItems value="#{seeds.getSeeds()}" var="seed" itemLabel="#{seed.seed_id.name}"/>
         </h:selectOneMenu>
 
         <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
