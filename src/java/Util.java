@@ -7,11 +7,8 @@ import java.sql.SQLException;
 import java.util.*;
 import javax.annotation.ManagedBean;
 import javax.el.ELContext;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
@@ -30,18 +27,7 @@ public class Util implements Serializable {
         session.invalidate();
     }
 
-    public void validateDate(FacesContext context, UIComponent component, Object value)
-            throws Exception {
-
-        try {
-            Date d = (Date) value;
-        } catch (Exception e) {
-            FacesMessage errorMessage = new FacesMessage("Input is not a valid date");
-            throw new ValidatorException(errorMessage);
-        }
-    }
-
-    public static int getIDFromLogin() throws SQLException {
+    public static int getIDFromLogin() throws SQLException, IOException {
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         Login elLogin = (Login) elContext.getELResolver().getValue(elContext, null, "login");
 
@@ -49,6 +35,7 @@ public class Util implements Serializable {
         Dao<User, Integer> userDao = User.getDao(cs);
 
         List<User> users = userDao.queryForEq("login", elLogin.getLogin());
+        cs.close();
         return users.get(0).user_id;
     }
 
