@@ -16,19 +16,16 @@ function addElement() {
         //                  newDiv.textContent = id;
         newDiv.dataset.id = id;
         newDiv.dataset.plantid = json[id].plant_id;
+        newDiv.setAttribute('id', 'div1');
         newDiv.setAttribute('class', 'grid-item');
-        const newImg = document.createElement("img");
-        newImg.src = json[id].plant_url;
-        newImg.style.width = "80px";
-        newImg.style.height = "80px";
+        newDiv.setAttribute('ondrop', 'drop(event)');
+        newDiv.setAttribute('ondragover', 'allowDrop(event)');
         newDiv.onclick = () => {
             console.log(newDiv.dataset.id + " was clicked on!:");
             console.log(newDiv);
         }
 
-
         document.getElementById('grid').appendChild(newDiv);
-        document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
     }
 }
 
@@ -43,5 +40,24 @@ function drag(ev) {
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+    clone = document.getElementById(data).cloneNode(true);
+    clone.id = "changed";
+    ev.target.appendChild(clone);
+}
+
+function changeimage(color) {
+    switch (color) {
+        case "select":
+            document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
+            break;
+        case "red":
+            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+            break;
+        case "blue":
+            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+            break;
+        case "green":
+            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+            break;
+    }
 }
