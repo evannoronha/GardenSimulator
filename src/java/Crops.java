@@ -35,11 +35,9 @@ public class Crops extends Harvestable implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<CropInventory, Integer> inventoryDao = getDao(cs);
         int userid = Util.getIDFromLogin();
-
-        HashMap<String, Object> params = new HashMap();
-        params.put("user_id", userid);
+        List<CropInventory> result = inventoryDao.queryForEq("user_id", userid);
         cs.close();
-        return inventoryDao.queryForFieldValues(params);
+        return result;
     }
 
     public String showCropInventory() {
