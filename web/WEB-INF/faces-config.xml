@@ -42,8 +42,13 @@
         <managed-bean-name>seeds</managed-bean-name>
         <managed-bean-class>Seeds</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>    
-<!--    <managed-bean>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>crops</managed-bean-name>
+        <managed-bean-class>Crops</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <!--    <managed-bean>
         <managed-bean-name>plantSpecies</managed-bean-name>
         <managed-bean-class>PlantSpecies</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
@@ -105,6 +110,10 @@
             <from-outcome>showSeedInventory</from-outcome>
             <to-view-id>showSeedInventory.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>showCropInventory</from-outcome>
+            <to-view-id>showCropInventory.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 
     <navigation-rule>
@@ -124,6 +133,16 @@
     <navigation-rule>
         <from-view-id>
             /insufficientseeds.xhtml
+        </from-view-id>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>home.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>
+            /insufficientCrops.xhtml
         </from-view-id>
         <navigation-case>
             <from-outcome>home</from-outcome>
