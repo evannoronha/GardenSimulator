@@ -9,18 +9,14 @@
 
     <h1>Crop Inventory</h1>
     <h:body>
-        <h:dataTable value="#{crops.getCrops()}" var="c" border="1">
+        <h:dataTable value="#{crops.getCrops()}" var="crop" border="1">
             <h:column>
                 <f:facet name="header"> Crop Id </f:facet>
-                    #{c.plantSpecies.speciesId}
-            </h:column>
-            <h:column>
-                <f:facet name="header"> Crop Type </f:facet>
-                    #{c.plantSpecies.name}
+                    #{crop.crop_id}
             </h:column>
             <h:column>
                 <f:facet name="header"> Crop Amount </f:facet>
-                    #{c.quantity}
+                    #{crop.quantity}
             </h:column>
         </h:dataTable>
     </h:body>

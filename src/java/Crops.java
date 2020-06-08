@@ -4,11 +4,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -35,48 +31,14 @@ public class Crops extends Harvestable implements Serializable {
         super(ps, quantity);
     }
 
-    public List<Crops> getCrops() throws SQLException {
+    public List<CropInventory> getCrops() throws SQLException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<CropInventory, Integer> inventoryDao = getDao(cs);
         int userid = Util.getIDFromLogin();
-        System.out.println("user id" + userid);
-        Connection con = dbConnect.getConnection();
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-        con.setAutoCommit(false);
-        ArrayList<Crops> cropsList = new ArrayList<>();
 
-        PreparedStatement ps = con.prepareStatement(
-                "select * from crops_inventory join plant_species "
-                + "on crops_inventory.crop_id = plant_species.species_id "
-                + "where crops_inventory.user_id = ?");
-
-        ps.setInt(1, userid);
-
-        ResultSet result = ps.executeQuery();
-        while (result.next()) {
-            System.out.println(result.toString());
-            System.out.println();
-            PlantSpecies thisPlant;
-            Integer speciesId = result.getInt("species_id");
-            String name = result.getString("name");
-            String lifespan = result.getString("lifespan_type");
-            Integer harvestQuantity = result.getInt("harvest_quantity");
-            String url = result.getString("plant_image_url");
-            Integer daysToHarvest = result.getInt("days_to_harvest");
-
-            thisPlant = PlantSpecies.makePlant(speciesId, name, lifespan, harvestQuantity, url, daysToHarvest);
-
-            System.out.print(thisPlant);
-
-            Crops newCrops = new Crops(thisPlant, result.getInt("quantity"));
-
-            cropsList.add(newCrops);
-        }
-
-        result.close();
-        con.close();
-
-        return cropsList;
+        HashMap<String, Object> params = new HashMap();
+        params.put("user_id", userid);
+        return inventoryDao.queryForFieldValues(params);
     }
 
     public String showCropInventory() {
@@ -128,8 +90,7 @@ public class Crops extends Harvestable implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         HashMap<String, Object> params = new HashMap();
 
-        Dao<CropInventory, Integer> inventoryDao
-                = DaoManager.createDao(cs, CropInventory.class);
+        Dao<CropInventory, Integer> inventoryDao = getDao(cs);
 
         params.put("user_id", userid);
         params.put("crop_id", seedId);
@@ -147,8 +108,7 @@ public class Crops extends Harvestable implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         HashMap<String, Object> params = new HashMap();
 
-        Dao<CropInventory, Integer> inventoryDao
-                = DaoManager.createDao(cs, CropInventory.class);
+        Dao<CropInventory, Integer> inventoryDao = getDao(cs);
 
         params.put("user_id", userid);
         params.put("crop_id", saleSpeciesId);
