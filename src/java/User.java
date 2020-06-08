@@ -83,6 +83,7 @@ public class User implements Serializable {
         cash = result.getDouble("cash");
         farmAge = result.getInt("farm_age");
         gardenSize = result.getInt("garden_size");
+        score = result.getInt("score");
 
         return this;
     }
@@ -108,6 +109,7 @@ public class User implements Serializable {
         user.cash = result.getDouble("cash");
         user.farmAge = result.getInt("farm_age");
         user.gardenSize = result.getInt("garden_size");
+        user.score = result.getInt("score");
 
         return user;
     }
@@ -213,4 +215,11 @@ public class User implements Serializable {
         return gardenSize;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }
