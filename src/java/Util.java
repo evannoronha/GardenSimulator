@@ -1,10 +1,8 @@
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
+import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import javax.annotation.ManagedBean;
@@ -54,39 +52,21 @@ public class Util implements Serializable {
         return users.get(0).user_id;
     }
 
-    public static String getBoxesJson() throws JSONException, SQLException {
-        DBConnect dbConnect = new DBConnect();
-        Connection con = dbConnect.getConnection();
-
-        if (con == null) {
-            throw new SQLException("Can't get database connection");
-        }
-
-        //DEFAULT accounts for serial column
-        PreparedStatement preparedStatement = con.prepareStatement("select species_id, plant_image_url from plant_species;");
-
-        ResultSet result = preparedStatement.executeQuery();
-
-        HashMap<Integer, String> plantImgMap = new HashMap<>();
-
-        while (result.next()) {
-            plantImgMap.put(result.getInt("species_id"), result.getString("plant_image_url"));
-        }
-
+    public static String getBoxesJson() throws JSONException, SQLException, IOException {
         JSONArray array = new JSONArray();
         JSONObject json = new JSONObject();
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
 
-        ArrayList<GrowBox> growBoxList = Garden.getBoxes();
+        List<GrowBox> growBoxList = Garden.getBoxes();
         for (GrowBox box : growBoxList) {
             JSONObject item = new JSONObject();
             item.put("plant_id", box.plantid);
-            item.put("whenPlanted", box.whenPlanted);
-            item.put("plant_url", plantImgMap.get(box.plantid));
+            item.put("day_planted", box.day_planted);
+            item.put("plant_url", plantSpeciesDao.queryForId(box.plantid).getPlant_image_url());
             json.put(Integer.toString(box.location), item);
         }
-
-//        item.put("url", "https://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/ballot-box-with-check.png");
-//        item.put("url", "https://imgur.com/fJORZNV");
+        cs.close();
         return json.toString();
     }
 }

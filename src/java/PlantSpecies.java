@@ -1,6 +1,10 @@
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
+import java.sql.SQLException;
 
 @DatabaseTable(tableName = "plant_species")
 public class PlantSpecies {
@@ -28,6 +32,10 @@ public class PlantSpecies {
         this.harvest_quantity = harvest_quantity;
         this.days_to_harvest = days_to_harvest;
         this.plant_image_url = plant_image_url;
+    }
+
+    public static Dao<PlantSpecies, Integer> getDao(ConnectionSource cs) throws SQLException {
+        return DaoManager.createDao(cs, PlantSpecies.class);
     }
 
     public Integer getSpecies_id() {
