@@ -9,7 +9,7 @@ import java.sql.SQLException;
 @DatabaseTable(tableName = "plant_species")
 public class PlantSpecies {
 
-    @DatabaseField(allowGeneratedIdInsert = false, generatedId = true, columnName = "species_id")
+    @DatabaseField(generatedId = true, columnName = "species_id", readOnly = true)
     protected Integer species_id;
     @DatabaseField(canBeNull = false)
     protected String name;
