@@ -21,17 +21,20 @@ public class PlantSpecies {
     protected Integer days_to_harvest;
     @DatabaseField
     protected String plant_image_url;
+    @DatabaseField(canBeNull = false, columnName = "points_for_eating")
+    protected Integer pointsForEating;
 
     public PlantSpecies() {
     }
 
-    public PlantSpecies(Integer species_id, String name, String lifespan_type, Integer harvest_quantity, Integer days_to_harvest, String plant_image_url) {
+    public PlantSpecies(Integer species_id, String name, String lifespan_type, Integer harvest_quantity, Integer days_to_harvest, String plant_image_url, Integer pointsForEating) {
         this.species_id = species_id;
         this.name = name;
         this.lifespan_type = lifespan_type;
         this.harvest_quantity = harvest_quantity;
         this.days_to_harvest = days_to_harvest;
         this.plant_image_url = plant_image_url;
+        this.pointsForEating = pointsForEating;
     }
 
     public static Dao<PlantSpecies, Integer> getDao(ConnectionSource cs) throws SQLException {
@@ -40,6 +43,14 @@ public class PlantSpecies {
 
     public Integer getSpecies_id() {
         return species_id;
+    }
+
+    public Integer getPointsForEating() {
+        return pointsForEating;
+    }
+
+    public void setPointsForEating(Integer pointsForEating) {
+        this.pointsForEating = pointsForEating;
     }
 
     public void setSpecies_id(Integer species_id) {

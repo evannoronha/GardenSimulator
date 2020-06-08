@@ -22,6 +22,10 @@
                 <f:facet name="header"> Crop Amount </f:facet>
                     #{crop.quantity}
             </h:column>
+            <h:column>
+                <f:facet name="header"> Points For Eating </f:facet>
+                    #{crop.crop_id.pointsForEating}
+            </h:column>
         </h:dataTable>
     </h:body>
     <h3>Sell Crops</h3>
