@@ -18,8 +18,8 @@ public class MarketListing {
     private Integer listing_id;
     @DatabaseField(canBeNull = false)
     private Integer seller_id;
-    @DatabaseField(canBeNull = false)
-    private Integer plant_id;
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "plant_id")
+    private PlantSpecies plant_id;
     @DatabaseField(canBeNull = false)
     private Double price;
     @DatabaseField(canBeNull = false)
@@ -31,7 +31,7 @@ public class MarketListing {
 
     }
 
-    public MarketListing(Integer listing_id, Integer seller_id, Integer plant_id, Double price, Integer quantity, String listing_type) {
+    public MarketListing(Integer listing_id, Integer seller_id, PlantSpecies plant_id, Double price, Integer quantity, String listing_type) {
         this.listing_id = listing_id;
         this.seller_id = seller_id;
         this.plant_id = plant_id;
@@ -56,11 +56,11 @@ public class MarketListing {
         this.seller_id = seller_id;
     }
 
-    public Integer getPlant_id() {
+    public PlantSpecies getPlant_id() {
         return plant_id;
     }
 
-    public void setPlant_id(Integer plant_id) {
+    public void setPlant_id(PlantSpecies plant_id) {
         this.plant_id = plant_id;
     }
 

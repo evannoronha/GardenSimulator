@@ -27,6 +27,10 @@ public class PlantSpecies {
     public PlantSpecies() {
     }
 
+    public PlantSpecies(Integer species_id) {
+        this.species_id = species_id;
+    }
+
     public PlantSpecies(Integer species_id, String name, String lifespan_type, Integer harvest_quantity, Integer days_to_harvest, String plant_image_url, Integer pointsForEating) {
         this.species_id = species_id;
         this.name = name;
