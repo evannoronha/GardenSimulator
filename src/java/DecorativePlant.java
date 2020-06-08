@@ -49,7 +49,7 @@ public class DecorativePlant extends PlantSpecies implements Serializable {
         con.setAutoCommit(false);
 
         PreparedStatement preparedStatement = con.prepareStatement("Insert into decorative_plants values(?)");
-        preparedStatement.setInt(1, super.speciesid);
+        preparedStatement.setInt(1, super.speciesId);
         preparedStatement.executeUpdate();
         con.commit();
         con.close();
@@ -67,7 +67,7 @@ public class DecorativePlant extends PlantSpecies implements Serializable {
 
         PreparedStatement ps
                 = con.prepareStatement(
-                        "select * from decorative_plants where decorative_plants.species_id = " + super.speciesid);
+                        "select * from decorative_plants where decorative_plants.species_id = " + super.speciesId);
 
         //get customer data from database
         ResultSet result = ps.executeQuery();

@@ -50,7 +50,7 @@ public class RootPlant extends PlantSpecies implements Serializable {
         con.setAutoCommit(false);
 
         PreparedStatement preparedStatement = con.prepareStatement("Insert into root_plants values(?)");
-        preparedStatement.setInt(1, super.speciesid);
+        preparedStatement.setInt(1, super.speciesId);
         preparedStatement.executeUpdate();
         con.commit();
         con.close();
@@ -68,7 +68,7 @@ public class RootPlant extends PlantSpecies implements Serializable {
 
         PreparedStatement ps
                 = con.prepareStatement(
-                        "select * from root_plants where root_plants.species_id = " + super.speciesid);
+                        "select * from root_plants where root_plants.species_id = " + super.speciesId);
 
         ResultSet result = ps.executeQuery();
 

@@ -23,17 +23,19 @@ public class Seeds implements Serializable {
 
     private DBConnect dbConnect = new DBConnect();
     ///int userid = Util.getIDFromLogin();
-    protected PlantSpecies ps;
+    protected PlantSpecies plantSpecies;
     protected Integer quantity;
-    protected Integer sellQuantity;
+    protected Integer saleQuantity;
+    protected Double salePrice;
+    protected Integer saleSpeciesId;
 
     public Seeds(){
-        ps = null;
+        plantSpecies = null;
         quantity = 0;
     }
 
     public Seeds(PlantSpecies ps, int quantity){
-        this.ps = ps;
+        this.plantSpecies = ps;
         this.quantity = quantity;
     }
 
@@ -45,16 +47,32 @@ public class Seeds implements Serializable {
         return quantity;
     }
 
-    public void setSellQuantity(Integer q){
-        this.sellQuantity = q;
+    public void setSaleQuantity(Integer q){
+        this.saleQuantity = q;
     }
 
-    public Integer getSellQuantity(){
-        return sellQuantity;
+    public Integer getSaleQuantity(){
+        return saleQuantity;
     }
 
     public PlantSpecies getPlantSpecies(){
-        return ps;
+        return plantSpecies;
+    }
+
+    public Double getSalePrice(){
+        return salePrice;
+    }
+
+    public void setSalePrice(Double s){
+        salePrice = s;
+    }
+
+    public Integer getSaleSpeciesId(){
+        return this.saleSpeciesId;
+    }
+
+    public void setSaleSpeciesId(Integer s){
+        this.saleSpeciesId = s;
     }
 
     public List<Seeds> getSeeds() throws SQLException
@@ -62,6 +80,10 @@ public class Seeds implements Serializable {
         int userid = Util.getIDFromLogin();
         System.out.println("user id" + userid);
         Connection con = dbConnect.getConnection();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        con.setAutoCommit(false);
         ArrayList<Seeds> seedsList = new ArrayList<>();
 
         PreparedStatement ps = con.prepareStatement(
@@ -110,8 +132,12 @@ public class Seeds implements Serializable {
         return "showSeedInventory";
     }
 
+    public String home(){
+        return "home";
+    }
+
     public String toString(){
-        return quantity + " " + "of  " + ps.toString();
+        return String.valueOf(quantity) + " " +  "of  " + plantSpecies.toString();
     }
 
     //TODO
@@ -120,10 +146,39 @@ public class Seeds implements Serializable {
         return;
     }
 
-    //TODO
-    public void sellSeeds(){
-        //subtract this amount of seeds from the database
-        return;
+    public String sellSeeds() throws SQLException{
+        if(!userHasSeedQuantity()){
+            return "fail";
+        }
+
+        int userid = Util.getIDFromLogin();
+        Connection con = dbConnect.getConnection();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        con.setAutoCommit(false);
+
+        PreparedStatement ps = con.prepareStatement(
+                        "update has_seeds set quantity = quantity - ? "
+                                + "where user_id = ? and "
+                                + "seed_id = ?");
+
+        ps.setInt(1, saleQuantity);
+        ps.setInt(2, userid);
+        ps.setInt(3, saleSpeciesId);
+
+        PreparedStatement ps2 = con.prepareStatement("insert into market_listings values('DEFAULT',?,?,?,?,?)");
+
+        ps2.setInt(1, userid);
+        ps2.setInt(2, saleSpeciesId);
+        ps2.setDouble(3, salePrice);
+        ps2.setInt(3, saleQuantity);
+
+        con.commit();
+        con.close();
+
+        System.out.println("Sucessful seed query");
+        return "success";
     }
 
     public void userOwnsSeeds(FacesContext context, UIComponent componentToValidate, Object value) throws SQLException, ValidatorException {
@@ -137,8 +192,6 @@ public class Seeds implements Serializable {
         }
         con.setAutoCommit(false);
 
-        Statement statement = con.createStatement();
-
         //DEFAULT accounts for serial column
         PreparedStatement preparedStatement = con.prepareStatement("select * from has_seeds where seed_id = ? ");
         preparedStatement.setInt(1, seedId);
@@ -150,8 +203,32 @@ public class Seeds implements Serializable {
         }
     }
 
-    public void userHasSeedQuantity(){
+    //validate that the user can sell this many seeds
+    public boolean userHasSeedQuantity() throws SQLException{
+        int userid = Util.getIDFromLogin();
+        Connection con = dbConnect.getConnection();
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+        con.setAutoCommit(false);
 
+        PreparedStatement ps = con.prepareStatement(
+                        "select * from has_seeds where user_id = ? and seed_id = ?");
+
+        ps.setInt(1, userid);
+        ps.setInt(2, saleSpeciesId);
+
+        ResultSet result = ps.executeQuery();
+
+        while(result.next())
+        {
+            Integer seedQuantity = result.getInt("quantity");
+            if(seedQuantity >= saleQuantity){
+                return true;
+            }
+        }
+        con.close();
+        return false;
     }
 
 }
