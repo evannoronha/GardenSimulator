@@ -20,11 +20,12 @@ import org.json.JSONObject;
 @ManagedBean
 public class Util implements Serializable {
 
-    public static void invalidateUserSession() {
+    public static String invalidateUserSession() {
         //invalidate user session
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
         session.invalidate();
+        return "Logout";
     }
 
     public static int getIDFromLogin() throws SQLException, IOException {
