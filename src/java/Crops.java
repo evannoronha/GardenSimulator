@@ -38,6 +38,7 @@ public class Crops extends Harvestable implements Serializable {
 
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
+        cs.close();
         return inventoryDao.queryForFieldValues(params);
     }
 
