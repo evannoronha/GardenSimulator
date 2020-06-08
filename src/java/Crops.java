@@ -17,7 +17,6 @@ import javax.inject.Named;
 public class Crops implements Serializable {
 
     private DBConnect dbConnect = new DBConnect();
-    ///int userid = Util.getIDFromLogin();
     protected PlantSpecies plantSpecies;
     protected Integer quantity;
     protected Integer saleQuantity;
