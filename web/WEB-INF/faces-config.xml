@@ -8,7 +8,7 @@
         <managed-bean-class>Selector</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-     <managed-bean>
+    <managed-bean>
         <managed-bean-name>util</managed-bean-name>
         <managed-bean-class>Util</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
@@ -22,7 +22,7 @@
         <managed-bean-name>user</managed-bean-name>
         <managed-bean-class>User</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>
     <managed-bean>
         <managed-bean-name>login</managed-bean-name>
         <managed-bean-class>Login</managed-bean-class>
@@ -32,7 +32,7 @@
         <managed-bean-name>growbox</managed-bean-name>
         <managed-bean-class>GrowBox</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>    
+    </managed-bean>
     <managed-bean>
         <managed-bean-name>garden</managed-bean-name>
         <managed-bean-class>Garden</managed-bean-class>
@@ -75,7 +75,7 @@
             <from-outcome>createAccount</from-outcome>
             <to-view-id>newUser.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule> 
+    </navigation-rule>
 
     <navigation-rule>
         <from-view-id>
@@ -86,7 +86,7 @@
             <to-view-id>index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
+
     <navigation-rule>
         <from-view-id>
             /findCustomer.xhtml
@@ -106,5 +106,5 @@
             <to-view-id>showSeedInventory.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
+
 </faces-config>
