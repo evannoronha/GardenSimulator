@@ -6,13 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import javax.inject.Named;
 
 //@Named(value = "plantSpecies")
 //@SessionScoped
@@ -27,7 +24,7 @@ public abstract class PlantSpecies implements Serializable {
     protected Integer daysToHarvest;
     protected String imageURL;
 
-    public PlantSpecies(int speciesId, String name, String lifespanType, int harvestQuantity, String imageURL, Integer daysToHarvest){
+    public PlantSpecies(int speciesId, String name, String lifespanType, int harvestQuantity, String imageURL, Integer daysToHarvest) {
         this.speciesId = speciesId;
         this.name = name;
         this.lifespanType = lifespanType;
@@ -36,7 +33,7 @@ public abstract class PlantSpecies implements Serializable {
         this.imageURL = imageURL;
     }
 
-    public PlantSpecies(){
+    public PlantSpecies() {
         this.speciesId = null;
         this.name = null;
         this.lifespanType = null;
@@ -45,23 +42,22 @@ public abstract class PlantSpecies implements Serializable {
         this.imageURL = null;
     }
 
-    public static PlantSpecies makePlant(Integer speciesId, String name, String lifespanType, Integer harvestQuantity, String imageURL, Integer daysToHarvest) throws SQLException{
+    public static PlantSpecies makePlant(Integer speciesId, String name, String lifespanType, Integer harvestQuantity, String imageURL, Integer daysToHarvest) throws SQLException {
 
         PlantSpecies newPlant = null;
-        switch(getPlantType(speciesId)){
+        switch(getPlantType(speciesId)) {
             case ROOT:
-                newPlant = new RootPlant(speciesId,name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
+                newPlant = new RootPlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             case DECORATIVE:
-                newPlant = new DecorativePlant(speciesId,name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
+                newPlant = new DecorativePlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             case FRUITING:
-                newPlant= new FruitingPlant(speciesId,name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
+                newPlant= new FruitingPlant(speciesId, name, lifespanType, harvestQuantity, imageURL, daysToHarvest);
                 break;
             default:
                 System.out.println("Couldn't find any plant in subtable with that id");
         }
-
         return newPlant;
     }
 
@@ -114,7 +110,6 @@ public abstract class PlantSpecies implements Serializable {
     }
 
     //public abstract String create() throws SQLException, ParseException;
-
     //should NEVER insert into plant species without inserting into the sub table.
     //also, this should never be called? not sure how to do that
     public String create() throws SQLException, ParseException {
@@ -222,19 +217,18 @@ public abstract class PlantSpecies implements Serializable {
 
     //cant have static classes implement abstract method
     //abstract boolean isInstance() throws SQLException;
-
-    public static PlantType getPlantType(int id) throws SQLException{
-        if(RootPlant.isInstance(id)){
+    public static PlantType getPlantType(int id) throws SQLException {
+        if (RootPlant.isInstance(id)) {
             return PlantType.ROOT;
-        }else if (DecorativePlant.isInstance(id)){
+        } else if (DecorativePlant.isInstance(id)) {
             return PlantType.DECORATIVE;
-        } else if (FruitingPlant.isInstance(id)){
+        } else if (FruitingPlant.isInstance(id)) {
             return PlantType.FRUITING;
         }
         return null;
     }
 
-    public String toString(){
+    public String toString() {
         return speciesId + " " + name + " " + lifespanType + " " + String.valueOf(harvestQuantity) + " " + imageURL;
     }
 

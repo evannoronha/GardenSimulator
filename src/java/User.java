@@ -1,3 +1,4 @@
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -5,10 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
-import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -25,12 +23,13 @@ public class User implements Serializable {
     private final static int STARTING_GARDEN_SIZE = 5;
 
     private DBConnect dbConnect = new DBConnect();
-    protected static int userid;
+    protected int userid;
     protected String login;
     protected String password;
     protected Double cash;
     protected int farmAge;
-    protected static int gardenSize;
+    protected int gardenSize;
+    protected int score;
 
     public String create() throws SQLException, ParseException {
         Connection con = dbConnect.getConnection();
@@ -63,7 +62,7 @@ public class User implements Serializable {
         return "createUser";
     }
 
-    public User get() throws SQLException {
+    public User getLoggedIn() throws SQLException {
         Connection con = dbConnect.getConnection();
 
         if (con == null) {
@@ -84,8 +83,35 @@ public class User implements Serializable {
         cash = result.getDouble("cash");
         farmAge = result.getInt("farm_age");
         gardenSize = result.getInt("garden_size");
+        score = result.getInt("score");
 
         return this;
+    }
+
+    public static User getByUserid(Integer userid) throws SQLException {
+        Connection con = new DBConnect().getConnection();
+
+        if (con == null) {
+            throw new SQLException("Can't get database connection");
+        }
+
+        PreparedStatement ps
+                = con.prepareStatement(
+                        "select * from users where users.id = " + userid);
+
+        //get user data from database
+        ResultSet result = ps.executeQuery();
+        result.next();
+        User user = new User();
+        user.userid = result.getInt("id");
+        user.login = result.getString("login");
+        user.password = result.getString("password");
+        user.cash = result.getDouble("cash");
+        user.farmAge = result.getInt("farm_age");
+        user.gardenSize = result.getInt("garden_size");
+        user.score = result.getInt("score");
+
+        return user;
     }
 
     public String delete() throws SQLException, ParseException {
@@ -173,6 +199,18 @@ public class User implements Serializable {
         return login;
     }
 
+    public String getCashAsDecimal() {
+        return String.format("%.2f", this.cash);
+    }
+
+    public Double getCash() {
+        return cash;
+    }
+
+    public void setCash(Double cash) {
+        this.cash = cash;
+    }
+
     public void setLogin(String login) {
         this.login = login;
     }
@@ -185,9 +223,15 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public int getGardenSize()
-    {
+    public int getGardenSize() {
         return gardenSize;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }

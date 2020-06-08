@@ -4,28 +4,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 
-
 /**
  *
  * @author robert
  */
-
 @Named(value = "garden")
 @SessionScoped
 @ManagedBean
-public class Garden implements Serializable{
+public class Garden implements Serializable {
 
     private static DBConnect dbConnect = new DBConnect();
     private static ArrayList<GrowBox> growBoxList;
 
-    public static void initalizeGarden(int userid, int startingGardenSize) throws SQLException
-    {
+    public static void initalizeGarden(int userid, int startingGardenSize) throws SQLException {
         Connection con = dbConnect.getConnection();
 
         if (con == null) {
@@ -41,54 +37,63 @@ public class Garden implements Serializable{
 
         System.out.println(startingGardenSize);
         con.setAutoCommit(false);
-        String bulkInsert = "Insert into grow_boxes (box_id, user_id, plant_id, location, water_level) values";
+        String bulkInsert = "Insert into grow_boxes (box_id, user_id, plant_id, location, when_planted) values";
 
-        for (int i = 1; i < startingGardenSize * startingGardenSize; i++)
-        {
-
-            bulkInsert += ("(DEFAULT, " + userid + ", " + startingPlantId + ", " + i + ", " + startingWaterLevel + "),");
+        for (int i = 1; i < startingGardenSize * startingGardenSize; i++) {
+            bulkInsert += ("(DEFAULT, "
+                    + userid
+                    + ", "
+                    + startingPlantId
+                    + ", "
+                    + i
+                    + ", "
+                    + User.getByUserid(userid).farmAge
+                    + "),");
         }
 
-        bulkInsert += ("(DEFAULT, " + userid + ", " + startingPlantId + ", " +
-                (startingGardenSize * startingGardenSize) + ", " + startingWaterLevel + ");");
+        bulkInsert += ("(DEFAULT, "
+                + userid
+                + ", "
+                + startingPlantId
+                + ", "
+                + (startingGardenSize * startingGardenSize)
+                + ", "
+                + User.getByUserid(userid).farmAge
+                + ");");
 
+        PreparedStatement preparedStatement = con.prepareStatement(bulkInsert);
+        preparedStatement.executeUpdate();
 
-       PreparedStatement preparedStatement = con.prepareStatement(bulkInsert);
-       preparedStatement.executeUpdate();
-
-       con.commit();
-       con.close();
+        con.commit();
+        con.close();
     }
 
-    public static ArrayList<GrowBox> getBoxes() throws SQLException
-    {
+    public static ArrayList<GrowBox> getBoxes() throws SQLException {
         int userid = Util.getIDFromLogin();
         Connection con = dbConnect.getConnection();
         growBoxList = new ArrayList<>();
 
         PreparedStatement ps = con.prepareStatement(
-                        "select * from grow_boxes where grow_boxes.user_id = ?");
+                "select * from grow_boxes where grow_boxes.user_id = ?");
 
         ps.setInt(1, userid);
 
         ResultSet result = ps.executeQuery();
-        while(result.next())
-        {
+        while (result.next()) {
             int boxid = result.getInt("box_id");
             int plantid = result.getInt("plant_id");
             int location = result.getInt("location");
-            int waterlevel = result.getInt("water_level");
+            int whenPlanted = result.getInt("location");
 
-            GrowBox growBoxToCreate = new GrowBox(boxid, userid, plantid, location, waterlevel);
+            GrowBox growBoxToCreate = new GrowBox(boxid, userid, plantid, location);
             growBoxList.add(growBoxToCreate);
         }
 
-        for (GrowBox box : growBoxList)
-        {
-            System.out.println(box.boxid + " " + box.userid + " " + box.plantid + " " + box.location + " " + box.waterlevel);
+        for (GrowBox box : growBoxList) {
+            System.out.println(box.boxid + " " + box.userid + " " + box.plantid + " " + box.location);
         }
 
-       return growBoxList;
+        return growBoxList;
     }
 
 }

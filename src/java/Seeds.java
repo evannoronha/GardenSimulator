@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -29,7 +28,7 @@ public class Seeds implements Serializable {
     protected Double salePrice;
     protected Integer saleSpeciesId;
 
-    public Seeds(){
+    public Seeds() {
         plantSpecies = null;
         quantity = 0;
     }
@@ -39,44 +38,43 @@ public class Seeds implements Serializable {
         this.quantity = quantity;
     }
 
-    public void setQuantity(Integer q){
+    public void setQuantity(Integer q) {
         this.quantity = q;
     }
 
-    public Integer getQuantity(){
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setSaleQuantity(Integer q){
+    public void setSaleQuantity(Integer q) {
         this.saleQuantity = q;
     }
 
-    public Integer getSaleQuantity(){
+    public Integer getSaleQuantity() {
         return saleQuantity;
     }
 
-    public PlantSpecies getPlantSpecies(){
+    public PlantSpecies getPlantSpecies() {
         return plantSpecies;
     }
 
-    public Double getSalePrice(){
+    public Double getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Double s){
+    public void setSalePrice(Double s) {
         salePrice = s;
     }
 
-    public Integer getSaleSpeciesId(){
+    public Integer getSaleSpeciesId() {
         return this.saleSpeciesId;
     }
 
-    public void setSaleSpeciesId(Integer s){
+    public void setSaleSpeciesId(Integer s) {
         this.saleSpeciesId = s;
     }
 
-    public List<Seeds> getSeeds() throws SQLException
-    {
+    public List<Seeds> getSeeds() throws SQLException {
         int userid = Util.getIDFromLogin();
         System.out.println("user id" + userid);
         Connection con = dbConnect.getConnection();
@@ -87,17 +85,16 @@ public class Seeds implements Serializable {
         ArrayList<Seeds> seedsList = new ArrayList<>();
 
         PreparedStatement ps = con.prepareStatement(
-                        "select * from has_seeds join plant_species "
-                                + "on has_seeds.seed_id = plant_species.species_id "
-                                + "where has_seeds.user_id = ?");
+                "select * from has_seeds join plant_species "
+                + "on has_seeds.seed_id = plant_species.species_id "
+                + "where has_seeds.user_id = ?");
 
         ps.setInt(1, userid);
 
         System.out.println("Sucessful seed query");
 
         ResultSet result = ps.executeQuery();
-        while(result.next())
-        {
+        while (result.next()) {
             System.out.println("starting to make a new seed");
             System.out.println(result.toString());
             System.out.println();
@@ -122,17 +119,16 @@ public class Seeds implements Serializable {
         result.close();
         con.close();
 
-
         System.out.println("bout to return a seeds list." + seedsList.size());
 
-       return seedsList;
+        return seedsList;
     }
 
-    public String showSeedInventory(){
+    public String showSeedInventory() {
         return "showSeedInventory";
     }
 
-    public String home(){
+    public String home() {
         return "home";
     }
 
@@ -141,12 +137,12 @@ public class Seeds implements Serializable {
     }
 
     //TODO
-    public void plantSeeds(){
+    public void plantSeeds() {
         //set the current type of seed to active
         return;
     }
 
-    public String sellSeeds() throws SQLException{
+    public String sellSeeds() throws SQLException {
         if(!userHasSeedQuantity()){
             return "fail";
         }
@@ -224,15 +220,13 @@ public class Seeds implements Serializable {
 
         ResultSet result = ps.executeQuery();
 
-        while(result.next())
-        {
+        while (result.next()) {
             Integer seedQuantity = result.getInt("quantity");
-            if(seedQuantity >= saleQuantity){
+            if (seedQuantity >= saleQuantity) {
                 return true;
             }
         }
         con.close();
         return false;
     }
-
 }

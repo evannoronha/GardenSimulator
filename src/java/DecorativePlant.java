@@ -5,14 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.ManagedBean;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
 @Named(value = "decorativePlant")
@@ -22,7 +16,7 @@ public class DecorativePlant extends PlantSpecies implements Serializable {
 
     private DBConnect dbConnect = new DBConnect();
 
-    public DecorativePlant(){
+    public DecorativePlant() {
         super();
     }
 
@@ -77,7 +71,7 @@ public class DecorativePlant extends PlantSpecies implements Serializable {
         return this;
     }
 
-    public PlantSpecies getInstance(){
+    public PlantSpecies getInstance() {
         return this;
     }
 
