@@ -58,12 +58,6 @@ and open the template in the editor.
                   newDiv.setAttribute('ondrop', 'drop(event)');
                   newDiv.setAttribute('ondragover', 'allowDrop(event)');
 
-                  /*const newImg = document.createElement("img");
-                  newImg.src = json[id].plant_url;
-                  newImg.style.width = "80px";
-                  newImg.style.height = "80px";
-                  */
-
                   newDiv.onclick = () => {
                       console.log(newDiv.dataset.id + " was clicked on!:");
                       console.log(newDiv);
@@ -93,13 +87,46 @@ and open the template in the editor.
             function drop(ev) {
               ev.preventDefault();
               var data = ev.dataTransfer.getData("text");
-              ev.target.appendChild(document.getElementById(data));
+              clone = document.getElementById(data).cloneNode(true);
+              clone.id = "changed";
+              ev.target.appendChild(clone);
             }
         </script>
 
-        <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <img id="drag1" src="https://i.imgur.com/fJORZNV.png" draggable="true" ondragstart="drag(event)" width="80" height="80"></img>
-        <img src="../assets/seeds_bag.jpg" styleClass = "seedBox"></img>
+        <img id="change" src="https://i.imgur.com/fJORZNV.png" draggable="true" ondragstart="drag(event)" width="80" height="80"></img>
+
+        <script>
+        function changeimage(color){
+
+            switch(color){
+                case "select":
+                    document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
+                 break;
+                 case "red":
+                    document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+                 break;
+                case "blue":
+                    document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+                 break;
+                 case "green":
+                    document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+                 break;
+            }
+        }
+
+        </script>
+
+        <select onchange="changeimage(this.value)">
+            <option value="select">select seed type</option>
+            <option value="red">red</option>
+            <option value="green">green</option>
+            <option value="blue">blue</option>
+        </select>
+
+        <h:selectOneMenu value="#{seeds.getSeeds()}">
+            <f:selectItems value="#{seeds.getSeeds()}" var="user" itemLabel="#{user.name}"/>
+        </h:selectOneMenu>
+
         <table>
             <tr>
                 <td><h:commandButton value="Select potato" styleClass="loginButton"/> </td>
