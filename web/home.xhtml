@@ -10,7 +10,7 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <link href="css/stylesheet_3.css" rel="stylesheet" type="text/css" />
+        <link href="css/global.css" rel="stylesheet" type="text/css" />
         <h1>
             <ui:insert name="header">
                 Welcome #{user.getLoggedIn().login}! <br/>You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
@@ -37,9 +37,9 @@ and open the template in the editor.
         <img src="assets/seeds_bag.jpg" styleClass = "seedBox"></img>
         <table>
             <tr>
-                <td><h:commandButton value="Select potato" styleClass="loginButton"/> </td>
-                <td><h:form><h:commandButton value="Select seeds" styleClass="loginButton" action="#{seeds.showSeedInventory()}"/></h:form></td>
-                <td><h:form><h:commandButton value="View crops" styleClass="loginButton" action="#{seeds.showSeedInventory()}"/></h:form></td>
+                <td><h:commandButton value="Select potato" styleClass="greenButton"/> </td>
+                <td><h:form><h:commandButton value="Select seeds" styleClass="greenButton" action="#{seeds.showSeedInventory()}"/></h:form></td>
+                <td><h:form><h:commandButton value="View crops" styleClass="greenButton" action="#{seeds.showSeedInventory()}"/></h:form></td>
             </tr>
         </table>
     </body>
