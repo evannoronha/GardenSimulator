@@ -1,0 +1,30 @@
+h1 {
+    margin: auto;
+    width: 50%;
+    color: #4CAF50;
+    text-align: center;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    background-color: #f9f9f9;
+    margin: 80px;
+    color: #444;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    background-color: #2196F3;
+    padding: 10px;
+    margin: 10px;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+}
