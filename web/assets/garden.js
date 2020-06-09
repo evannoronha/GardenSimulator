@@ -36,7 +36,7 @@ function addElement() {
             document.getElementById('grid').appendChild(newDiv);
             newSpan.appendChild(newImg);
             
-            if (Number.parseInt(newDiv.dataset.age, 10) > Number.parseInt(newDiv.dataset.daysToHarvest, 10)) 
+            if (Number.parseInt(newDiv.dataset.age, 10) >= Number.parseInt(newDiv.dataset.daysToHarvest, 10)) 
             {
                 
                 const testImg = document.createElement("img");
@@ -56,11 +56,11 @@ function addElement() {
             if (Number.parseInt(newDiv.dataset.age, 10) < Number.parseInt(newDiv.dataset.daysToHarvest, 10)) {
                 alert(`Not ready for harvest! ${newDiv.dataset.age} out of ${newDiv.dataset.daysToHarvest} days complete.`);
             } else {
-                
+
                 while (newDiv.firstChild) {
                     newDiv.removeChild(newDiv.lastChild);
                   }
-            } 
+            }     
         }
 
         document.getElementById('grid').appendChild(newDiv);
