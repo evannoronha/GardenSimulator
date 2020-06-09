@@ -76,11 +76,14 @@ public class User implements Serializable {
         return user;
     }
 
-    public static User getByUserid(Integer userid) throws SQLException {
+    public static User getByUserid(Integer userid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<User, Integer> userDao = getDao(cs);
 
-        return userDao.queryForId(userid);
+        User tmpUser = userDao.queryForId(userid);
+
+        cs.close();
+        return tmpUser;
     }
 
     public void validateUniqueLogin(FacesContext context, UIComponent componentToValidate, Object value)

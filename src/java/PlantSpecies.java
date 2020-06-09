@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
+import java.io.IOException;
 import java.sql.SQLException;
 
 @DatabaseTable(tableName = "plant_species")
@@ -43,6 +44,16 @@ public class PlantSpecies {
 
     public static Dao<PlantSpecies, Integer> getDao(ConnectionSource cs) throws SQLException {
         return DaoManager.createDao(cs, PlantSpecies.class);
+    }
+
+    public static PlantSpecies getPlantSpeciesByID(Integer plantid) throws SQLException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<PlantSpecies, Integer> plantSpeciesDao = getDao(cs);
+
+        PlantSpecies tmpUser = plantSpeciesDao.queryForId(plantid);
+
+        cs.close();
+        return tmpUser;
     }
 
     public Integer getSpecies_id() {

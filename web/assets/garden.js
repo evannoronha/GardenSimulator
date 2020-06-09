@@ -20,6 +20,15 @@ function addElement() {
         newDiv.setAttribute('class', 'grid-item');
         newDiv.setAttribute('ondrop', 'drop(event)');
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
+        
+        const newImg = document.createElement("img");
+        newImg.src = json[id].plant_url;
+        newImg.style.width = "80px";
+        newImg.style.height = "80px";
+         
+        document.getElementById('grid').appendChild(newDiv);
+        document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
+                  
         newDiv.onclick = () => {
             console.log(newDiv.dataset.id + " was clicked on!:");
             var i = newDiv.getElementsByTagName('img')[0];
@@ -31,10 +40,10 @@ function addElement() {
     }
 
     var selectMenu = document.getElementById("seedSelect");
-    const plantJson = JSON.parse(selectMenu.dataset.imgjson);
+    const plantJson = JSON.parse(selectMenu.dataset.seedjson);
     Object.keys(plantJson).forEach(function (key) {
         var opt = document.createElement("option");
-        opt.text = key;
+        opt.text = plantJson[key].name;
         selectMenu.options.add(opt);
     });
 
@@ -45,30 +54,47 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
+    
     ev.dataTransfer.setData("text", ev.target.id);
 }
+
+
 
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+    console.log(data);
     clone = document.getElementById(data).cloneNode(true);
     clone.id = "changed";
     clone.removeAttribute('draggable');
     clone.removeAttribute('ondragstart');
+    console.log(ev.target.dataset.id + "   " + clone.getAttribute("seedid"));
+    let curId = ev.target.dataset.id;
+    
     ev.target.appendChild(clone);
+    document.getElementById("formId:loc").value = curId;
+    document.getElementById("formId:seedid").value = clone.getAttribute("seedid");
+    document.getElementById("formId").submit();
+    
+    
     // decrease seed count by one
 }
 
-function changeimage(color) {
+function changeimage(seedName) {
+    
     var selectMenu = document.getElementById("seedSelect");
-    const plantJson = JSON.parse(selectMenu.dataset.imgjson);
+    const plantJson = JSON.parse(selectMenu.dataset.seedjson);
     Object.keys(plantJson).forEach(function (key) {
-        if (color === key) {
-            document.getElementById("change").setAttribute('src', plantJson[key].image_url);
-            document.getElementById("change").setAttribute('draggable', 'true');
+        if (seedName === plantJson[key].name) {
+            let selectorImage = document.getElementById("change");
+            selectorImage.setAttribute('seedid', key);
+            selectorImage.setAttribute('src', plantJson[key].image_url);
+            selectorImage.setAttribute('draggable', 'true');
+            console.log("seedid " + key);
+            
         }
     });
-    if (color === "select") {
+    if (seedName === "select") {
         document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
         document.getElementById("change").setAttribute('draggable', 'false');
     }
