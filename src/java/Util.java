@@ -43,16 +43,23 @@ public class Util implements Serializable {
     public static String getBoxesJson() throws JSONException, SQLException, IOException {
         JSONArray array = new JSONArray();
         JSONObject json = new JSONObject();
+
         ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = User.getDao(cs);
         Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
 
+        json.put("farm_age", userDao.queryForId(Util.getIDFromLogin()).getFarmAge());
         List<GrowBox> growBoxList = Garden.getBoxes();
         for (GrowBox box : growBoxList) {
             JSONObject item = new JSONObject();
+
             item.put("plant_id", box.plantid);
             item.put("day_planted", box.day_planted);
+
             if (box.plantid != null) {
-                item.put("plant_url", plantSpeciesDao.queryForId(box.plantid.species_id).getPlant_image_url());
+                PlantSpecies species = plantSpeciesDao.queryForId(box.plantid.species_id);
+                item.put("plant_url", species.getPlant_image_url());
+                item.put("daysToHarvest", species.getDays_to_harvest());
             }
             json.put(Integer.toString(box.location), item);
         }

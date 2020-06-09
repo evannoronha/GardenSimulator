@@ -16,6 +16,8 @@ function addElement() {
         //                  newDiv.textContent = id;
         newDiv.dataset.id = id;
         newDiv.dataset.plantid = json[id].plant_id;
+        newDiv.dataset.age = json['farm_age'] - json[id]['day_planted'];
+        newDiv.dataset.daysToHarvest = json[id].daysToHarvest
         newDiv.setAttribute('id', 'div1');
         newDiv.setAttribute('class', 'grid-item');
         newDiv.setAttribute('ondrop', 'drop(event)');
@@ -34,15 +36,17 @@ function addElement() {
             document.getElementById('grid').appendChild(newDiv);
 
             document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
-            
+
         }
-            
-                  
+
+
         newDiv.onclick = () => {
-            console.log(newDiv.dataset.id + " was clicked on!:");
-            var i = newDiv.getElementsByTagName('img')[0];
-            i.parentNode.removeChild(i);
-            //harvest -> increase crop count by one
+            if (newDiv.dataset.age < newDiv.dataset.daysToHarvest) {
+                alert('Not ready for harvest!');
+            } else {
+                var i = newDiv.getElementsByTagName('img')[0];
+                i.parentNode.removeChild(i);
+            }
         }
 
         document.getElementById('grid').appendChild(newDiv);
