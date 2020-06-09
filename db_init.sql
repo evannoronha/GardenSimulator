@@ -103,7 +103,7 @@ CREATE TABLE public.watering_events (
     event_id integer NOT NULL,
     box_id text NOT NULL,
     user_day integer NOT NULL,
-    (box_id) REFERENCES public.grow_boxes(box_uuid),
+    FOREIGN KEY (box_id) REFERENCES public.grow_boxes(box_uuid),
     primary key (event_id)
 );
 
