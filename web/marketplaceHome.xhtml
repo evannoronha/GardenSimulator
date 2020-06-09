@@ -48,6 +48,14 @@
                     <f:facet name="header"> Quantity </f:facet>
                         #{listing.quantity}
                 </h:column>
+                <h:column>
+                    <f:facet name="header"> Time to Harvest </f:facet>
+                        #{listing.plant_id.days_to_harvest}
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Points for Eating </f:facet>
+                        #{listing.plant_id.pointsForEating}
+                </h:column>
             </h:dataTable>
         </div>
     </h:body>
