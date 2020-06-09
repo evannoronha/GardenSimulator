@@ -23,3 +23,8 @@
 - Sending dragged plant data to java bean : 3 hours
 - Trying to refresh grid after each plant : 3 hours
 
+### Calantha
+- Initial java classes (plants and species): 1 hours
+- Drag and drop: 2 hours
+- Planting and harvesting UI functionality: 2 hours
+- User manual: .5 hours
