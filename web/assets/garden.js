@@ -22,7 +22,9 @@ function addElement() {
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
         newDiv.onclick = () => {
             console.log(newDiv.dataset.id + " was clicked on!:");
-            console.log(newDiv);
+            var i = newDiv.getElementsByTagName('img')[0];
+            i.parentNode.removeChild(i);
+            //harvest -> increase crop count by one
         }
 
         document.getElementById('grid').appendChild(newDiv);
@@ -31,7 +33,6 @@ function addElement() {
     var selectMenu = document.getElementById("seedSelect");
     const plantJson = JSON.parse(selectMenu.dataset.imgjson);
     Object.keys(plantJson).forEach(function (key) {
-        console.log(key, plantJson[key]);
         var opt = document.createElement("option");
         opt.text = key;
         selectMenu.options.add(opt);
@@ -52,14 +53,16 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     clone = document.getElementById(data).cloneNode(true);
     clone.id = "changed";
+    clone.removeAttribute('draggable');
+    clone.removeAttribute('ondragstart');
     ev.target.appendChild(clone);
+    // decrease seed count by one
 }
 
 function changeimage(color) {
     var selectMenu = document.getElementById("seedSelect");
     const plantJson = JSON.parse(selectMenu.dataset.imgjson);
     Object.keys(plantJson).forEach(function (key) {
-        console.log(key, plantJson[key]);
         if (color === key) {
             document.getElementById("change").setAttribute('src', plantJson[key].image_url);
         }
