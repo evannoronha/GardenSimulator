@@ -1,3 +1,4 @@
 - Each user has a unique login
 - User cannot buy their own listing, so it is not shown in the marketplace 
 - Every user starts off at day 0
+- User will refresh the garden view page after each planting, so that it will persist
