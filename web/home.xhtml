@@ -17,7 +17,6 @@ and open the template in the editor.
         <link href="css/garden.css" rel="stylesheet" type="text/css" />
     </h:head>
     <ezcomp:header></ezcomp:header>
-
     <body class="home-page">
         <h1>
             Welcome #{user.getLoggedIn().login}!
@@ -26,13 +25,10 @@ and open the template in the editor.
             <br/>
             Your garden is #{user.getLoggedIn().farmAge} days old!
         </h1>
-        <img id="change" src="https://i.imgur.com/fJORZNV.png" draggable="true" ondragstart="drag(event)" width="80" height="80"></img>
+        <img id="change" src="../assets/seeds_bag.jpg" draggable="false" ondragstart="drag(event)" width="80" height="80"></img>
 
-        <select onchange="changeimage(this.value)">
+        <select id="seedSelect" onchange="changeimage(this.value)" data-imgjson="#{util.getSeedsJson()}">
             <option value="select">select seed type</option>
-            <option value="red">red</option>
-            <option value="green">green</option>
-            <option value="blue">blue</option>
         </select>
 
         <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
@@ -40,7 +36,5 @@ and open the template in the editor.
         <ezcomp:footer></ezcomp:footer>
 
         <script src="assets/garden.js"></script>
-
     </body>
-
 </html>

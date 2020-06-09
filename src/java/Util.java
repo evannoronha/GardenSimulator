@@ -57,4 +57,18 @@ public class Util implements Serializable {
         cs.close();
         return json.toString();
     }
+
+    public static String getSeedsJson() throws JSONException, SQLException, IOException {
+        JSONObject json = new JSONObject();
+        Seeds s = new Seeds();
+
+        List<SeedInventory> inventoryList = s.getSeeds();
+        for (SeedInventory seed : inventoryList) {
+            JSONObject item = new JSONObject();
+            item.put("quantity", seed.getQuantity());
+            item.put("image_url", seed.getSeed_id().getPlant_image_url());
+            json.put(seed.getSeed_id().getName(), item);
+        }
+        return json.toString();
+    }
 }

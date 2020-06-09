@@ -22,11 +22,22 @@ function addElement() {
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
         newDiv.onclick = () => {
             console.log(newDiv.dataset.id + " was clicked on!:");
-            console.log(newDiv);
+            var i = newDiv.getElementsByTagName('img')[0];
+            i.parentNode.removeChild(i);
+            //harvest -> increase crop count by one
         }
 
         document.getElementById('grid').appendChild(newDiv);
     }
+
+    var selectMenu = document.getElementById("seedSelect");
+    const plantJson = JSON.parse(selectMenu.dataset.imgjson);
+    Object.keys(plantJson).forEach(function (key) {
+        var opt = document.createElement("option");
+        opt.text = key;
+        selectMenu.options.add(opt);
+    });
+
 }
 
 function allowDrop(ev) {
@@ -42,22 +53,23 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     clone = document.getElementById(data).cloneNode(true);
     clone.id = "changed";
+    clone.removeAttribute('draggable');
+    clone.removeAttribute('ondragstart');
     ev.target.appendChild(clone);
+    // decrease seed count by one
 }
 
 function changeimage(color) {
-    switch (color) {
-        case "select":
-            document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
-            break;
-        case "red":
-            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
-            break;
-        case "blue":
-            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
-            break;
-        case "green":
-            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
-            break;
+    var selectMenu = document.getElementById("seedSelect");
+    const plantJson = JSON.parse(selectMenu.dataset.imgjson);
+    Object.keys(plantJson).forEach(function (key) {
+        if (color === key) {
+            document.getElementById("change").setAttribute('src', plantJson[key].image_url);
+            document.getElementById("change").setAttribute('draggable', 'true');
+        }
+    });
+    if (color === "select") {
+        document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+        document.getElementById("change").setAttribute('draggable', 'false');
     }
 }
