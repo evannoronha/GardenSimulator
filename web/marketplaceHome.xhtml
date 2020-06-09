@@ -18,12 +18,47 @@
         <div id ="header">
             <h1>
                 <ui:insert name="header">
-                    Buy Seeds and Crops
+                    Marketplace
                 </ui:insert>
             </h1>
         </div>
+    </h:body>
+    <h3> Your Listings </h3>
+    <h:body>
         <div id="listings">
-            <h:dataTable value="#{marketplace.getListings()}" var="listing" border="1">
+            <h:dataTable value="#{marketplace.getCurrentUserListings()}" var="listing" border="1">
+                <h:column>
+                    <f:facet name="header"> Listing Id </f:facet>
+                        #{listing.listing_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Seller Id </f:facet>
+                        #{listing.seller_id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Plant Name </f:facet>
+                        #{listing.plant_id.name}
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Listing Type </f:facet>
+                        #{listing.listing_type}
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Price </f:facet>
+                        #{listing.price}
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Quantity </f:facet>
+                        #{listing.quantity}
+                </h:column>
+            </h:dataTable>
+        </div>
+    </h:body>
+
+    <h3> Other User's Listings </h3>
+    <h:body>
+        <div id="listings">
+            <h:dataTable value="#{marketplace.getOtherUserListings()}" var="listing" border="1">
                 <h:column>
                     <f:facet name="header"> Listing Id </f:facet>
                         #{listing.listing_id}

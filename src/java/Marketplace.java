@@ -38,7 +38,26 @@ public class Marketplace {
         return "visitMarketplace";
     }
 
-    public List<MarketListing> getListings() throws SQLException, IOException {
+    public List<MarketListing> getCurrentUserListings() throws SQLException, IOException {
+        int userid = Util.getIDFromLogin();
+        ConnectionSource cs = DBConnect.getConnectionSource();
+
+        Dao<MarketListing, Integer> listingDao
+                = DaoManager.createDao(cs, MarketListing.class);
+
+        //unsure how to query for not this user
+        List<MarketListing> allListings = listingDao.queryForAll();
+        List<MarketListing> myListings = new ArrayList<>();
+        for (MarketListing ml : allListings) {
+            if (ml.getSeller_id() == userid) {
+                myListings.add(ml);
+            }
+        }
+        cs.close();
+        return myListings;
+    }
+
+    public List<MarketListing> getOtherUserListings() throws SQLException, IOException {
         int userid = Util.getIDFromLogin();
         ConnectionSource cs = DBConnect.getConnectionSource();
 
