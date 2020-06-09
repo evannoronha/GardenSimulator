@@ -24,32 +24,43 @@ function addElement() {
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
 
 
+        const newSpan = document.createElement("span");
 
         if (json[id].plant_url != null)
         {
             const newImg = document.createElement("img");
             newImg.src = json[id].plant_url;
 
-            newImg.style.width = "80px";
-            newImg.style.height = "80px";
-
+            newImg.style.width = "60px";
+            newImg.style.height = "60px";
             document.getElementById('grid').appendChild(newDiv);
+            newSpan.appendChild(newImg);
+            
+            if (Number.parseInt(newDiv.dataset.age, 10) >= Number.parseInt(newDiv.dataset.daysToHarvest, 10)) 
+            {
+                
+                const testImg = document.createElement("img");
+                testImg.setAttribute('src', '../assets/check.png');
 
-            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
-
+                testImg.style.width = "20px";
+                testImg.style.height = "20px";
+                
+                newSpan.appendChild(testImg);
+            }
+            
+            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newSpan);
+    
         }
-
 
         newDiv.onclick = () => {
             if (Number.parseInt(newDiv.dataset.age, 10) < Number.parseInt(newDiv.dataset.daysToHarvest, 10)) {
                 alert(`Not ready for harvest! ${newDiv.dataset.age} out of ${newDiv.dataset.daysToHarvest} days complete.`);
             } else {
 
-                document.getElementById("harvestForm:harvestLocation").value = newDiv.dataset.id;
-                var i = newDiv.getElementsByTagName('img')[0];
-                i.parentNode.removeChild(i);
-                document.getElementById("harvestForm").submit();
-            }
+                while (newDiv.firstChild) {
+                    newDiv.removeChild(newDiv.lastChild);
+                  }
+            }     
         }
 
         document.getElementById('grid').appendChild(newDiv);
