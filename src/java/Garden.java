@@ -59,24 +59,27 @@ public class Garden implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
         Dao<SeedInventory, Integer> seedInventoryDao = SeedInventory.getDao(cs);
+        Integer userid = Util.getIDFromLogin();
 
         HashMap<String, Object> boxParams = new HashMap();
-        boxParams.put("user_id", Util.getIDFromLogin());
+        boxParams.put("user_id", userid);
         boxParams.put("location", updateLocation);
 
         HashMap<String, Object> seedParams = new HashMap();
-        seedParams.put("user_id", Util.getIDFromLogin());
+        seedParams.put("user_id", userid);
         seedParams.put("seed_id", updateSeedId);
 
         List<GrowBox> boxResult = growBoxDao.queryForFieldValues(boxParams);
         List<SeedInventory> seedResult = seedInventoryDao.queryForFieldValues(seedParams);
 
+        Dao<User, Integer> userDao = User.getDao(cs);
         if (boxResult.isEmpty() || seedResult.isEmpty()) {
             cs.close();
             return;
         } else {
             GrowBox box = boxResult.get(0);
             box.setPlantid(PlantSpecies.getPlantSpeciesByID(updateSeedId));
+            box.setDay_planted(userDao.queryForId(userid).farmAge);
             growBoxDao.update(box);
 
             SeedInventory inv = seedResult.get(0);
