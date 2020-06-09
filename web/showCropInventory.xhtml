@@ -58,4 +58,24 @@
             <h:commandButton value="Sell Crops" action="#{crops.sell()}"/>
         </h:panelGrid>
     </h:form>
+    <h3>Eat Crops</h3>
+    <h:form>
+        <h:panelGrid columns="3">
+            Crop ID:       <h:inputText value="#{crops.eatSpeciesId}" required ="true"
+                                        requiredMessage="Your must enter a crop id"
+                                        validator="#{crops.userOwnsCrops}"
+                                        id="sellId"/>
+
+            <h:message for="sellId" style="color:red;margin:8px;"/>
+        </h:panelGrid>
+        <h:panelGrid columns="3">
+            Crop Quantity: <h:inputText value="#{crops.eatQuantity}" required ="true"
+                                        requiredMessage="Your must enter a number of crops to sell"
+                                        id="eatNumber"/>
+            <h:message for="eatNumber" style="color:red;margin:8px;"/>
+        </h:panelGrid>
+        <h:panelGrid>
+            <h:commandButton value="Eat Crops" action="#{crops.eatCrops()}"/>
+        </h:panelGrid>
+    </h:form>
 </html>
