@@ -56,25 +56,32 @@ public class Garden implements Serializable {
     private int updateSeedId;
 
     public void updatePlant() throws SQLException, IOException {
-
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
+        Dao<SeedInventory, Integer> seedInventoryDao = SeedInventory.getDao(cs);
 
-        HashMap<String, Object> params = new HashMap();
+        HashMap<String, Object> boxParams = new HashMap();
+        boxParams.put("user_id", Util.getIDFromLogin());
+        boxParams.put("location", updateLocation);
 
-        params.put("user_id", Util.getIDFromLogin());
+        HashMap<String, Object> seedParams = new HashMap();
+        seedParams.put("user_id", Util.getIDFromLogin());
+        seedParams.put("seed_id", updateSeedId);
 
-        params.put("location", updateLocation);
-        List<GrowBox> result = growBoxDao.queryForFieldValues(params);
+        List<GrowBox> boxResult = growBoxDao.queryForFieldValues(boxParams);
+        List<SeedInventory> seedResult = seedInventoryDao.queryForFieldValues(seedParams);
 
-        if (result.isEmpty()) {
+        if (boxResult.isEmpty() || seedResult.isEmpty()) {
             cs.close();
             return;
         } else {
-            GrowBox box = result.get(0);
+            GrowBox box = boxResult.get(0);
             box.setPlantid(PlantSpecies.getPlantSpeciesByID(updateSeedId));
-
             growBoxDao.update(box);
+
+            SeedInventory inv = seedResult.get(0);
+            inv.setQuantity(inv.getQuantity() - 1);
+            seedInventoryDao.update(inv);
             cs.close();
             System.out.println("\n\n\n" + updateLocation + "    " + updateSeedId + "   " + box.boxid);
         }

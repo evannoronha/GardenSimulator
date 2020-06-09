@@ -20,9 +20,9 @@ function addElement() {
         newDiv.setAttribute('class', 'grid-item');
         newDiv.setAttribute('ondrop', 'drop(event)');
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
-        
-        
-        
+
+
+
         if (json[id].plant_url != null)
         {
             const newImg = document.createElement("img");

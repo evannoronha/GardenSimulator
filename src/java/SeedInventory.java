@@ -1,6 +1,10 @@
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
+import java.sql.SQLException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,6 +34,10 @@ public class SeedInventory {
         this.user_id = user_id;
         this.seed_id = seed_id;
         this.quantity = quantity;
+    }
+
+    public static Dao<SeedInventory, Integer> getDao(ConnectionSource cs) throws SQLException {
+        return DaoManager.createDao(cs, SeedInventory.class);
     }
 
     public Integer getUser_id() {
