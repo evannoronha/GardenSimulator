@@ -44,7 +44,7 @@ A display of the user seed inventory will appear that lists the id, name, and qu
 
 #### View Crops
 
-A display of the user crop inventory will appear that lists the id, name, amount, and points for eating. Input the crop id, quantity, and price you would like to sell for. The crop inventory will be reflected with the sell and a marketplace listing will be created. 
+A display of the user crop inventory will appear that lists the id, name, amount, and points for eating. Input the crop id, quantity, and price you would like to sell for. The crop inventory will be reflected with the sell and a marketplace listing will be created. Input the crop id and quantity you would like to eat. Your point increase will be reflected in the amount. 
 
 #### Visit Marketplace 
 
