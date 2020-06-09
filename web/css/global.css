@@ -21,6 +21,13 @@ body {
     width: auto;
 }
 
+.greenButton:disabled,
+greenButton[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(var(--grid-columns), 1fr);

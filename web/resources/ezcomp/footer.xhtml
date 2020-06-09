@@ -11,7 +11,12 @@
     <!-- IMPLEMENTATION -->
     <cc:implementation>
         <div id="footer">
-            <h:form><h:commandButton value="Advance One Day" styleClass="greenButton" action="#{user.getLoggedIn().advanceTime()}"/></h:form>
+            <h:form><h:commandButton
+                    value="Advance One Day (-#{user.PENALTY_FOR_ADVANCING_DAYS} point)"
+                    styleClass="greenButton"
+                    disabled="#{user.getLoggedIn().canNotAdvance()}"
+                    action="#{user.getLoggedIn().advanceTime()}"/>
+            </h:form>
         </div>
 
     </cc:implementation>

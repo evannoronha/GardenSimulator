@@ -111,8 +111,8 @@ public class User implements Serializable {
         }
     }
 
-        userDao.update(this);
-        return "ViewGarden";
+    public boolean canNotAdvance() {
+        return this.score < this.PENALTY_FOR_ADVANCING_DAYS;
     }
 
     public String getCashAsDecimal() {
