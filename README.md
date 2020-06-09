@@ -54,6 +54,11 @@ A display of the marketplace will appear that lists the listing id, seller id, p
 
 Logging out of your account will return you to the homepage to sign in or create a new account.
 
+#### Advance One Day
+
+Advancing the day will increase the plant progess towards harvesting at the cost of one point. 
+
+
 ## ER Diagram
 
 ![ER Diagram for Garden Simulator](ER-Diagam.dio.png?raw=true "Title")
