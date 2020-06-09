@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -53,4 +54,54 @@ public class Garden implements Serializable {
     public String viewGarden() {
         return "ViewGarden";
     }
+
+    private int updateLocation;
+    private int updateSeedId;
+
+    public void updatePlant() throws SQLException, IOException
+    {
+
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
+
+        HashMap<String, Object> params = new HashMap();
+
+        params.put("user_id", Util.getIDFromLogin());
+
+        params.put("location", updateLocation);
+        List<GrowBox> result = growBoxDao.queryForFieldValues(params);
+
+        if (result.isEmpty())
+        {
+            cs.close();
+            return;
+        }
+        else
+        {
+            GrowBox box = result.get(0);
+            box.setPlantid(PlantSpecies.getPlantSpeciesByID(updateSeedId));
+
+            growBoxDao.update(box);
+            cs.close();
+            System.out.println("\n\n\n" + updateLocation + "    " + updateSeedId + "   " + box.boxid);
+        }
+    }
+
+    public int getUpdateLocation() {
+        return updateLocation;
+    }
+
+    public void setUpdateLocation(int updateLocation) {
+        this.updateLocation = updateLocation;
+    }
+
+    public int getUpdateSeedId() {
+        return updateSeedId;
+    }
+
+    public void setUpdateSeedId(int updateSeedId) {
+        this.updateSeedId = updateSeedId;
+    }
+
+
 }

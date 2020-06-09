@@ -24,7 +24,7 @@ public class GrowBox implements Serializable {
 
     @DatabaseField(id = true, columnName = "box_uuid", canBeNull = true, readOnly = true)
     protected String boxid;
-    @DatabaseField(columnName = "user_id", foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true)
+    @DatabaseField(columnName = "user_id", foreign = true, foreignAutoCreate = true, foreignAutoRefresh = false)
     protected User userid;
     @DatabaseField(columnName = "plant_id", foreign = true, foreignAutoCreate = false, foreignAutoRefresh = true)
     protected PlantSpecies plantid;
@@ -47,6 +47,7 @@ public class GrowBox implements Serializable {
         return DaoManager.createDao(cs, GrowBox.class);
     }
 
+
     public String create() throws SQLException, ParseException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = getDao(cs);
@@ -61,6 +62,10 @@ public class GrowBox implements Serializable {
         cs.close();
         return "createGardenBox";
     }
+
+
+
+
 
     public String getBoxid() {
         return boxid;
