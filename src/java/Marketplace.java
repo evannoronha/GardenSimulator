@@ -1,6 +1,5 @@
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -61,10 +60,7 @@ public class Marketplace {
         int userid = Util.getIDFromLogin();
         System.out.println(purchaseListingId);
 
-        //get values from current listing
-        Dao<MarketListing, Integer> listingDao
-                = DaoManager.createDao(cs, MarketListing.class);
-
+        Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
         MarketListing thisListing = listingDao.queryForId(purchaseListingId);
 
         Double salePrice = thisListing.getPrice();
@@ -84,8 +80,7 @@ public class Marketplace {
         }
 
         //pay the seller
-        Dao<User, Integer> userDao
-                = DaoManager.createDao(cs, User.class);
+        Dao<User, Integer> userDao = User.getDao(cs);
         User seller = userDao.queryForId(sellerId);
         seller.setCash(seller.getCash() + salePrice);
         userDao.update(seller);
