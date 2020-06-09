@@ -67,12 +67,12 @@ function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
-
+var myJSON = {};
 
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    console.log(data);
+
     clone = document.getElementById(data).cloneNode(true);
     clone.id = "changed";
     clone.removeAttribute('draggable');
@@ -80,7 +80,11 @@ function drop(ev) {
     console.log(ev.target.dataset.id + "   " + clone.getAttribute("seedid"));
     let curId = ev.target.dataset.id;
     
-    ev.target.appendChild(clone);
+  
+//    ev.target.appendChild(clone);
+//    var form = document.getElementById("formId");
+//    function handleForm(event) { event.preventDefault(); } 
+//    form.addEventListener('submit', handleForm);
     document.getElementById("formId:loc").value = curId;
     document.getElementById("formId:seedid").value = clone.getAttribute("seedid");
     document.getElementById("formId").submit();
