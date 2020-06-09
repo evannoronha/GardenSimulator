@@ -20,7 +20,7 @@ function addElement() {
         newDiv.setAttribute('class', 'grid-item');
         newDiv.setAttribute('ondrop', 'drop(event)');
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
-
+ 
 
 
         if (json[id].plant_url != null)
@@ -30,14 +30,21 @@ function addElement() {
 
             newImg.style.width = "80px";
             newImg.style.height = "80px";
-
             document.getElementById('grid').appendChild(newDiv);
-
             document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
-            
+    
         }
-            
-                  
+        
+        if (id < 5)
+        {
+            const testImg = document.createElement("img");
+            testImg.setAttribute('src', '../assets/check.png');
+        
+            testImg.style.width = "80px";
+            testImg.style.height = "80px";
+            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(testImg);
+        }
+                    
         newDiv.onclick = () => {
             console.log(newDiv.dataset.id + " was clicked on!:");
             var i = newDiv.getElementsByTagName('img')[0];
