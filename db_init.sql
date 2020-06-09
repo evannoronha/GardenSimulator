@@ -879,6 +879,12 @@ INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VAL
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 7, 100, 1);
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 11, 123, 4);
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (40, 11, 5, 3);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 119, 10, 5);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 120, 10, 6);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 121, 10, 7);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 122, 10, 8);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 123, 10, 9);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 124, 10, 10);
 
 
 --
@@ -907,10 +913,15 @@ INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quant
 INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (2, 'null-plant', 'pernnial', 0, 'https://i.ytimg.com/vi/1fUJp7jwaoY/maxresdefault.jpg', 10, 1);
 INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (3, 'null-plant', 'pernnial', 0, 'https://i.ytimg.com/vi/1fUJp7jwaoY/maxresdefault.jpg', 10, 1);
 INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (4, 'null-plant', 'pernnial', 0, 'https://i.ytimg.com/vi/1fUJp7jwaoY/maxresdefault.jpg', 10, 1);
-INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (11, 'strawberry', 'perennial', 13, 'https://imgur.com/hdkEw1n.png', 5, 5);
-INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (7, 'blurberry', 'perennial', 0, 'https://imgur.com/yJBOPf7.png', 2, 1);
-INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (119, 'avocado', 'annual', 2, 'https://imgur.com/dsNTIZm.png', 20, 9);
-INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (120, 'avocado2', 'annual', 2, 'https://imgur.com/dsNTIZm.png', 20, 9);
+INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (11, 'strawberry', 'perennial', 13, 'https://imgur.com/6f40dJJ.png', 5, 5);
+INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (7, 'blueberry', 'perennial', 5, 'https://imgur.com/yJBOPf7.png', 2, 1);
+INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (119, 'avocado', 'perennial', 2, 'https://imgur.com/dsNTIZm.png', 20, 9);
+INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (120, 'mushroom', 'annual', 18, 'https://imgur.com/Q7PTqKw.png', 10, 18);
+INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (121, 'eggplant', 'annual', 3, 'https://imgur.com/SzyMRUW.png', 11, 20);
+INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (122, 'onion', 'perennial', 1, 'https://imgur.com/Wgjxeq8.png', 8, 4);
+INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (123, 'broccoli', 'annual', 6, 'https://imgur.com/OYJ3m79.png', 13, 11);
+INSERT INTO public.plant_species (species_id, name, lifespan_type, harvest_quantity, plant_image_url, days_to_harvest, points_for_eating) VALUES (124, 'orange', 'perennial', 14, 'https://imgur.com/L2rhWPT.png', 6, 4);
+
 
 
 --
