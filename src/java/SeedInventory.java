@@ -18,7 +18,7 @@ public class SeedInventory {
     private Integer seed_inventory_id;
     @DatabaseField
     private Integer user_id;
-    @DatabaseField(canBeNull = false, foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "seed_id")
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoCreate = false, foreignAutoRefresh = false, columnName = "seed_id")
     private PlantSpecies seed_id;
     @DatabaseField(canBeNull = false)
     private Integer quantity;

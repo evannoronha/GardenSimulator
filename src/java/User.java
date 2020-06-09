@@ -100,7 +100,7 @@ public class User implements Serializable {
         }
     }
 
-    public String advanceTime() throws SQLException {
+    public String advanceTime() throws SQLException, IOException {
         if (this.score == 0) {
             FacesMessage errorMessage = new FacesMessage("You do not have any points. Eat something.");
             throw new ValidatorException(errorMessage);
@@ -110,6 +110,7 @@ public class User implements Serializable {
             ConnectionSource cs = DBConnect.getConnectionSource();
             Dao<User, Integer> userDao = getDao(cs);
             userDao.update(this);
+            cs.close();
             return "ViewGarden";
         }
     }

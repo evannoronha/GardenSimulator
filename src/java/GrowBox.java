@@ -26,7 +26,7 @@ public class GrowBox implements Serializable {
     protected String boxid;
     @DatabaseField(columnName = "user_id", foreign = true, foreignAutoCreate = false, foreignAutoRefresh = false)
     protected User userid;
-    @DatabaseField(columnName = "plant_id", foreign = true, foreignAutoCreate = false, foreignAutoRefresh = true, canBeNull = true)
+    @DatabaseField(columnName = "plant_id", foreign = true, foreignAutoCreate = false, foreignAutoRefresh = false, canBeNull = true)
     protected PlantSpecies plantid;
     @DatabaseField
     protected int location;

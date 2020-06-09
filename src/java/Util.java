@@ -52,7 +52,7 @@ public class Util implements Serializable {
             item.put("plant_id", box.plantid);
             item.put("day_planted", box.day_planted);
             if (box.plantid != null) {
-                item.put("plant_url", box.plantid.getPlant_image_url());
+                item.put("plant_url", plantSpeciesDao.queryForId(box.plantid.species_id).getPlant_image_url());
             }
             json.put(Integer.toString(box.location), item);
         }
@@ -64,15 +64,20 @@ public class Util implements Serializable {
         JSONObject json = new JSONObject();
         Seeds s = new Seeds();
 
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
+
         List<SeedInventory> inventoryList = s.getSeeds();
         for (SeedInventory seed : inventoryList) {
             JSONObject item = new JSONObject();
 
-            item.put("name", seed.getSeed_id().getName());
+            PlantSpecies species = plantSpeciesDao.queryForId(seed.getSeed_id().species_id);
+            item.put("name", species.getName());
             item.put("quantity", seed.getQuantity());
-            item.put("image_url", seed.getSeed_id().getPlant_image_url());
-            json.put(Integer.toString(seed.getSeed_id().species_id), item);
+            item.put("image_url", species.getPlant_image_url());
+            json.put(Integer.toString(species.species_id), item);
         }
+        cs.close();
         return json.toString();
     }
 }

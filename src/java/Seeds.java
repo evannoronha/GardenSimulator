@@ -36,10 +36,7 @@ public class Seeds extends Harvestable implements Serializable {
         Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
         int userid = Util.getIDFromLogin();
 
-        HashMap<String, Object> params = new HashMap();
-        params.put("user_id", userid);
-
-        List<SeedInventory> listSeeds = inventoryDao.queryForFieldValues(params);
+        List<SeedInventory> listSeeds = inventoryDao.queryForEq("user_id", userid);
         cs.close();
         return listSeeds;
     }
@@ -112,11 +109,11 @@ public class Seeds extends Harvestable implements Serializable {
         params.put("user_id", userid);
         params.put(this.plantIdColumn, seedId);
         List<SeedInventory> result = inventoryDao.queryForFieldValues(params);
+        cs.close();
         if (result.size() == 0) {
             FacesMessage errorMessage = new FacesMessage("You don't have any of those.");
             throw new ValidatorException(errorMessage);
         }
-        cs.close();
     }
 
     //validate that the user can sell this many seeds

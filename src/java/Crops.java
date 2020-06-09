@@ -118,6 +118,7 @@ public class Crops extends Harvestable implements Serializable {
         params.put("crop_id", seedId);
         List<CropInventory> result = inventoryDao.queryForFieldValues(params);
         if (result.size() == 0) {
+            cs.close();
             FacesMessage errorMessage = new FacesMessage("You don't have any of those.");
             throw new ValidatorException(errorMessage);
         }
