@@ -65,9 +65,11 @@ function changeimage(color) {
     Object.keys(plantJson).forEach(function (key) {
         if (color === key) {
             document.getElementById("change").setAttribute('src', plantJson[key].image_url);
+            document.getElementById("change").setAttribute('draggable', 'true');
         }
     });
     if (color === "select") {
         document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+        document.getElementById("change").setAttribute('draggable', 'false');
     }
 }

@@ -9,9 +9,9 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp">
 
-      <h:head>
+    <h:head>
         <title>Welcome to your garden!</title>
         <link href="css/global.css" rel="stylesheet" type="text/css" />
         <link href="css/garden.css" rel="stylesheet" type="text/css" />
@@ -25,7 +25,7 @@ and open the template in the editor.
             <br/>
             Your garden is #{user.getLoggedIn().farmAge} days old!
         </h1>
-        <img id="change" src="../assets/seeds_bag.jpg" draggable="true" ondragstart="drag(event)" width="80" height="80"></img>
+        <img id="change" src="../assets/seeds_bag.jpg" draggable="false" ondragstart="drag(event)" width="80" height="80"></img>
 
         <select id="seedSelect" onchange="changeimage(this.value)" data-imgjson="#{util.getSeedsJson()}">
             <option value="select">select seed type</option>
