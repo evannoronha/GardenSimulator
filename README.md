@@ -7,7 +7,7 @@
 
 ## Summary
 
-This application is a game that allows to you plant, care for, and harvest fruits and vegetables in a garden. It is a multiplayer game, and users can interact by buying and selling plants and seeds in a marketplace.
+This application is a game that allows to you plant, care for, and harvest fruits and vegetables in a garden. It is a multiplayer game, and users can interact by buying and selling plants and seeds in a marketplace. There is a competitive aspect to grow and harvest the plant so that you can eat the crops for points and get other players. There is also strategy with day advancement with the tradeoff of decreasing points. 
 
 ## Gameplay
 
@@ -22,8 +22,6 @@ You also have money and a number of grow boxes that can be used to grow crops. Y
 
 In your garden view, you can see all your grow boxes and their current state. You can also plant seeds or harvest crops that are ready.
 
-In the garden you may also choose to water your plants.
-
 #### Inventory
 
 Your inventory shows all the crops and seeds that you currently own. In this view you can also choose to list any of your inventory for sale in the marketplace.
@@ -36,7 +34,7 @@ The marketplace is a listing of all available crops and seeds that have been lis
 
 #### View Garden
 
-To plant a seed, select a seed type from your inventory and drag the image to the desired spot in the grow box. The user inventory of the planted seed will decrease by one. To harvest a crop that is ready, click on the image and it will disappear. The user inventory of the crop will increase by one. The user points, money, and day passed is shown. 
+To plant a seed, select a seed type from your inventory and drag the image to the desired spot in the grow box. You must then click view garden again so that the plant will persist. The user inventory of the planted seed will decrease by one. To harvest a crop that is ready, click on the image and it will disappear if it is ready. The user inventory of the crop will increase. If the plant is not ready to harvest, a notification popup tells you how many days is needed. A harvest appears ready with a green check. The user points, money, and day passed is shown. 
 
 #### Select Seeds
 
@@ -56,7 +54,7 @@ Logging out of your account will return you to the homepage to sign in or create
 
 #### Advance One Day
 
-Advancing the day will increase the plant progess towards harvesting at the cost of one point. 
+Advancing the day will increase the plant progess towards harvesting at the cost of one point. If any plants are now ready to harvest, it will be reflected with a green check. 
 
 
 ## ER Diagram
