@@ -1,9 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.5.19
--- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -16,19 +10,12 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: listing_type; Type: TYPE; Schema: public; Owner: -
---
 
 CREATE TYPE public.listing_type AS ENUM (
     'seeds',
     'crops'
 );
 
-
---
--- Name: crops_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
 
 CREATE SEQUENCE public.crops_inventory_id_seq
     START WITH 1
@@ -40,9 +27,6 @@ CREATE SEQUENCE public.crops_inventory_id_seq
 
 SET default_tablespace = '';
 
---
--- Name: crops_inventory; Type: TABLE; Schema: public; Owner: -
---
 
 CREATE TABLE public.crops_inventory (
     user_id integer NOT NULL,
@@ -52,9 +36,6 @@ CREATE TABLE public.crops_inventory (
 );
 
 
---
--- Name: crops_inventory_crops_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
 
 CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
     START WITH 1
@@ -63,17 +44,6 @@ CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
---
--- Name: crops_inventory_crops_inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.crops_inventory_crops_inventory_id_seq OWNED BY public.crops_inventory.crops_inventory_id;
-
-
---
--- Name: grow_boxes; Type: TABLE; Schema: public; Owner: -
---
 
 CREATE TABLE public.grow_boxes (
     user_id integer NOT NULL,
@@ -84,10 +54,6 @@ CREATE TABLE public.grow_boxes (
 );
 
 
---
--- Name: grow_boxes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
 CREATE SEQUENCE public.grow_boxes_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -95,10 +61,6 @@ CREATE SEQUENCE public.grow_boxes_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
---
--- Name: has_seeds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
 
 CREATE SEQUENCE public.has_seeds_id_seq
     START WITH 1
@@ -108,10 +70,6 @@ CREATE SEQUENCE public.has_seeds_id_seq
     CACHE 1;
 
 
---
--- Name: has_seeds; Type: TABLE; Schema: public; Owner: -
---
-
 CREATE TABLE public.has_seeds (
     user_id integer NOT NULL,
     seed_id integer NOT NULL,
@@ -119,10 +77,6 @@ CREATE TABLE public.has_seeds (
     seed_inventory_id integer DEFAULT nextval('public.has_seeds_id_seq'::regclass) NOT NULL
 );
 
-
---
--- Name: has_seeds_seed_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
 
 CREATE SEQUENCE public.has_seeds_seed_inventory_id_seq
     START WITH 1
@@ -132,17 +86,6 @@ CREATE SEQUENCE public.has_seeds_seed_inventory_id_seq
     CACHE 1;
 
 
---
--- Name: has_seeds_seed_inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.has_seeds_seed_inventory_id_seq OWNED BY public.has_seeds.seed_inventory_id;
-
-
---
--- Name: market_listings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
 CREATE SEQUENCE public.market_listings_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -151,9 +94,6 @@ CREATE SEQUENCE public.market_listings_id_seq
     CACHE 1;
 
 
---
--- Name: market_listings; Type: TABLE; Schema: public; Owner: -
---
 
 CREATE TABLE public.market_listings (
     listing_id integer DEFAULT nextval('public.market_listings_id_seq'::regclass) NOT NULL,
@@ -167,10 +107,6 @@ CREATE TABLE public.market_listings (
 );
 
 
---
--- Name: market_listings_listing_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
 CREATE SEQUENCE public.market_listings_listing_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -179,17 +115,6 @@ CREATE SEQUENCE public.market_listings_listing_id_seq
     CACHE 1;
 
 
---
--- Name: market_listings_listing_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.market_listings_listing_id_seq OWNED BY public.market_listings.listing_id;
-
-
---
--- Name: plant_species_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
 CREATE SEQUENCE public.plant_species_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -197,10 +122,6 @@ CREATE SEQUENCE public.plant_species_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
---
--- Name: plant_species; Type: TABLE; Schema: public; Owner: -
---
 
 CREATE TABLE public.plant_species (
     species_id integer DEFAULT nextval('public.plant_species_id_seq'::regclass) NOT NULL,
@@ -213,10 +134,6 @@ CREATE TABLE public.plant_species (
 );
 
 
---
--- Name: plant_species_species_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
 CREATE SEQUENCE public.plant_species_species_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -224,17 +141,6 @@ CREATE SEQUENCE public.plant_species_species_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
---
--- Name: plant_species_species_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.plant_species_species_id_seq OWNED BY public.plant_species.species_id;
-
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: -
---
 
 CREATE TABLE public.users (
     user_id integer NOT NULL,
@@ -251,10 +157,6 @@ CREATE TABLE public.users (
 );
 
 
---
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
 CREATE SEQUENCE public.users_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -263,27 +165,12 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.user_id;
-
-
---
--- Name: watering_events; Type: TABLE; Schema: public; Owner: -
---
-
 CREATE TABLE public.watering_events (
     event_id integer NOT NULL,
     box_id text NOT NULL,
     user_day integer NOT NULL
 );
 
-
---
--- Name: watering_events_event_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
 
 CREATE SEQUENCE public.watering_events_event_id_seq
     START WITH 1
@@ -293,156 +180,73 @@ CREATE SEQUENCE public.watering_events_event_id_seq
     CACHE 1;
 
 
---
--- Name: watering_events_event_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.watering_events_event_id_seq OWNED BY public.watering_events.event_id;
-
-
---
--- Name: users user_id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
---
--- Name: watering_events event_id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.watering_events ALTER COLUMN event_id SET DEFAULT nextval('public.watering_events_event_id_seq'::regclass);
 
-
---
--- Name: crops_inventory crops_inventory_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.crops_inventory
     ADD CONSTRAINT crops_inventory_pkey PRIMARY KEY (crops_inventory_id);
 
 
---
--- Name: grow_boxes grow_boxes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.grow_boxes
     ADD CONSTRAINT grow_boxes_pkey PRIMARY KEY (box_uuid);
 
-
---
--- Name: has_seeds has_seeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.has_seeds
     ADD CONSTRAINT has_seeds_pkey PRIMARY KEY (seed_inventory_id);
 
 
---
--- Name: market_listings market_listings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.market_listings
     ADD CONSTRAINT market_listings_pkey PRIMARY KEY (listing_id);
 
-
---
--- Name: plant_species plant_species_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.plant_species
     ADD CONSTRAINT plant_species_pkey PRIMARY KEY (species_id);
 
 
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
 
-
---
--- Name: watering_events watering_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.watering_events
     ADD CONSTRAINT watering_events_pkey PRIMARY KEY (event_id);
 
 
---
--- Name: crops_inventory crops_inventory_crop_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.crops_inventory
     ADD CONSTRAINT crops_inventory_crop_id_fkey FOREIGN KEY (crop_id) REFERENCES public.plant_species(species_id);
 
-
---
--- Name: crops_inventory crops_inventory_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.crops_inventory
     ADD CONSTRAINT crops_inventory_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
---
--- Name: grow_boxes grow_boxes_plant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.grow_boxes
     ADD CONSTRAINT grow_boxes_plant_id_fkey FOREIGN KEY (plant_id) REFERENCES public.plant_species(species_id);
 
-
---
--- Name: grow_boxes grow_boxes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.grow_boxes
     ADD CONSTRAINT grow_boxes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
---
--- Name: has_seeds has_seeds_seed_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.has_seeds
     ADD CONSTRAINT has_seeds_seed_id_fkey FOREIGN KEY (seed_id) REFERENCES public.plant_species(species_id);
 
-
---
--- Name: has_seeds has_seeds_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.has_seeds
     ADD CONSTRAINT has_seeds_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
---
--- Name: market_listings market_listings_plant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.market_listings
     ADD CONSTRAINT market_listings_plant_id_fkey FOREIGN KEY (plant_id) REFERENCES public.plant_species(species_id);
 
-
---
--- Name: market_listings market_listings_seller_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
 
 ALTER TABLE ONLY public.market_listings
     ADD CONSTRAINT market_listings_seller_id_fkey FOREIGN KEY (seller_id) REFERENCES public.users(user_id);
 
 
---
--- Name: watering_events watering_events_box_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY public.watering_events
     ADD CONSTRAINT watering_events_box_id_fkey FOREIGN KEY (box_id) REFERENCES public.grow_boxes(box_uuid);
 
-
---
--- PostgreSQL database dump complete
---
 
