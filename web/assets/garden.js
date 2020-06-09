@@ -41,8 +41,8 @@ function addElement() {
 
 
         newDiv.onclick = () => {
-            if (newDiv.dataset.age < newDiv.dataset.daysToHarvest) {
-                alert('Not ready for harvest!');
+            if (Number.parseInt(newDiv.dataset.age, 10) < Number.parseInt(newDiv.dataset.daysToHarvest, 10)) {
+                alert(`Not ready for harvest! ${newDiv.dataset.age} out of ${newDiv.dataset.daysToHarvest} days complete.`);
             } else {
                 var i = newDiv.getElementsByTagName('img')[0];
                 i.parentNode.removeChild(i);
