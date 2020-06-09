@@ -26,12 +26,9 @@ public class Garden implements Serializable {
         Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
         Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
 
-        int startingPlantId = 0;
-
         for (int i = 1; i <= startingGardenSize * startingGardenSize; i++) {
             GrowBox box = new GrowBox();
             box.setUserid(userid);
-            box.setPlantid(plantSpeciesDao.queryForId(startingPlantId));
             box.setLocation(i);
             box.setDay_planted(userid.getFarmAge());
 
