@@ -126,18 +126,27 @@ public class Crops extends Harvestable implements Serializable {
         }
     }
 
-    @Override
     public void addToInventory() throws SQLException, IOException {
+        //do I do quantity here? or pass in quantity as a variable
         ConnectionSource cs = DBConnect.getConnectionSource();
         int userid = Util.getIDFromLogin();
-        Dao<CropInventory, Integer> inventoryDao
-                = DaoManager.createDao(cs, CropInventory.class);
+        Dao<CropInventory, Integer> inventoryDao = getDao(cs);
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
         params.put(plantIdColumn, plantSpecies.getSpecies_id());
-        CropInventory inv = inventoryDao.queryForFieldValues(params).get(0);
-        inv.setQuantity(inv.getQuantity() + quantity);
-        inventoryDao.update(inv);
+        List<CropInventory> invList = inventoryDao.queryForFieldValues(params);
+
+        if (invList.isEmpty()) {
+            CropInventory newInv = new CropInventory();
+            newInv.setQuantity(quantity);
+            newInv.setCrop_id(plantSpecies);
+            newInv.setUser_id(userid);
+            inventoryDao.create(newInv);
+        } else {
+            CropInventory inv = invList.get(0);
+            inv.setQuantity(inv.getQuantity() + quantity);
+            inventoryDao.update(inv);
+        }
         cs.close();
     }
 }

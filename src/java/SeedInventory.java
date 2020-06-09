@@ -14,7 +14,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "has_seeds")
 public class SeedInventory {
 
-    @DatabaseField(generatedId = true)
+    @DatabaseField(generatedId = true, readOnly = true)
     private Integer seed_inventory_id;
     @DatabaseField
     private Integer user_id;
