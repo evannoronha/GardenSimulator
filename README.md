@@ -32,6 +32,28 @@ Your inventory shows all the crops and seeds that you currently own. In this vie
 
 The marketplace is a listing of all available crops and seeds that have been listed by other players. You can visit the marketplace to buy crops and seeds for the purpose of planting or eating.
 
+### Actions
+
+#### View Garden
+
+To plant a seed, select a seed type from your inventory and drag the image to the desired spot in the grow box. The user inventory of the planted seed will decrease by one. To harvest a crop that is ready, click on the image and it will disappear. The user inventory of the crop will increase by one. The user points, money, and day passed is shown. 
+
+#### Select Seeds
+
+A display of the user seed inventory will appear that lists the id, name, and quantity. Input the seed id, quantity, and price you would like to sell for. The seed inventory will be reflected with the sell and a marketplace listing will be created. 
+
+#### View Crops
+
+A display of the user crop inventory will appear that lists the id, name, amount, and points for eating. Input the crop id, quantity, and price you would like to sell for. The crop inventory will be reflected with the sell and a marketplace listing will be created. 
+
+#### Visit Marketplace 
+
+A display of the marketplace will appear that lists the listing id, seller id, plant name, listing type (seed or crop), price, and quantity. Input the listing id you would like to purchase. Your inventory will increase by the quantity in the listing bought. Your money will decrease and the seller's money increases. 
+
+#### Logout
+
+Logging out of your account will return you to the homepage to sign in or create a new account.
+
 ## ER Diagram
 
 ![ER Diagram for Garden Simulator](ER-Diagam.dio.png?raw=true "Title")
