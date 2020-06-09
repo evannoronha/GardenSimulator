@@ -21,4 +21,5 @@
 - Sign up page : .5 hours
 - Home page grid UI : 5 hours
 - Sending dragged plant data to java bean : 3 hours
+- Trying to refresh grid after each plant : 3 hours
 
