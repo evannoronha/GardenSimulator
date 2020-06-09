@@ -1,6 +1,5 @@
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.io.Serializable;
@@ -72,11 +71,9 @@ public class Crops extends Harvestable implements Serializable {
 
         ConnectionSource cs = DBConnect.getConnectionSource();
 
-        Dao<MarketListing, Integer> listingDao
-                = DaoManager.createDao(cs, MarketListing.class);
+        Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
+        Dao<PlantSpecies, Integer> plantDao = PlantSpecies.getDao(cs);
 
-        Dao<PlantSpecies, Integer> plantDao
-                = DaoManager.createDao(cs, PlantSpecies.class);
         PlantSpecies saleSpecies = plantDao.queryForId(saleSpeciesId);
 
         MarketListing listing = new MarketListing();
