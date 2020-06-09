@@ -56,7 +56,3 @@ Logging out of your account will return you to the homepage to sign in or create
 
 Advancing the day will increase the plant progess towards harvesting at the cost of one point. If any plants are now ready to harvest, it will be reflected with a green check. 
 
-
-## ER Diagram
-
-![ER Diagram for Garden Simulator](ER-Diagam.dio.png?raw=true "Title")
