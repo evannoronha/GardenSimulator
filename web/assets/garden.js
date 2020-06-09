@@ -21,13 +21,22 @@ function addElement() {
         newDiv.setAttribute('ondrop', 'drop(event)');
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
         
-        const newImg = document.createElement("img");
-        newImg.src = json[id].plant_url;
-        newImg.style.width = "80px";
-        newImg.style.height = "80px";
-         
-        document.getElementById('grid').appendChild(newDiv);
-        document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
+        
+        
+        if (json[id].plant_url != null)
+        {
+            const newImg = document.createElement("img");
+            newImg.src = json[id].plant_url;
+
+            newImg.style.width = "80px";
+            newImg.style.height = "80px";
+
+            document.getElementById('grid').appendChild(newDiv);
+
+            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
+            
+        }
+            
                   
         newDiv.onclick = () => {
             console.log(newDiv.dataset.id + " was clicked on!:");
