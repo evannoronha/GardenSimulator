@@ -46,7 +46,7 @@ CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
 
 CREATE TABLE public.grow_boxes (
     user_id integer NOT NULL,
-    plant_id integer NOT NULL,
+    plant_id integer,
     location integer,
     day_planted integer,
     box_uuid text DEFAULT uuid_in((md5(((random())::text || (clock_timestamp())::text)))::cstring) NOT NULL
@@ -247,5 +247,4 @@ ALTER TABLE ONLY public.market_listings
 
 ALTER TABLE ONLY public.watering_events
     ADD CONSTRAINT watering_events_box_id_fkey FOREIGN KEY (box_id) REFERENCES public.grow_boxes(box_uuid);
-
 
