@@ -22,23 +22,37 @@ function addElement() {
         newDiv.setAttribute('class', 'grid-item');
         newDiv.setAttribute('ondrop', 'drop(event)');
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
+ 
 
-
-
+        const newSpan = document.createElement("span");
+        
         if (json[id].plant_url != null)
         {
             const newImg = document.createElement("img");
             newImg.src = json[id].plant_url;
 
-            newImg.style.width = "80px";
-            newImg.style.height = "80px";
-
+            newImg.style.width = "60px";
+            newImg.style.height = "60px";
             document.getElementById('grid').appendChild(newDiv);
+            newSpan.appendChild(newImg);
+            
+            if (id < 5)
+            {
+                const testImg = document.createElement("img");
+                testImg.setAttribute('src', '../assets/check.png');
 
-            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
-
+                testImg.style.margin = "2px";
+                testImg.style.width = "20px";
+                testImg.style.height = "20px";
+                newSpan.appendChild(testImg);
+            }
+            
+            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newSpan);
+    
         }
-
+        
+        
+                    
 
         newDiv.onclick = () => {
             if (Number.parseInt(newDiv.dataset.age, 10) < Number.parseInt(newDiv.dataset.daysToHarvest, 10)) {
@@ -75,12 +89,12 @@ function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
-
+var myJSON = {};
 
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    console.log(data);
+
     clone = document.getElementById(data).cloneNode(true);
     clone.id = "changed";
     clone.removeAttribute('draggable');
@@ -88,7 +102,11 @@ function drop(ev) {
     console.log(ev.target.dataset.id + "   " + clone.getAttribute("seedid"));
     let curId = ev.target.dataset.id;
     
-    ev.target.appendChild(clone);
+  
+//    ev.target.appendChild(clone);
+//    var form = document.getElementById("formId");
+//    function handleForm(event) { event.preventDefault(); } 
+//    form.addEventListener('submit', handleForm);
     document.getElementById("formId:loc").value = curId;
     document.getElementById("formId:seedid").value = clone.getAttribute("seedid");
     document.getElementById("formId").submit();
