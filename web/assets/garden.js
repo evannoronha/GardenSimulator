@@ -36,31 +36,31 @@ function addElement() {
             document.getElementById('grid').appendChild(newDiv);
             newSpan.appendChild(newImg);
             
-            if (id < 5)
+            if (Number.parseInt(newDiv.dataset.age, 10) > Number.parseInt(newDiv.dataset.daysToHarvest, 10)) 
             {
+                
                 const testImg = document.createElement("img");
                 testImg.setAttribute('src', '../assets/check.png');
 
-                testImg.style.margin = "2px";
                 testImg.style.width = "20px";
                 testImg.style.height = "20px";
+                
                 newSpan.appendChild(testImg);
             }
             
             document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newSpan);
     
         }
-        
-        
-                    
 
         newDiv.onclick = () => {
             if (Number.parseInt(newDiv.dataset.age, 10) < Number.parseInt(newDiv.dataset.daysToHarvest, 10)) {
                 alert(`Not ready for harvest! ${newDiv.dataset.age} out of ${newDiv.dataset.daysToHarvest} days complete.`);
             } else {
-                var i = newDiv.getElementsByTagName('img')[0];
-                i.parentNode.removeChild(i);
-            }
+                
+                while (newDiv.firstChild) {
+                    newDiv.removeChild(newDiv.lastChild);
+                  }
+            } 
         }
 
         document.getElementById('grid').appendChild(newDiv);
