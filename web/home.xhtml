@@ -9,7 +9,8 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp">
+      xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <title>Welcome to your garden!</title>
@@ -18,29 +19,25 @@ and open the template in the editor.
     </h:head>
     <ezcomp:header></ezcomp:header>
 
-    <body class="home-page">
-        <h1>
-            Welcome #{user.getLoggedIn().login}!
-            <br/>
-            You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
-            <br/>
-            Your garden is #{user.getLoggedIn().farmAge} days old!
-        </h1>
-        <img id="change" src="https://i.imgur.com/fJORZNV.png" draggable="true" ondragstart="drag(event)" width="80" height="80"></img>
 
-        <select onchange="changeimage(this.value)">
-            <option value="select">select seed type</option>
-            <option value="red">red</option>
-            <option value="green">green</option>
-            <option value="blue">blue</option>
-        </select>
+    <h1>
+        Welcome #{user.getLoggedIn().login}!
+        <br/>
+        You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
+        <br/>
+        Your garden is #{user.getLoggedIn().farmAge} days old!
+    </h1>
+    <img id="change" src="../assets/seeds_bag.jpg" draggable="true" ondragstart="drag(event)" width="80" height="80"></img>
 
-        <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
-        </div>
-        <ezcomp:footer></ezcomp:footer>
+    <select id="seedSelect" onchange="changeimage(this.value)" data-imgjson="#{util.getSeedsJson()}">
+        <option value="select">select seed type</option>
+    </select>
 
-        <script src="assets/garden.js"></script>
+    <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
+    </div>
+    <ezcomp:footer></ezcomp:footer>
 
-    </body>
+    <script src="assets/garden.js"></script>
+
 
 </html>

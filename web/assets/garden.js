@@ -27,6 +27,16 @@ function addElement() {
 
         document.getElementById('grid').appendChild(newDiv);
     }
+
+    var selectMenu = document.getElementById("seedSelect");
+    const plantJson = JSON.parse(selectMenu.dataset.imgjson);
+    Object.keys(plantJson).forEach(function (key) {
+        console.log(key, plantJson[key]);
+        var opt = document.createElement("option");
+        opt.text = key;
+        selectMenu.options.add(opt);
+    });
+
 }
 
 function allowDrop(ev) {
@@ -46,18 +56,31 @@ function drop(ev) {
 }
 
 function changeimage(color) {
-    switch (color) {
-        case "select":
-            document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
-            break;
-        case "red":
-            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
-            break;
-        case "blue":
-            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
-            break;
-        case "green":
-            document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
-            break;
+    var selectMenu = document.getElementById("seedSelect");
+    const plantJson = JSON.parse(selectMenu.dataset.imgjson);
+    Object.keys(plantJson).forEach(function (key) {
+        console.log(key, plantJson[key]);
+        if (color === key) {
+            document.getElementById("change").setAttribute('src', plantJson[key].image_url);
+        }
+    });
+    if (color === "select") {
+        document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
     }
+    /*
+     switch (color) {
+     case "select":
+     document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
+     break;
+     case "red":
+     document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
+     break;
+     case "blue":
+     document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
+     break;
+     case "green":
+     document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
+     break;
+     }
+     */
 }
