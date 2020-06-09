@@ -44,8 +44,11 @@ function addElement() {
             if (Number.parseInt(newDiv.dataset.age, 10) < Number.parseInt(newDiv.dataset.daysToHarvest, 10)) {
                 alert(`Not ready for harvest! ${newDiv.dataset.age} out of ${newDiv.dataset.daysToHarvest} days complete.`);
             } else {
+
+                document.getElementById("harvestForm:harvestLocation").value = newDiv.dataset.id;
                 var i = newDiv.getElementsByTagName('img')[0];
                 i.parentNode.removeChild(i);
+                document.getElementById("harvestForm").submit();
             }
         }
 
