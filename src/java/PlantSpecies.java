@@ -46,8 +46,7 @@ public class PlantSpecies {
         return DaoManager.createDao(cs, PlantSpecies.class);
     }
 
-    public static PlantSpecies getPlantSpeciesByID(Integer plantid) throws SQLException, IOException
-    {
+    public static PlantSpecies getPlantSpeciesByID(Integer plantid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<PlantSpecies, Integer> plantSpeciesDao = getDao(cs);
 

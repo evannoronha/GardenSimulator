@@ -34,6 +34,7 @@ public class GrowBox implements Serializable {
     protected int day_planted;
 
     public GrowBox() {
+
     }
 
     public GrowBox(User userid, PlantSpecies plantid, int location, int day_planted) {
@@ -46,7 +47,6 @@ public class GrowBox implements Serializable {
     public static Dao<GrowBox, String> getDao(ConnectionSource cs) throws SQLException {
         return DaoManager.createDao(cs, GrowBox.class);
     }
-
 
     public String create() throws SQLException, ParseException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
@@ -62,10 +62,6 @@ public class GrowBox implements Serializable {
         cs.close();
         return "createGardenBox";
     }
-
-
-
-
 
     public String getBoxid() {
         return boxid;

@@ -63,7 +63,6 @@ public class User implements Serializable {
         return "createUser";
     }
 
-
     public User getLoggedIn() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<User, Integer> userDao = getDao(cs);

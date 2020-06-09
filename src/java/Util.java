@@ -20,9 +20,6 @@ import org.json.JSONObject;
 @ManagedBean
 public class Util implements Serializable {
 
-
-
-
     public static String invalidateUserSession() {
         //invalidate user session
         FacesContext context = FacesContext.getCurrentInstance();
@@ -68,7 +65,7 @@ public class Util implements Serializable {
         List<SeedInventory> inventoryList = s.getSeeds();
         for (SeedInventory seed : inventoryList) {
             JSONObject item = new JSONObject();
-            
+
             item.put("name", seed.getSeed_id().getName());
             item.put("quantity", seed.getQuantity());
             item.put("image_url", seed.getSeed_id().getPlant_image_url());

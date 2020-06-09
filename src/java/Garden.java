@@ -58,8 +58,7 @@ public class Garden implements Serializable {
     private int updateLocation;
     private int updateSeedId;
 
-    public void updatePlant() throws SQLException, IOException
-    {
+    public void updatePlant() throws SQLException, IOException {
 
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
@@ -71,13 +70,10 @@ public class Garden implements Serializable {
         params.put("location", updateLocation);
         List<GrowBox> result = growBoxDao.queryForFieldValues(params);
 
-        if (result.isEmpty())
-        {
+        if (result.isEmpty()) {
             cs.close();
             return;
-        }
-        else
-        {
+        } else {
             GrowBox box = result.get(0);
             box.setPlantid(PlantSpecies.getPlantSpeciesByID(updateSeedId));
 
@@ -102,6 +98,5 @@ public class Garden implements Serializable {
     public void setUpdateSeedId(int updateSeedId) {
         this.updateSeedId = updateSeedId;
     }
-
 
 }
