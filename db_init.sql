@@ -1,3 +1,5 @@
+drop table if exists crops_inventory;
+
 drop sequence if exists crops_inventory_id_seq;
 CREATE SEQUENCE public.crops_inventory_id_seq
     START WITH 1
@@ -6,7 +8,6 @@ CREATE SEQUENCE public.crops_inventory_id_seq
     NO MAXVALUE
     CACHE 1;
 
-drop table if exists crops_inventory;
 CREATE TABLE public.crops_inventory (
     user_id integer NOT NULL,
     crop_id integer NOT NULL,
@@ -21,6 +22,22 @@ CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
+    
+    drop table if exists watering_events;
+CREATE TABLE public.watering_events (
+    event_id integer NOT NULL,
+    box_id text NOT NULL,
+    user_day integer NOT NULL
+);
+
+drop sequence if exists watering_events_event_id_seq;
+CREATE SEQUENCE public.watering_events_event_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 
 drop table if exists grow_boxes;
 CREATE TABLE public.grow_boxes (
@@ -39,6 +56,7 @@ CREATE SEQUENCE public.grow_boxes_id_seq
     NO MAXVALUE
     CACHE 1;
 
+drop table if exists has_seeds;
 drop sequence if exists has_seeds_id_seq;
 CREATE SEQUENCE public.has_seeds_id_seq
     START WITH 1
@@ -47,7 +65,7 @@ CREATE SEQUENCE public.has_seeds_id_seq
     NO MAXVALUE
     CACHE 1;
 
-drop table if exists has_seeds;
+
 CREATE TABLE public.has_seeds (
     user_id integer NOT NULL,
     seed_id integer NOT NULL,
@@ -63,6 +81,7 @@ CREATE SEQUENCE public.has_seeds_seed_inventory_id_seq
     NO MAXVALUE
     CACHE 1;
 
+drop table if exists market_listings;
 drop sequence if exists market_listings_id_seq;
 CREATE SEQUENCE public.market_listings_id_seq
     START WITH 1
@@ -71,7 +90,6 @@ CREATE SEQUENCE public.market_listings_id_seq
     NO MAXVALUE
     CACHE 1;
 
-drop table if exists market_listings;
 CREATE TABLE public.market_listings (
     listing_id integer DEFAULT nextval('public.market_listings_id_seq'::regclass) NOT NULL,
     seller_id integer NOT NULL,
@@ -91,6 +109,7 @@ CREATE SEQUENCE public.market_listings_listing_id_seq
     NO MAXVALUE
     CACHE 1;
 
+drop table if exists plant_species;
 drop sequence if exists plant_species_id_seq;
 CREATE SEQUENCE public.plant_species_id_seq
     START WITH 1
@@ -99,7 +118,6 @@ CREATE SEQUENCE public.plant_species_id_seq
     NO MAXVALUE
     CACHE 1;
 
-drop table if exists plant_species;
 CREATE TABLE public.plant_species (
     species_id integer DEFAULT nextval('public.plant_species_id_seq'::regclass) NOT NULL,
     name text NOT NULL,
@@ -141,20 +159,6 @@ CREATE SEQUENCE public.users_id_seq
     NO MAXVALUE
     CACHE 1;
 
-drop table if exists watering_events;
-CREATE TABLE public.watering_events (
-    event_id integer NOT NULL,
-    box_id text NOT NULL,
-    user_day integer NOT NULL
-);
-
-drop sequence if exists watering_events_event_id_seq;
-CREATE SEQUENCE public.watering_events_event_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
 
 ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
@@ -167,7 +171,7 @@ ALTER TABLE ONLY public.grow_boxes
     ADD CONSTRAINT grow_boxes_pkey PRIMARY KEY (box_uuid);
 
 ALTER TABLE ONLY public.has_seeds
-    ADD CONSTRAINT has_seeds_pkey PRIMARY KEY (seed_inventory_id)
+    ADD CONSTRAINT has_seeds_pkey PRIMARY KEY (seed_inventory_id);
 
 ALTER TABLE ONLY public.market_listings
     ADD CONSTRAINT market_listings_pkey PRIMARY KEY (listing_id);
@@ -207,7 +211,7 @@ ALTER TABLE ONLY public.market_listings
 
 ALTER TABLE ONLY public.watering_events
     ADD CONSTRAINT watering_events_box_id_fkey FOREIGN KEY (box_id) REFERENCES public.grow_boxes(box_uuid);
-        
+
 INSERT INTO "public"."plant_species"("species_id","name","lifespan_type","harvest_quantity","plant_image_url","days_to_harvest","points_for_eating")
 VALUES
 (1,E'potato',E'pernnial',1,E'https://i.imgur.com/fJORZNV.png',5,1),
@@ -222,6 +226,79 @@ VALUES
 (10,E'broccoli',E'annual',6,E'https://imgur.com/OYJ3m79.png',13,11),
 (11,E'orange',E'perennial',14,E'https://imgur.com/L2rhWPT.png',6,4);
 
-INSERT INTO "public"."users"("user_id","login","password","cash","farm_age","garden_size","score")
+INSERT INTO "public"."users"("login","password","cash","farm_age","garden_size","score")
 VALUES
-(1,E'JohnnyAppleseed',E'hello',1000,2,5,3);
+(E'JohnnyAppleseed',E'password',1000,0,5,5);
+
+INSERT INTO "public"."grow_boxes"("user_id","plant_id","location","day_planted")
+VALUES
+(1,NULL,6,0),
+(1,NULL,19,0),
+(1,NULL,1,0),
+(1,NULL,10,0),
+(1,NULL,2,0),
+(1,NULL,21,0),
+(1,NULL,13,0),
+(1,NULL,11,0),
+(1,NULL,8,0),
+(1,NULL,25,0),
+(1,NULL,5,0),
+(1,NULL,22,0),
+(1,NULL,14,0),
+(1,NULL,16,0),
+(1,NULL,12,0),
+(1,NULL,3,0),
+(1,NULL,4,0),
+(1,NULL,23,0),
+(1,NULL,15,0),
+(1,NULL,20,0),
+(1,NULL,7,0),
+(1,NULL,24,0),
+(1,NULL,18,0),
+(1,NULL,9,0),
+(1,NULL,17,0);
+
+INSERT INTO "public"."market_listings"("seller_id","plant_id","price","quantity","listing_type")
+VALUES
+(1,1,10,40,E'seeds'),
+(1,2,10,40,E'seeds'),
+(1,3,10,40,E'seeds'),
+(1,4,10,40,E'seeds'),
+(1,5,10,40,E'seeds'),
+(1,6,10,40,E'seeds'),
+(1,7,10,40,E'seeds'),
+(1,8,10,40,E'seeds'),
+(1,9,10,40,E'seeds'),
+(1,10,10,40,E'seeds'),
+(1,11,10,40,E'seeds'),
+(1,2,10,40,E'seeds'),
+(1,3,10,40,E'seeds'),
+(1,4,10,40,E'seeds'),
+(1,5,10,40,E'seeds'),
+(1,6,10,40,E'seeds'),
+(1,7,10,40,E'seeds'),
+(1,8,10,40,E'seeds'),
+(1,9,10,40,E'seeds'),
+(1,10,10,40,E'seeds'),
+(1,11,10,40,E'seeds'),
+(1,1,10,40,E'crops'),
+(1,2,10,40,E'crops'),
+(1,3,10,40,E'crops'),
+(1,4,10,40,E'crops'),
+(1,5,10,40,E'crops'),
+(1,6,10,40,E'crops'),
+(1,7,10,40,E'crops'),
+(1,8,10,40,E'crops'),
+(1,9,10,40,E'crops'),
+(1,10,10,40,E'crops'),
+(1,11,10,40,E'crops'),
+(1,2,10,40,E'crops'),
+(1,3,10,40,E'crops'),
+(1,4,10,40,E'crops'),
+(1,5,10,40,E'crops'),
+(1,6,10,40,E'crops'),
+(1,7,10,40,E'crops'),
+(1,8,10,40,E'crops'),
+(1,9,10,40,E'crops'),
+(1,10,10,40,E'crops'),
+(1,11,10,40,E'crops');
