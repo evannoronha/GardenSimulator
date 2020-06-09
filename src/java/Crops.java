@@ -149,4 +149,27 @@ public class Crops extends Harvestable implements Serializable {
         }
         cs.close();
     }
+
+    public String eatCrops() throws SQLException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        int userid = Util.getIDFromLogin();
+        Dao<CropInventory, Integer> inventoryDao
+                = DaoManager.createDao(cs, CropInventory.class);
+        HashMap<String, Object> params = new HashMap();
+        params.put("user_id", userid);
+        params.put(plantIdColumn, saleSpeciesId);
+        CropInventory inv = inventoryDao.queryForFieldValues(params).get(0);
+        Integer pointsForEating = inv.getCrop_id().getPointsForEating();
+        System.out.println("points for eating " + pointsForEating);
+        inv.setQuantity(inv.getQuantity() - saleQuantity);
+        inventoryDao.update(inv);
+
+        Dao<User, Integer> userDao
+                = DaoManager.createDao(cs, User.class);
+        User thisUser = userDao.queryForId(userid);
+        thisUser.setScore(thisUser.getScore() + pointsForEating);
+        userDao.update(thisUser);
+        cs.close();
+        return "success";
+    }
 }
