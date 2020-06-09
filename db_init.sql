@@ -25,9 +25,7 @@ CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-    
-
-    
+      
 drop table if exists plant_species;
 drop sequence if exists plant_species_id_seq;
 CREATE SEQUENCE public.plant_species_id_seq
