@@ -12,7 +12,8 @@ CREATE TABLE public.crops_inventory (
     user_id integer NOT NULL,
     crop_id integer NOT NULL,
     quantity integer NOT NULL,
-    crops_inventory_id integer DEFAULT nextval('public.crops_inventory_id_seq'::regclass) NOT NULL
+    crops_inventory_id integer DEFAULT nextval('public.crops_inventory_id_seq'::regclass) NOT NULL,
+    primary key (crops_inventory_id)
 );
 
 drop sequence if exists crops_inventory_crops_inventory_id_seq;
@@ -27,7 +28,8 @@ CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
 CREATE TABLE public.watering_events (
     event_id integer NOT NULL,
     box_id text NOT NULL,
-    user_day integer NOT NULL
+    user_day integer NOT NULL,
+    primary key (event_id)
 );
 
 drop sequence if exists watering_events_event_id_seq;
@@ -45,7 +47,8 @@ CREATE TABLE public.grow_boxes (
     plant_id integer,
     location integer,
     day_planted integer,
-    box_uuid text DEFAULT uuid_in((md5(((random())::text || (clock_timestamp())::text)))::cstring) NOT NULL
+    box_uuid text DEFAULT uuid_in((md5(((random())::text || (clock_timestamp())::text)))::cstring) NOT NULL,
+    primary key (box_uuid)
 );
 
 drop sequence if exists grow_boxes_id_seq;
@@ -70,7 +73,8 @@ CREATE TABLE public.has_seeds (
     user_id integer NOT NULL,
     seed_id integer NOT NULL,
     quantity integer NOT NULL,
-    seed_inventory_id integer DEFAULT nextval('public.has_seeds_id_seq'::regclass) NOT NULL
+    seed_inventory_id integer DEFAULT nextval('public.has_seeds_id_seq'::regclass) NOT NULL,
+    primary key (seed_inventory_id)
 );
 
 drop sequence if exists has_seeds_seed_inventory_id_seq;
@@ -98,7 +102,8 @@ CREATE TABLE public.market_listings (
     quantity integer,
     listing_type text DEFAULT 'crops'::text NOT NULL,
     CONSTRAINT market_listings_price_check CHECK ((price > (0)::double precision)),
-    CONSTRAINT market_listings_quantity_check CHECK ((quantity > 0))
+    CONSTRAINT market_listings_quantity_check CHECK ((quantity > 0)),
+    primary key (listing_id)
 );
 
 drop sequence if exists market_listings_listing_id_seq;
@@ -125,7 +130,8 @@ CREATE TABLE public.plant_species (
     harvest_quantity integer,
     plant_image_url text,
     days_to_harvest integer DEFAULT 5 NOT NULL,
-    points_for_eating integer DEFAULT 1 NOT NULL
+    points_for_eating integer DEFAULT 1 NOT NULL,
+    primary key (species_id)
 );
 
 drop sequence if exists plant_species_species_id_seq;
@@ -148,7 +154,8 @@ CREATE TABLE public.users (
     CONSTRAINT users_cash_check CHECK ((cash > (0)::double precision)),
     CONSTRAINT users_farm_age_check CHECK ((farm_age >= 0)),
     CONSTRAINT users_garden_size_check CHECK ((garden_size >= 0)),
-    CONSTRAINT users_score_check CHECK ((score >= 0))
+    CONSTRAINT users_score_check CHECK ((score >= 0)),
+    primary key (user_id)
 );
 
 drop sequence if exists users_id_seq;
@@ -163,27 +170,6 @@ CREATE SEQUENCE public.users_id_seq
 ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 ALTER TABLE ONLY public.watering_events ALTER COLUMN event_id SET DEFAULT nextval('public.watering_events_event_id_seq'::regclass);
-
-ALTER TABLE ONLY public.crops_inventory
-    ADD CONSTRAINT crops_inventory_pkey PRIMARY KEY (crops_inventory_id);
-
-ALTER TABLE ONLY public.grow_boxes
-    ADD CONSTRAINT grow_boxes_pkey PRIMARY KEY (box_uuid);
-
-ALTER TABLE ONLY public.has_seeds
-    ADD CONSTRAINT has_seeds_pkey PRIMARY KEY (seed_inventory_id);
-
-ALTER TABLE ONLY public.market_listings
-    ADD CONSTRAINT market_listings_pkey PRIMARY KEY (listing_id);
-
-ALTER TABLE ONLY public.plant_species
-    ADD CONSTRAINT plant_species_pkey PRIMARY KEY (species_id);
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (user_id);
-
-ALTER TABLE ONLY public.watering_events
-    ADD CONSTRAINT watering_events_pkey PRIMARY KEY (event_id);
 
 ALTER TABLE ONLY public.crops_inventory
     ADD CONSTRAINT crops_inventory_crop_id_fkey FOREIGN KEY (crop_id) REFERENCES public.plant_species(species_id);
