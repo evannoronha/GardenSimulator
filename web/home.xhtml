@@ -11,32 +11,30 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp"
 
-    <h:head>
+      <h:head>
         <title>Welcome to your garden!</title>
         <link href="css/global.css" rel="stylesheet" type="text/css" />
         <link href="css/garden.css" rel="stylesheet" type="text/css" />
     </h:head>
     <ezcomp:header></ezcomp:header>
+    <body class="home-page">
+        <h1>
+            Welcome #{user.getLoggedIn().login}!
+            <br/>
+            You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
+            <br/>
+            Your garden is #{user.getLoggedIn().farmAge} days old!
+        </h1>
+        <img id="change" src="../assets/seeds_bag.jpg" draggable="true" ondragstart="drag(event)" width="80" height="80"></img>
 
+        <select id="seedSelect" onchange="changeimage(this.value)" data-imgjson="#{util.getSeedsJson()}">
+            <option value="select">select seed type</option>
+        </select>
 
-    <h1>
-        Welcome #{user.getLoggedIn().login}!
-        <br/>
-        You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
-        <br/>
-        Your garden is #{user.getLoggedIn().farmAge} days old!
-    </h1>
-    <img id="change" src="../assets/seeds_bag.jpg" draggable="true" ondragstart="drag(event)" width="80" height="80"></img>
+        <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
+        </div>
+        <ezcomp:footer></ezcomp:footer>
 
-    <select id="seedSelect" onchange="changeimage(this.value)" data-imgjson="#{util.getSeedsJson()}">
-        <option value="select">select seed type</option>
-    </select>
-
-    <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
-    </div>
-    <ezcomp:footer></ezcomp:footer>
-
-    <script src="assets/garden.js"></script>
-
-
+        <script src="assets/garden.js"></script>
+    </body>
 </html>
