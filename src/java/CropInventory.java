@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 public class CropInventory {
 
-    @DatabaseField(generatedId = true)
+    @DatabaseField(generatedId = true, readOnly = true)
     private Integer crops_inventory_id;
     @DatabaseField(canBeNull = false)
     private Integer user_id;
