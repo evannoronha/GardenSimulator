@@ -879,12 +879,14 @@ INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VAL
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 7, 100, 1);
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 11, 123, 4);
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (40, 11, 5, 3);
-INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 119, 10, 5);
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 120, 10, 6);
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 121, 10, 7);
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 122, 10, 8);
 INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 123, 10, 9);
-INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (36, 124, 10, 10);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (35, 124, 5, 10);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (35, 122, 10, 11);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (35, 120, 10, 12);
+INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VALUES (35, 119, 10, 5);
 
 
 --
@@ -892,11 +894,14 @@ INSERT INTO public.has_seeds (user_id, seed_id, quantity, seed_inventory_id) VAL
 --
 
 INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (4, 36, 11, 10, 1, 'crops');
-INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (3, 36, 11, 11, 10, 'crops');
-INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (5, 36, 11, 10, 5, 'crops');
-INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (13, 35, 11, 10, 4, 'crops');
-INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (14, 35, 11, 40, 4, 'crops');
-INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (16, 35, 11, 30, 3, 'seeds');
+INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (3, 36, 7, 11, 10, 'crops');
+INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (5, 36, 120, 39, 5, 'crops');
+INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (13, 35, 124, 10, 4, 'crops');
+INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (14, 35, 120, 25, 4, 'crops');
+INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (16, 35, 119, 30, 3, 'seeds');
+INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (17, 38, 123, 6, 9, 'seeds');
+INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (18, 35, 122, 32, 14, 'seeds');
+INSERT INTO public.market_listings (listing_id, seller_id, plant_id, price, quantity, listing_type) VALUES (19, 35, 7, 9, 18, 'seeds');
 
 
 --
