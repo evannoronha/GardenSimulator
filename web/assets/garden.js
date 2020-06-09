@@ -67,20 +67,4 @@ function changeimage(color) {
     if (color === "select") {
         document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
     }
-    /*
-     switch (color) {
-     case "select":
-     document.getElementById("change").setAttribute('src', '../assets/seeds_bag.jpg');
-     break;
-     case "red":
-     document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
-     break;
-     case "blue":
-     document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
-     break;
-     case "green":
-     document.getElementById("change").setAttribute('src', 'https://i.imgur.com/fJORZNV.png');
-     break;
-     }
-     */
 }
