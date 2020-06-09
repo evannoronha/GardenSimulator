@@ -16,40 +16,51 @@ function addElement() {
         //                  newDiv.textContent = id;
         newDiv.dataset.id = id;
         newDiv.dataset.plantid = json[id].plant_id;
+        newDiv.dataset.age = json['farm_age'] - json[id]['day_planted'];
+        newDiv.dataset.daysToHarvest = json[id].daysToHarvest
         newDiv.setAttribute('id', 'div1');
         newDiv.setAttribute('class', 'grid-item');
         newDiv.setAttribute('ondrop', 'drop(event)');
         newDiv.setAttribute('ondragover', 'allowDrop(event)');
  
 
-
+        const newSpan = document.createElement("span");
+        
         if (json[id].plant_url != null)
         {
             const newImg = document.createElement("img");
             newImg.src = json[id].plant_url;
 
-            newImg.style.width = "80px";
-            newImg.style.height = "80px";
+            newImg.style.width = "60px";
+            newImg.style.height = "60px";
             document.getElementById('grid').appendChild(newDiv);
-            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newImg);
+            newSpan.appendChild(newImg);
+            
+            if (id < 5)
+            {
+                const testImg = document.createElement("img");
+                testImg.setAttribute('src', '../assets/check.png');
+
+                testImg.style.margin = "2px";
+                testImg.style.width = "20px";
+                testImg.style.height = "20px";
+                newSpan.appendChild(testImg);
+            }
+            
+            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(newSpan);
     
         }
         
-        if (id < 5)
-        {
-            const testImg = document.createElement("img");
-            testImg.setAttribute('src', '../assets/check.png');
         
-            testImg.style.width = "80px";
-            testImg.style.height = "80px";
-            document.querySelector("[data-id=" + CSS.escape(id) + "]").appendChild(testImg);
-        }
                     
+
         newDiv.onclick = () => {
-            console.log(newDiv.dataset.id + " was clicked on!:");
-            var i = newDiv.getElementsByTagName('img')[0];
-            i.parentNode.removeChild(i);
-            //harvest -> increase crop count by one
+            if (newDiv.dataset.age < newDiv.dataset.daysToHarvest) {
+                alert('Not ready for harvest!');
+            } else {
+                var i = newDiv.getElementsByTagName('img')[0];
+                i.parentNode.removeChild(i);
+            }
         }
 
         document.getElementById('grid').appendChild(newDiv);
