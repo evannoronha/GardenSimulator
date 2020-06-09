@@ -14,3 +14,11 @@
 - Plant Harvesting: 1 hour
 - User Score System: 1 hour
 - User Manual: 1 hour
+
+### Robert
+- ER Diagram: 2 hours
+- Home page : 2 hours
+- Sign up page : .5 hours
+- Home page grid UI : 5 hours
+- Sending dragged plant data to java bean : 3 hours
+
