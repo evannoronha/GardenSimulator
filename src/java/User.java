@@ -23,6 +23,11 @@ import javax.inject.Named;
 public class User implements Serializable {
 
     private final static Double STARTING_CASH = 1000.00;
+    public final static Integer PENALTY_FOR_ADVANCING_DAYS = 1;
+
+    public Integer getPENALTY_FOR_ADVANCING_DAYS() {
+        return PENALTY_FOR_ADVANCING_DAYS;
+    }
     private final static int STARTING_GARDEN_SIZE = 5;
     private final static int STARTING_SCORE = 5;
 
@@ -93,12 +98,21 @@ public class User implements Serializable {
     }
 
     public String advanceTime() throws SQLException {
-        this.farmAge += 1;
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = getDao(cs);
+        if (this.score == 0) {
+            FacesMessage errorMessage = new FacesMessage("You do not have any points. Eat something.");
+            throw new ValidatorException(errorMessage);
+        } else {
+            this.score -= this.PENALTY_FOR_ADVANCING_DAYS;
+            this.farmAge += 1;
+            ConnectionSource cs = DBConnect.getConnectionSource();
+            Dao<User, Integer> userDao = getDao(cs);
+            userDao.update(this);
+            return "ViewGarden";
+        }
+    }
 
-        userDao.update(this);
-        return "ViewGarden";
+    public boolean canNotAdvance() {
+        return this.score < this.PENALTY_FOR_ADVANCING_DAYS;
     }
 
     public String getCashAsDecimal() {
