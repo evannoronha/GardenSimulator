@@ -81,7 +81,7 @@ public class Crops extends Harvestable implements Serializable {
 
         MarketListing listing = new MarketListing();
 
-        listing.setSeller_id(userid);
+        listing.setSeller_id(User.getByUserid(userid));
         listing.setPlant_id(saleSpecies);
         listing.setPrice(salePrice);
         listing.setQuantity(saleQuantity);

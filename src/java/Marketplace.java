@@ -42,14 +42,12 @@ public class Marketplace {
         int userid = Util.getIDFromLogin();
         ConnectionSource cs = DBConnect.getConnectionSource();
 
-        Dao<MarketListing, Integer> listingDao
-                = DaoManager.createDao(cs, MarketListing.class);
+        Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
 
-        //unsure how to query for not this user
         List<MarketListing> allListings = listingDao.queryForAll();
         List<MarketListing> otherUserListings = new ArrayList<>();
         for (MarketListing ml : allListings) {
-            if (ml.getSeller_id() != userid) {
+            if (ml.getSeller_id().user_id != userid) {
                 otherUserListings.add(ml);
             }
         }
@@ -74,7 +72,7 @@ public class Marketplace {
         PlantSpecies species = thisListing.getPlant_id();
         Integer speciesId = species.getSpecies_id();
         Integer quantity = thisListing.getQuantity();
-        Integer sellerId = thisListing.getSeller_id();
+        Integer sellerId = thisListing.getSeller_id().user_id;
 
         //add to the current user's seed or crops
         if (type.equals("seeds")) {

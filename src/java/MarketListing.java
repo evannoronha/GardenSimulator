@@ -1,6 +1,10 @@
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
+import java.sql.SQLException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,9 +20,9 @@ public class MarketListing {
 
     @DatabaseField(generatedId = true, readOnly = true)
     private Integer listing_id;
-    @DatabaseField(canBeNull = false)
-    private Integer seller_id;
-    @DatabaseField(canBeNull = false, foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "plant_id")
+    @DatabaseField(canBeNull = false, foreign = true, columnName = "seller_id", foreignAutoRefresh = true)
+    private User seller_id;
+    @DatabaseField(canBeNull = false, foreign = true, columnName = "plant_id", foreignAutoRefresh = true)
     private PlantSpecies plant_id;
     @DatabaseField(canBeNull = false)
     private Double price;
@@ -31,7 +35,11 @@ public class MarketListing {
 
     }
 
-    public MarketListing(Integer listing_id, Integer seller_id, PlantSpecies plant_id, Double price, Integer quantity, String listing_type) {
+    public static Dao<MarketListing, Integer> getDao(ConnectionSource cs) throws SQLException {
+        return DaoManager.createDao(cs, MarketListing.class);
+    }
+
+    public MarketListing(Integer listing_id, User seller_id, PlantSpecies plant_id, Double price, Integer quantity, String listing_type) {
         this.listing_id = listing_id;
         this.seller_id = seller_id;
         this.plant_id = plant_id;
@@ -48,11 +56,11 @@ public class MarketListing {
         this.listing_id = listing_id;
     }
 
-    public Integer getSeller_id() {
+    public User getSeller_id() {
         return seller_id;
     }
 
-    public void setSeller_id(Integer seller_id) {
+    public void setSeller_id(User seller_id) {
         this.seller_id = seller_id;
     }
 
