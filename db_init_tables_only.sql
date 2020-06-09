@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: listing_type; Type: TYPE; Schema: public; Owner: team1
+-- Name: listing_type; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public.listing_type AS ENUM (
@@ -26,10 +26,8 @@ CREATE TYPE public.listing_type AS ENUM (
 );
 
 
-ALTER TYPE public.listing_type OWNER TO team1;
-
 --
--- Name: crops_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: crops_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.crops_inventory_id_seq
@@ -40,12 +38,10 @@ CREATE SEQUENCE public.crops_inventory_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.crops_inventory_id_seq OWNER TO team1;
-
 SET default_tablespace = '';
 
 --
--- Name: crops_inventory; Type: TABLE; Schema: public; Owner: team1
+-- Name: crops_inventory; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.crops_inventory (
@@ -56,10 +52,8 @@ CREATE TABLE public.crops_inventory (
 );
 
 
-ALTER TABLE public.crops_inventory OWNER TO team1;
-
 --
--- Name: crops_inventory_crops_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: crops_inventory_crops_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
@@ -70,17 +64,15 @@ CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.crops_inventory_crops_inventory_id_seq OWNER TO team1;
-
 --
--- Name: crops_inventory_crops_inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: team1
+-- Name: crops_inventory_crops_inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.crops_inventory_crops_inventory_id_seq OWNED BY public.crops_inventory.crops_inventory_id;
 
 
 --
--- Name: grow_boxes; Type: TABLE; Schema: public; Owner: team1
+-- Name: grow_boxes; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.grow_boxes (
@@ -92,10 +84,8 @@ CREATE TABLE public.grow_boxes (
 );
 
 
-ALTER TABLE public.grow_boxes OWNER TO team1;
-
 --
--- Name: grow_boxes_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: grow_boxes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.grow_boxes_id_seq
@@ -106,10 +96,8 @@ CREATE SEQUENCE public.grow_boxes_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.grow_boxes_id_seq OWNER TO team1;
-
 --
--- Name: has_seeds_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: has_seeds_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.has_seeds_id_seq
@@ -120,10 +108,8 @@ CREATE SEQUENCE public.has_seeds_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.has_seeds_id_seq OWNER TO team1;
-
 --
--- Name: has_seeds; Type: TABLE; Schema: public; Owner: team1
+-- Name: has_seeds; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.has_seeds (
@@ -134,10 +120,8 @@ CREATE TABLE public.has_seeds (
 );
 
 
-ALTER TABLE public.has_seeds OWNER TO team1;
-
 --
--- Name: has_seeds_seed_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: has_seeds_seed_inventory_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.has_seeds_seed_inventory_id_seq
@@ -148,17 +132,15 @@ CREATE SEQUENCE public.has_seeds_seed_inventory_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.has_seeds_seed_inventory_id_seq OWNER TO team1;
-
 --
--- Name: has_seeds_seed_inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: team1
+-- Name: has_seeds_seed_inventory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.has_seeds_seed_inventory_id_seq OWNED BY public.has_seeds.seed_inventory_id;
 
 
 --
--- Name: market_listings_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: market_listings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.market_listings_id_seq
@@ -169,10 +151,8 @@ CREATE SEQUENCE public.market_listings_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.market_listings_id_seq OWNER TO team1;
-
 --
--- Name: market_listings; Type: TABLE; Schema: public; Owner: team1
+-- Name: market_listings; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.market_listings (
@@ -187,10 +167,8 @@ CREATE TABLE public.market_listings (
 );
 
 
-ALTER TABLE public.market_listings OWNER TO team1;
-
 --
--- Name: market_listings_listing_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: market_listings_listing_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.market_listings_listing_id_seq
@@ -201,17 +179,15 @@ CREATE SEQUENCE public.market_listings_listing_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.market_listings_listing_id_seq OWNER TO team1;
-
 --
--- Name: market_listings_listing_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: team1
+-- Name: market_listings_listing_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.market_listings_listing_id_seq OWNED BY public.market_listings.listing_id;
 
 
 --
--- Name: plant_species_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: plant_species_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.plant_species_id_seq
@@ -222,10 +198,8 @@ CREATE SEQUENCE public.plant_species_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.plant_species_id_seq OWNER TO team1;
-
 --
--- Name: plant_species; Type: TABLE; Schema: public; Owner: team1
+-- Name: plant_species; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.plant_species (
@@ -239,10 +213,8 @@ CREATE TABLE public.plant_species (
 );
 
 
-ALTER TABLE public.plant_species OWNER TO team1;
-
 --
--- Name: plant_species_species_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: plant_species_species_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.plant_species_species_id_seq
@@ -253,17 +225,15 @@ CREATE SEQUENCE public.plant_species_species_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.plant_species_species_id_seq OWNER TO team1;
-
 --
--- Name: plant_species_species_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: team1
+-- Name: plant_species_species_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.plant_species_species_id_seq OWNED BY public.plant_species.species_id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: team1
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.users (
@@ -281,10 +251,8 @@ CREATE TABLE public.users (
 );
 
 
-ALTER TABLE public.users OWNER TO team1;
-
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.users_id_seq
@@ -295,17 +263,15 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.users_id_seq OWNER TO team1;
-
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: team1
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.user_id;
 
 
 --
--- Name: watering_events; Type: TABLE; Schema: public; Owner: team1
+-- Name: watering_events; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.watering_events (
@@ -315,10 +281,8 @@ CREATE TABLE public.watering_events (
 );
 
 
-ALTER TABLE public.watering_events OWNER TO team1;
-
 --
--- Name: watering_events_event_id_seq; Type: SEQUENCE; Schema: public; Owner: team1
+-- Name: watering_events_event_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.watering_events_event_id_seq
@@ -329,31 +293,29 @@ CREATE SEQUENCE public.watering_events_event_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.watering_events_event_id_seq OWNER TO team1;
-
 --
--- Name: watering_events_event_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: team1
+-- Name: watering_events_event_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE public.watering_events_event_id_seq OWNED BY public.watering_events.event_id;
 
 
 --
--- Name: users user_id; Type: DEFAULT; Schema: public; Owner: team1
+-- Name: users user_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN user_id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
--- Name: watering_events event_id; Type: DEFAULT; Schema: public; Owner: team1
+-- Name: watering_events event_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.watering_events ALTER COLUMN event_id SET DEFAULT nextval('public.watering_events_event_id_seq'::regclass);
 
 
 --
--- Name: crops_inventory crops_inventory_pkey; Type: CONSTRAINT; Schema: public; Owner: team1
+-- Name: crops_inventory crops_inventory_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.crops_inventory
@@ -361,7 +323,7 @@ ALTER TABLE ONLY public.crops_inventory
 
 
 --
--- Name: grow_boxes grow_boxes_pkey; Type: CONSTRAINT; Schema: public; Owner: team1
+-- Name: grow_boxes grow_boxes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.grow_boxes
@@ -369,7 +331,7 @@ ALTER TABLE ONLY public.grow_boxes
 
 
 --
--- Name: has_seeds has_seeds_pkey; Type: CONSTRAINT; Schema: public; Owner: team1
+-- Name: has_seeds has_seeds_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.has_seeds
@@ -377,7 +339,7 @@ ALTER TABLE ONLY public.has_seeds
 
 
 --
--- Name: market_listings market_listings_pkey; Type: CONSTRAINT; Schema: public; Owner: team1
+-- Name: market_listings market_listings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.market_listings
@@ -385,7 +347,7 @@ ALTER TABLE ONLY public.market_listings
 
 
 --
--- Name: plant_species plant_species_pkey; Type: CONSTRAINT; Schema: public; Owner: team1
+-- Name: plant_species plant_species_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.plant_species
@@ -393,7 +355,7 @@ ALTER TABLE ONLY public.plant_species
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: team1
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
@@ -401,7 +363,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: watering_events watering_events_pkey; Type: CONSTRAINT; Schema: public; Owner: team1
+-- Name: watering_events watering_events_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.watering_events
@@ -409,7 +371,7 @@ ALTER TABLE ONLY public.watering_events
 
 
 --
--- Name: crops_inventory crops_inventory_crop_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: crops_inventory crops_inventory_crop_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.crops_inventory
@@ -417,7 +379,7 @@ ALTER TABLE ONLY public.crops_inventory
 
 
 --
--- Name: crops_inventory crops_inventory_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: crops_inventory crops_inventory_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.crops_inventory
@@ -425,7 +387,7 @@ ALTER TABLE ONLY public.crops_inventory
 
 
 --
--- Name: grow_boxes grow_boxes_plant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: grow_boxes grow_boxes_plant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.grow_boxes
@@ -433,7 +395,7 @@ ALTER TABLE ONLY public.grow_boxes
 
 
 --
--- Name: grow_boxes grow_boxes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: grow_boxes grow_boxes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.grow_boxes
@@ -441,7 +403,7 @@ ALTER TABLE ONLY public.grow_boxes
 
 
 --
--- Name: has_seeds has_seeds_seed_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: has_seeds has_seeds_seed_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.has_seeds
@@ -449,7 +411,7 @@ ALTER TABLE ONLY public.has_seeds
 
 
 --
--- Name: has_seeds has_seeds_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: has_seeds has_seeds_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.has_seeds
@@ -457,7 +419,7 @@ ALTER TABLE ONLY public.has_seeds
 
 
 --
--- Name: market_listings market_listings_plant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: market_listings market_listings_plant_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.market_listings
@@ -465,7 +427,7 @@ ALTER TABLE ONLY public.market_listings
 
 
 --
--- Name: market_listings market_listings_seller_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: market_listings market_listings_seller_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.market_listings
@@ -473,21 +435,11 @@ ALTER TABLE ONLY public.market_listings
 
 
 --
--- Name: watering_events watering_events_box_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: team1
+-- Name: watering_events watering_events_box_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.watering_events
     ADD CONSTRAINT watering_events_box_id_fkey FOREIGN KEY (box_id) REFERENCES public.grow_boxes(box_uuid);
-
-
---
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
