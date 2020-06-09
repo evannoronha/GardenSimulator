@@ -221,3 +221,7 @@ VALUES
 (9,E'onion',E'perennial',1,E'https://imgur.com/Wgjxeq8.png',8,4),
 (10,E'broccoli',E'annual',6,E'https://imgur.com/OYJ3m79.png',13,11),
 (11,E'orange',E'perennial',14,E'https://imgur.com/L2rhWPT.png',6,4);
+
+INSERT INTO "public"."users"("user_id","login","password","cash","farm_age","garden_size","score")
+VALUES
+(1,E'JohnnyAppleseed',E'hello',1000,2,5,3);
