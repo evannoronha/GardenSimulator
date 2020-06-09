@@ -52,7 +52,8 @@ function addElement() {
     const plantJson = JSON.parse(selectMenu.dataset.seedjson);
     Object.keys(plantJson).forEach(function (key) {
         var opt = document.createElement("option");
-        opt.text = plantJson[key].name;
+        opt.value = plantJson[key].name;
+        opt.text = plantJson[key].name + " (" + plantJson[key].quantity + ")";
         selectMenu.options.add(opt);
     });
 
