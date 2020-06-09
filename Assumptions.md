@@ -1,0 +1,2 @@
+- Each user has a unique login
+- User cannot see their listing in the marketplace 
