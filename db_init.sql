@@ -1,31 +1,3 @@
-drop table if exists crops_inventory;
-
-drop sequence if exists crops_inventory_id_seq;
-CREATE SEQUENCE public.crops_inventory_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-CREATE TABLE public.crops_inventory (
-    user_id integer NOT NULL,
-    crop_id integer NOT NULL,
-    quantity integer NOT NULL,
-    crops_inventory_id integer DEFAULT nextval('public.crops_inventory_id_seq'::regclass) NOT NULL,
-    FOREIGN KEY (crop_id) REFERENCES public.plant_species(species_id),
-    FOREIGN KEY (user_id) REFERENCES public.users(user_id),
-    primary key (crops_inventory_id)
-);
-
-drop sequence if exists crops_inventory_crops_inventory_id_seq;
-CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-      
 drop table if exists plant_species;
 drop sequence if exists plant_species_id_seq;
 CREATE SEQUENCE public.plant_species_id_seq
@@ -72,6 +44,33 @@ CREATE TABLE public.users (
 
 drop sequence if exists users_id_seq;
 CREATE SEQUENCE public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+	
+drop table if exists crops_inventory;
+drop sequence if exists crops_inventory_id_seq;
+CREATE SEQUENCE public.crops_inventory_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+CREATE TABLE public.crops_inventory (
+    user_id integer NOT NULL,
+    crop_id integer NOT NULL,
+    quantity integer NOT NULL,
+    crops_inventory_id integer DEFAULT nextval('public.crops_inventory_id_seq'::regclass) NOT NULL,
+    FOREIGN KEY (crop_id) REFERENCES public.plant_species(species_id),
+    FOREIGN KEY (user_id) REFERENCES public.users(user_id),
+    primary key (crops_inventory_id)
+);
+
+drop sequence if exists crops_inventory_crops_inventory_id_seq;
+CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
