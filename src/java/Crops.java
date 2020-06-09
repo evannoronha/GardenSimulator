@@ -23,6 +23,25 @@ public class Crops extends Harvestable implements Serializable {
     public static String typeName = "crops";
     public static String plantIdColumn = "crop_id";
 
+    private Integer eatSpeciesId;
+    private Integer eatQuantity;
+
+    public Integer getEatSpeciesId() {
+        return eatSpeciesId;
+    }
+
+    public void setEatSpeciesId(Integer eatSpeciesId) {
+        this.eatSpeciesId = eatSpeciesId;
+    }
+
+    public Integer getEatQuantity() {
+        return eatQuantity;
+    }
+
+    public void setEatQuantity(Integer eatQuantity) {
+        this.eatQuantity = eatQuantity;
+    }
+
     public Crops() {
         super();
     }
@@ -156,11 +175,11 @@ public class Crops extends Harvestable implements Serializable {
         Dao<CropInventory, Integer> inventoryDao = getDao(cs);
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
-        params.put(plantIdColumn, saleSpeciesId);
+        params.put(plantIdColumn, eatSpeciesId);
         CropInventory inv = inventoryDao.queryForFieldValues(params).get(0);
-        Integer pointsForEating = inv.getCrop_id().getPointsForEating();
+        Integer pointsForEating = inv.getCrop_id().getPointsForEating() * this.eatQuantity;
 
-        inv.setQuantity(inv.getQuantity() - saleQuantity);
+        inv.setQuantity(inv.getQuantity() - eatQuantity);
         inventoryDao.update(inv);
 
         Dao<User, Integer> userDao = User.getDao(cs);
