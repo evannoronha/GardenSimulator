@@ -30,8 +30,8 @@ public class GrowBox implements Serializable {
     protected PlantSpecies plantid;
     @DatabaseField
     protected int location;
-    @DatabaseField
-    protected int day_planted;
+    @DatabaseField(canBeNull = true)
+    protected Integer day_planted;
 
     public GrowBox() {
 
@@ -87,19 +87,19 @@ public class GrowBox implements Serializable {
         this.plantid = plantid;
     }
 
-    public int getLocation() {
+    public Integer getLocation() {
         return location;
     }
 
-    public void setLocation(int location) {
+    public void setLocation(Integer location) {
         this.location = location;
     }
 
-    public int getDay_planted() {
+    public Integer getDay_planted() {
         return day_planted;
     }
 
-    public void setDay_planted(int day_planted) {
+    public void setDay_planted(Integer day_planted) {
         this.day_planted = day_planted;
     }
 

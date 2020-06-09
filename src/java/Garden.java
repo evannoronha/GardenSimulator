@@ -90,6 +90,66 @@ public class Garden implements Serializable {
         }
     }
 
+    private Integer harvestLocation;
+
+    public Integer getHarvestLocation() {
+        return harvestLocation;
+    }
+
+    public void setHarvestLocation(Integer harvestLocation) {
+        this.harvestLocation = harvestLocation;
+    }
+
+    public void harvestPlant() throws SQLException, IOException {
+        if (harvestLocation == null) {
+            return;
+        }
+
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
+        Dao<CropInventory, Integer> cropInventoryDao = CropInventory.getDao(cs);
+        Integer userid = Util.getIDFromLogin();
+
+        HashMap<String, Object> boxParams = new HashMap();
+        boxParams.put("user_id", userid);
+        boxParams.put("location", harvestLocation);
+        List<GrowBox> boxes = growBoxDao.queryForFieldValues(boxParams);
+
+        if (boxes.isEmpty()) {
+            cs.close();
+            return;
+        }
+
+        PlantSpecies species;
+        GrowBox box = boxes.get(0);
+        try {
+            species = PlantSpecies.getDao(cs).queryForId(box.getPlantid().getSpecies_id());
+        } catch (NullPointerException e) {
+            return;
+        }
+
+        box.setDay_planted(null);
+        box.setPlantid(null);
+        growBoxDao.update(box);
+
+        HashMap<String, Object> cropParams = new HashMap();
+        cropParams.put("user_id", userid);
+        cropParams.put("crop_id", species.species_id);
+        List<CropInventory> invs = cropInventoryDao.queryForFieldValuesArgs(cropParams);
+        if (invs.isEmpty()) {
+            CropInventory harvested = new CropInventory();
+            harvested.setCrop_id(species);
+            harvested.setQuantity(species.harvest_quantity);
+            harvested.setUser_id(userid);
+            cropInventoryDao.create(harvested);
+        } else {
+            CropInventory harvested = invs.get(0);
+            harvested.setQuantity(harvested.getQuantity() + species.getHarvest_quantity());
+            cropInventoryDao.update(harvested);
+        }
+        cs.close();
+    }
+
     public int getUpdateLocation() {
         return updateLocation;
     }

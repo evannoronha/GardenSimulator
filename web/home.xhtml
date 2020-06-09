@@ -36,10 +36,13 @@ and open the template in the editor.
         <ezcomp:footer></ezcomp:footer>
 
         <script src="assets/garden.js"></script>
-        
-        <h:form id="formId" onsubmit="#{garden.updatePlant()}; return false">>
+        <h:form id="formId" onsubmit="#{garden.updatePlant()}; return false">
             <h:inputHidden id="loc" value="#{garden.updateLocation}" />
             <h:inputHidden id="seedid" value="#{garden.updateSeedId}" />
+        </h:form>
+
+        <h:form id="harvestForm" onsubmit="#{garden.harvestPlant()}">
+            <h:inputHidden id="harvestLocation" value="#{garden.harvestLocation}" />
         </h:form>
     </body>
 </html>
