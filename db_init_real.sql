@@ -212,6 +212,14 @@ ALTER TABLE ONLY public.market_listings
 ALTER TABLE ONLY public.watering_events
     ADD CONSTRAINT watering_events_box_id_fkey FOREIGN KEY (box_id) REFERENCES public.grow_boxes(box_uuid);
 
+CREATE INDEX crops_inventory_user_id_idx ON public.crops_inventory USING btree (user_id);
+CREATE INDEX grow_boxes_user_id_idx ON public.grow_boxes USING btree (user_id);
+CREATE INDEX has_seeds_user_id_idx ON public.has_seeds USING btree (user_id);
+CREATE INDEX plant_species_days_to_harvest_idx ON public.plant_species USING btree (days_to_harvest);
+CREATE INDEX plant_species_name_idx ON public.plant_species USING btree (name);
+CREATE INDEX plant_species_plant_image_url_idx ON public.plant_species USING btree (plant_image_url);
+CREATE INDEX plant_species_points_for_eating_idx ON public.plant_species USING btree (points_for_eating);
+
 INSERT INTO "public"."plant_species"("species_id","name","lifespan_type","harvest_quantity","plant_image_url","days_to_harvest","points_for_eating")
 VALUES
 (1,E'potato',E'pernnial',1,E'https://i.imgur.com/fJORZNV.png',5,1),
