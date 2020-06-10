@@ -14,7 +14,7 @@ public class CropInventory {
     private Integer crops_inventory_id;
     @DatabaseField(canBeNull = false)
     private Integer user_id;
-    @DatabaseField(canBeNull = false, foreign = true, foreignAutoCreate = true, foreignAutoRefresh = true, columnName = "crop_id")
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoRefresh = true, columnName = "crop_id")
     private PlantSpecies crop_id;
     @DatabaseField(canBeNull = false)
     private Integer quantity;
