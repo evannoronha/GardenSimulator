@@ -4,20 +4,11 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <managed-bean>
-        <managed-bean-name>selector</managed-bean-name>
-        <managed-bean-class>Selector</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
         <managed-bean-name>util</managed-bean-name>
         <managed-bean-class>Util</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    <managed-bean>
-        <managed-bean-name>customer</managed-bean-name>
-        <managed-bean-class>Customer</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+
     <managed-bean>
         <managed-bean-name>user</managed-bean-name>
         <managed-bean-class>User</managed-bean-class>
@@ -28,56 +19,31 @@
         <managed-bean-class>Login</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    <managed-bean>
-        <managed-bean-name>growbox</managed-bean-name>
-        <managed-bean-class>GrowBox</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+
     <managed-bean>
         <managed-bean-name>garden</managed-bean-name>
         <managed-bean-class>Garden</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+
     <managed-bean>
         <managed-bean-name>seeds</managed-bean-name>
         <managed-bean-class>Seeds</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+
     <managed-bean>
         <managed-bean-name>crops</managed-bean-name>
         <managed-bean-class>Crops</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+
     <managed-bean>
         <managed-bean-name>marketplace</managed-bean-name>
         <managed-bean-class>Marketplace</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
-    <managed-bean>
-        <managed-bean-name>test</managed-bean-name>
-        <managed-bean-class>TestBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <!--    <managed-bean>
-        <managed-bean-name>plantSpecies</managed-bean-name>
-        <managed-bean-class>PlantSpecies</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>-->
-    <managed-bean>
-        <managed-bean-name>fruitingPlant</managed-bean-name>
-        <managed-bean-class>FruitingPlant</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>rootPlant</managed-bean-name>
-        <managed-bean-class>RootPlant</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>decorativePlant</managed-bean-name>
-        <managed-bean-class>DecorativePlant</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
+
     <navigation-rule>
         <from-view-id>
             /index.xhtml

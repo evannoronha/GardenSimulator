@@ -1,8 +1,4 @@
 
-/**
- *
- * @author robert
- */
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
@@ -10,13 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
-import javax.annotation.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.inject.Named;
 
-@Named(value = "growbox")
-@SessionScoped
-@ManagedBean
 @DatabaseTable(tableName = "grow_boxes")
 public class GrowBox extends LiveObject implements Serializable {
 
