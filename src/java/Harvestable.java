@@ -6,6 +6,8 @@ public abstract class Harvestable {
 
     public static String typeName;
 
+    protected int userid = Util.getInstance().getIDFromLogin();
+
     protected PlantSpecies plantSpecies;
     protected Integer quantity;
     protected Integer saleQuantity;

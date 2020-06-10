@@ -22,11 +22,11 @@ public class Garden implements Serializable {
 
     private static ArrayList<GrowBox> growBoxList;
 
-    public static void initalizeGarden(User userid, int startingGardenSize) throws SQLException, IOException {
+    public static void initalizeGarden(User userid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
-        Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
-
+        Dao<GrowBox, String> growBoxDao = new GrowBox().getDao(cs);
+        Dao<PlantSpecies, Integer> plantSpeciesDao = new PlantSpecies().getDao(cs);
+        int startingGardenSize = User.STARTING_GARDEN_SIZE;
         for (int i = 1; i <= startingGardenSize * startingGardenSize; i++) {
             GrowBox box = new GrowBox();
             box.setUserid(userid);
@@ -42,7 +42,7 @@ public class Garden implements Serializable {
 
     public List<GrowBox> getBoxes() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
+        Dao<GrowBox, String> growBoxDao = new GrowBox().getDao(cs);
 
         List<GrowBox> result = growBoxDao.queryForEq("user_id", userid);
         cs.close();
@@ -58,8 +58,8 @@ public class Garden implements Serializable {
 
     public void updatePlant() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
-        Dao<SeedInventory, Integer> seedInventoryDao = SeedInventory.getDao(cs);
+        Dao<GrowBox, String> growBoxDao = new GrowBox().getDao(cs);
+        Dao<SeedInventory, Integer> seedInventoryDao = new SeedInventory().getDao(cs);
 
         HashMap<String, Object> boxParams = new HashMap();
         boxParams.put("user_id", userid);
@@ -72,7 +72,7 @@ public class Garden implements Serializable {
         List<GrowBox> boxResult = growBoxDao.queryForFieldValues(boxParams);
         List<SeedInventory> seedResult = seedInventoryDao.queryForFieldValues(seedParams);
 
-        Dao<User, Integer> userDao = User.getDao(cs);
+        Dao<User, Integer> userDao = new User().getDao(cs);
         if (boxResult.isEmpty() || seedResult.isEmpty()) {
             cs.close();
             return;
@@ -106,8 +106,8 @@ public class Garden implements Serializable {
         }
 
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
-        Dao<CropInventory, Integer> cropInventoryDao = CropInventory.getDao(cs);
+        Dao<GrowBox, String> growBoxDao = new GrowBox().getDao(cs);
+        Dao<CropInventory, Integer> inventoryDao = new CropInventory().getDao(cs);
 
         HashMap<String, Object> boxParams = new HashMap();
         boxParams.put("user_id", userid);
@@ -122,7 +122,7 @@ public class Garden implements Serializable {
         PlantSpecies species;
         GrowBox box = boxes.get(0);
         try {
-            species = PlantSpecies.getDao(cs).queryForId(box.getPlantid().getSpecies_id());
+            species = (PlantSpecies) new PlantSpecies().getDao(cs).queryForId(box.getPlantid().getSpecies_id());
         } catch (NullPointerException e) {
             return;
         }
@@ -134,17 +134,17 @@ public class Garden implements Serializable {
         HashMap<String, Object> cropParams = new HashMap();
         cropParams.put("user_id", userid);
         cropParams.put("crop_id", species.species_id);
-        List<CropInventory> invs = cropInventoryDao.queryForFieldValuesArgs(cropParams);
+        List<CropInventory> invs = inventoryDao.queryForFieldValuesArgs(cropParams);
         if (invs.isEmpty()) {
             CropInventory harvested = new CropInventory();
             harvested.setCrop_id(species);
             harvested.setQuantity(species.harvest_quantity);
             harvested.setUser_id(userid);
-            cropInventoryDao.create(harvested);
+            inventoryDao.create(harvested);
         } else {
             CropInventory harvested = invs.get(0);
             harvested.setQuantity(harvested.getQuantity() + species.getHarvest_quantity());
-            cropInventoryDao.update(harvested);
+            inventoryDao.update(harvested);
         }
         cs.close();
     }

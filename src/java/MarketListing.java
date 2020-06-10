@@ -1,10 +1,6 @@
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
-import java.sql.SQLException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,7 +12,7 @@ import java.sql.SQLException;
  * @author Evan
  */
 @DatabaseTable(tableName = "market_listings")
-public class MarketListing {
+public class MarketListing extends LiveObject {
 
     @DatabaseField(generatedId = true, readOnly = true)
     private Integer listing_id;
@@ -33,19 +29,6 @@ public class MarketListing {
 
     public MarketListing() {
 
-    }
-
-    public static Dao<MarketListing, Integer> getDao(ConnectionSource cs) throws SQLException {
-        return DaoManager.createDao(cs, MarketListing.class);
-    }
-
-    public MarketListing(Integer listing_id, User seller_id, PlantSpecies plant_id, Double price, Integer quantity, String listing_type) {
-        this.listing_id = listing_id;
-        this.seller_id = seller_id;
-        this.plant_id = plant_id;
-        this.price = price;
-        this.quantity = quantity;
-        this.listing_type = listing_type;
     }
 
     public Integer getListing_id() {

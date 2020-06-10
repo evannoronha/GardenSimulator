@@ -1,18 +1,13 @@
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 import java.io.IOException;
-import java.io.Serializable;
 import java.sql.SQLException;
-import java.text.ParseException;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
@@ -20,18 +15,19 @@ import javax.inject.Named;
 @SessionScoped
 @ManagedBean
 @DatabaseTable(tableName = "users")
-public class User implements Serializable {
+public class User extends LiveObject {
 
-    private final static Double STARTING_CASH = 1000.00;
+    public final static Double STARTING_CASH = 1000.00;
     public final static Integer PENALTY_FOR_ADVANCING_DAYS = 1;
+    public final static Integer STARTING_FARM_AGE = 0;
+    public final static int STARTING_GARDEN_SIZE = 5;
+    public final static int STARTING_SCORE = 5;
 
     public Integer getPENALTY_FOR_ADVANCING_DAYS() {
         return PENALTY_FOR_ADVANCING_DAYS;
     }
-    private final static int STARTING_GARDEN_SIZE = 5;
-    private final static int STARTING_SCORE = 5;
 
-    @DatabaseField(generatedId = true)
+    @DatabaseField(generatedId = true, readOnly = true)
     protected int user_id;
     @DatabaseField
     protected String login;
@@ -46,52 +42,15 @@ public class User implements Serializable {
     @DatabaseField
     protected int score;
 
-    public static Dao<User, Integer> getDao(ConnectionSource cs) throws SQLException {
-        return DaoManager.createDao(cs, User.class);
-    }
-
-    public String create() throws SQLException, ParseException, IOException {
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = getDao(cs);
-
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setCash(STARTING_CASH);
-        user.setFarmAge(farmAge);
-        user.setGardenSize(STARTING_GARDEN_SIZE);
-        user.setScore(STARTING_SCORE);
-
-        userDao.create(user);
-        cs.close();
-        Garden.initalizeGarden(user, STARTING_GARDEN_SIZE);
-        return "createUser";
-    }
-
-    public User getLoggedIn() throws SQLException, IOException {
-        return Util.getInstance().getLoggedInUser();
+    public User() {
     }
 
     public static User getByUserid(Integer userid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = getDao(cs);
+        Dao<User, Integer> userDao = new User().getDao(cs);
         User tmpUser = userDao.queryForId(userid);
         cs.close();
         return tmpUser;
-    }
-
-    public void validateUniqueLogin(FacesContext context, UIComponent componentToValidate, Object value)
-            throws ValidatorException, SQLException, IOException {
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = getDao(cs);
-
-        if (userDao.queryForEq("login", value).size() > 0) {
-            FacesMessage errorMessage = new FacesMessage("Login is not unique");
-            cs.close();
-            throw new ValidatorException(errorMessage);
-        } else {
-            cs.close();
-        }
     }
 
     public String advanceTime() throws SQLException, IOException {

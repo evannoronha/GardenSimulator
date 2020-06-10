@@ -4,6 +4,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
@@ -54,7 +55,7 @@ public class Login implements Serializable {
         this.password = value.toString();
 
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = User.getDao(cs);
+        Dao<User, Integer> userDao = new User().getDao(cs);
 
         List<User> user = userDao.queryForEq("login", this.login);
         cs.close();
@@ -65,6 +66,38 @@ public class Login implements Serializable {
             FacesMessage errorMessage = new FacesMessage("Wrong login/password");
             throw new ValidatorException(errorMessage);
         }
+    }
+
+    public void validateUniqueLogin(FacesContext context, UIComponent componentToValidate, Object value)
+            throws ValidatorException, SQLException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = new User().getDao(cs);
+
+        if (userDao.queryForEq("login", value).size() > 0) {
+            FacesMessage errorMessage = new FacesMessage("Login is not unique");
+            cs.close();
+            throw new ValidatorException(errorMessage);
+        } else {
+            cs.close();
+        }
+    }
+
+    public String createUser() throws SQLException, ParseException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = new User().getDao(cs);
+
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setCash(User.STARTING_CASH);
+        user.setFarmAge(User.STARTING_FARM_AGE);
+        user.setGardenSize(User.STARTING_GARDEN_SIZE);
+        user.setScore(User.STARTING_SCORE);
+
+        userDao.create(user);
+        cs.close();
+        Garden.initalizeGarden(user);
+        return "createUser";
     }
 
     public String go() throws SQLException {

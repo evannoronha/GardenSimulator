@@ -21,7 +21,6 @@ public class Crops extends Harvestable implements Serializable {
 
     public static String typeName = "crops";
     public static String plantIdColumn = "crop_id";
-    private int userid = Util.getInstance().getIDFromLogin();
 
     private Integer eatSpeciesId;
     private Integer eatQuantity;
@@ -52,7 +51,7 @@ public class Crops extends Harvestable implements Serializable {
 
     public List<CropInventory> getCrops() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
+        Dao<CropInventory, Integer> inventoryDao = new CropInventory().getDao(cs);
         List<CropInventory> result = inventoryDao.queryForEq("user_id", userid);
         cs.close();
         return result;
@@ -69,8 +68,8 @@ public class Crops extends Harvestable implements Serializable {
 
         ConnectionSource cs = DBConnect.getConnectionSource();
 
-        Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
-        Dao<PlantSpecies, Integer> plantDao = PlantSpecies.getDao(cs);
+        Dao<MarketListing, Integer> listingDao = new MarketListing().getDao(cs);
+        Dao<PlantSpecies, Integer> plantDao = new PlantSpecies().getDao(cs);
 
         PlantSpecies saleSpecies = plantDao.queryForId(saleSpeciesId);
 
@@ -83,7 +82,7 @@ public class Crops extends Harvestable implements Serializable {
         listing.setListing_type(this.typeName);
         listingDao.create(listing);
 
-        Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
+        Dao<CropInventory, Integer> inventoryDao = new CropInventory().getDao(cs);
 
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
@@ -102,7 +101,7 @@ public class Crops extends Harvestable implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         HashMap<String, Object> params = new HashMap();
 
-        Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
+        Dao<CropInventory, Integer> inventoryDao = new CropInventory().getDao(cs);
 
         params.put("user_id", userid);
         params.put("crop_id", seedId);
@@ -119,7 +118,7 @@ public class Crops extends Harvestable implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         HashMap<String, Object> params = new HashMap();
 
-        Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
+        Dao<CropInventory, Integer> inventoryDao = new CropInventory().getDao(cs);
 
         params.put("user_id", userid);
         params.put("crop_id", saleSpeciesId);
@@ -137,7 +136,7 @@ public class Crops extends Harvestable implements Serializable {
     public void addToInventory() throws SQLException, IOException {
         //do I do quantity here? or pass in quantity as a variable
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
+        Dao<CropInventory, Integer> inventoryDao = new CropInventory().getDao(cs);
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
         params.put(plantIdColumn, plantSpecies.getSpecies_id());
@@ -159,7 +158,7 @@ public class Crops extends Harvestable implements Serializable {
 
     public String eatCrops() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
+        Dao<CropInventory, Integer> inventoryDao = new CropInventory().getDao(cs);
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
         params.put(plantIdColumn, eatSpeciesId);
@@ -169,7 +168,7 @@ public class Crops extends Harvestable implements Serializable {
         inv.setQuantity(inv.getQuantity() - eatQuantity);
         inventoryDao.update(inv);
 
-        Dao<User, Integer> userDao = User.getDao(cs);
+        Dao<User, Integer> userDao = new User().getDao(cs);
         User thisUser = Util.getInstance().getLoggedInUser();
         thisUser.setScore(thisUser.getScore() + pointsForEating);
         userDao.update(thisUser);

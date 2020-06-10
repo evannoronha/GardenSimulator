@@ -1,14 +1,10 @@
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
-import java.sql.SQLException;
 
 @DatabaseTable(tableName = "crops_inventory")
 
-public class CropInventory {
+public class CropInventory extends LiveObject {
 
     @DatabaseField(generatedId = true, readOnly = true)
     private Integer crops_inventory_id;
@@ -20,16 +16,6 @@ public class CropInventory {
     private Integer quantity;
 
     public CropInventory() {
-    }
-
-    public static Dao<CropInventory, Integer> getDao(ConnectionSource cs) throws SQLException {
-        return DaoManager.createDao(cs, CropInventory.class);
-    }
-
-    public CropInventory(Integer user_id, PlantSpecies crop_id, Integer quantity) {
-        this.user_id = user_id;
-        this.crop_id = crop_id;
-        this.quantity = quantity;
     }
 
     public Integer getUser_id() {

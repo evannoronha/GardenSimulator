@@ -52,7 +52,7 @@ public class Util implements Serializable {
             Login elLogin = (Login) elContext.getELResolver().getValue(elContext, null, "login");
 
             ConnectionSource cs = DBConnect.getConnectionSource();
-            Dao<User, Integer> userDao = User.getDao(cs);
+            Dao<User, Integer> userDao = new User().getDao(cs);
 
             List<User> users = userDao.queryForEq("login", elLogin.getLogin());
             try {
@@ -82,8 +82,8 @@ public class Util implements Serializable {
         JSONObject json = new JSONObject();
 
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = User.getDao(cs);
-        Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
+        Dao<User, Integer> userDao = new User().getDao(cs);
+        Dao<PlantSpecies, Integer> plantSpeciesDao = new PlantSpecies().getDao(cs);
 
         json.put("farm_age", userDao.queryForId(Util.getInstance().getIDFromLogin()).getFarmAge());
         Garden garden = new Garden();
@@ -110,7 +110,7 @@ public class Util implements Serializable {
         Seeds s = new Seeds();
 
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
+        Dao<PlantSpecies, Integer> plantSpeciesDao = new PlantSpecies().getDao(cs);
 
         List<SeedInventory> inventoryList = s.getSeeds();
         for (SeedInventory seed : inventoryList) {

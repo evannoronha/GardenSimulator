@@ -1,6 +1,5 @@
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.io.Serializable;
@@ -22,7 +21,6 @@ public class Seeds extends Harvestable implements Serializable {
 
     public static String typeName = "seeds";
     public static String plantIdColumn = "seed_id";
-    private int userid = Util.getInstance().getIDFromLogin();
 
     public Seeds() {
         super();
@@ -34,7 +32,7 @@ public class Seeds extends Harvestable implements Serializable {
 
     public List<SeedInventory> getSeeds() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
+        Dao<SeedInventory, Integer> inventoryDao = new SeedInventory().getDao(cs);
         List<SeedInventory> listSeeds = inventoryDao.queryForEq("user_id", userid);
         cs.close();
         return listSeeds;
@@ -48,12 +46,6 @@ public class Seeds extends Harvestable implements Serializable {
         return String.valueOf(quantity) + " " + "of  " + plantSpecies.toString();
     }
 
-    //TODO
-    public void plantSeeds() {
-        //set the current type of seed to active
-        return;
-    }
-
     public String sell() throws SQLException, IOException {
         if (!this.userHasQuantity()) {
             return "fail";
@@ -61,10 +53,10 @@ public class Seeds extends Harvestable implements Serializable {
 
         ConnectionSource cs = DBConnect.getConnectionSource();
 
-        Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
-        Dao<PlantSpecies, Integer> plantDao = PlantSpecies.getDao(cs);
+        Dao<MarketListing, Integer> listingDao = new MarketListing().getDao(cs);
+        Dao<PlantSpecies, Integer> plantSpeciesDao = new PlantSpecies().getDao(cs);
 
-        PlantSpecies saleSpecies = plantDao.queryForId(saleSpeciesId);
+        PlantSpecies saleSpecies = plantSpeciesDao.queryForId(saleSpeciesId);
 
         MarketListing listing = new MarketListing();
         listing.setSeller_id(User.getByUserid(userid));
@@ -74,7 +66,7 @@ public class Seeds extends Harvestable implements Serializable {
         listing.setListing_type(this.typeName);
         listingDao.create(listing);
 
-        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
+        Dao<SeedInventory, Integer> inventoryDao = new SeedInventory().getDao(cs);
 
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
@@ -87,17 +79,13 @@ public class Seeds extends Harvestable implements Serializable {
         return "success";
     }
 
-    public Dao<SeedInventory, Integer> getDao(ConnectionSource cs) throws SQLException {
-        return DaoManager.createDao(cs, SeedInventory.class);
-    }
-
     public void userOwnsSeeds(FacesContext context, UIComponent componentToValidate, Object value) throws SQLException, ValidatorException, IOException {
         int seedId = (Integer) (value);
 
         ConnectionSource cs = DBConnect.getConnectionSource();
         HashMap<String, Object> params = new HashMap();
 
-        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
+        Dao<SeedInventory, Integer> inventoryDao = new SeedInventory().getDao(cs);
 
         params.put("user_id", userid);
         params.put(this.plantIdColumn, seedId);
@@ -113,7 +101,7 @@ public class Seeds extends Harvestable implements Serializable {
     public boolean userHasQuantity() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         HashMap<String, Object> params = new HashMap();
-        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
+        Dao<SeedInventory, Integer> inventoryDao = new SeedInventory().getDao(cs);
         params.put("user_id", userid);
         params.put(this.plantIdColumn, saleSpeciesId);
         List<SeedInventory> result = inventoryDao.queryForFieldValues(params);
@@ -131,7 +119,7 @@ public class Seeds extends Harvestable implements Serializable {
     public void addToInventory() throws SQLException, IOException {
         //do I do quantity here? or pass in quantity as a variable
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
+        Dao<SeedInventory, Integer> inventoryDao = new SeedInventory().getDao(cs);
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
         params.put(plantIdColumn, plantSpecies.getSpecies_id());
