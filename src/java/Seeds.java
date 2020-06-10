@@ -46,12 +46,6 @@ public class Seeds extends Harvestable implements Serializable {
         return String.valueOf(quantity) + " " + "of  " + plantSpecies.toString();
     }
 
-    //TODO
-    public void plantSeeds() {
-        //set the current type of seed to active
-        return;
-    }
-
     public String sell() throws SQLException, IOException {
         if (!this.userHasQuantity()) {
             return "fail";
