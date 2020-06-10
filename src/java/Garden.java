@@ -112,7 +112,6 @@ public class Garden implements Serializable {
             inv.setQuantity(inv.getQuantity() - 1);
             seedInventoryDao.update(inv);
             cs.close();
-            System.out.println("\n\n\n" + updateLocation + "    " + updateSeedId + "   " + box.boxid);
         }
     }
 
