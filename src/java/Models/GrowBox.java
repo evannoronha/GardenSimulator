@@ -1,13 +1,8 @@
 package Models;
 
-
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
-import java.io.IOException;
 import java.io.Serializable;
-import java.sql.SQLException;
 
 @DatabaseTable(tableName = "grow_boxes")
 public class GrowBox extends LiveObject implements Serializable {
@@ -65,14 +60,5 @@ public class GrowBox extends LiveObject implements Serializable {
 
     public void setDay_planted(Integer day_planted) {
         this.day_planted = day_planted;
-    }
-
-    public GrowBox get() throws SQLException, IOException {
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, String> growBoxDao = getDao(cs);
-
-        GrowBox result = growBoxDao.queryForId(this.boxid);
-        cs.close();
-        return result;
     }
 }
