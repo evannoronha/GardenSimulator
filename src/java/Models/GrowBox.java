@@ -19,7 +19,6 @@ public class GrowBox extends LiveObject implements Serializable {
     protected Integer day_planted;
 
     public GrowBox() {
-
     }
 
     public String getBoxid() {

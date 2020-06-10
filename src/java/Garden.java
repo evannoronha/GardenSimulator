@@ -1,9 +1,9 @@
 
+import Models.CropInventory;
 import Models.GrowBox;
 import Models.PlantSpecies;
 import Models.SeedInventory;
 import Models.User;
-import Models.CropInventory;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
