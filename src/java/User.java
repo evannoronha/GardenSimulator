@@ -4,7 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 import java.io.IOException;
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.ParseException;
 import javax.annotation.ManagedBean;
@@ -19,7 +18,7 @@ import javax.inject.Named;
 @SessionScoped
 @ManagedBean
 @DatabaseTable(tableName = "users")
-public class User extends LiveObject implements Serializable {
+public class User extends LiveObject {
 
     private final static Double STARTING_CASH = 1000.00;
     public final static Integer PENALTY_FOR_ADVANCING_DAYS = 1;
@@ -44,6 +43,9 @@ public class User extends LiveObject implements Serializable {
     protected int gardenSize;
     @DatabaseField
     protected int score;
+
+    public User() {
+    }
 
     public String create() throws SQLException, ParseException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
