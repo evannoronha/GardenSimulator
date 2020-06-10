@@ -63,7 +63,7 @@ public class Login implements Serializable {
         if (user.size() == 0) {
             FacesMessage errorMessage = new FacesMessage("Login not found");
             throw new ValidatorException(errorMessage);
-        } else if (!user.get(0).password.equals(this.password)) {
+        } else if (!user.get(0).getPassword().equals(this.password)) {
             FacesMessage errorMessage = new FacesMessage("Wrong login/password");
             throw new ValidatorException(errorMessage);
         }
