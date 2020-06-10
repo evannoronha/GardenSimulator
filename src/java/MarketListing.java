@@ -31,15 +31,6 @@ public class MarketListing extends LiveObject {
 
     }
 
-    public MarketListing(Integer listing_id, User seller_id, PlantSpecies plant_id, Double price, Integer quantity, String listing_type) {
-        this.listing_id = listing_id;
-        this.seller_id = seller_id;
-        this.plant_id = plant_id;
-        this.price = price;
-        this.quantity = quantity;
-        this.listing_type = listing_type;
-    }
-
     public Integer getListing_id() {
         return listing_id;
     }
