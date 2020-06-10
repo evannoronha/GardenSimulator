@@ -31,16 +31,6 @@ public class PlantSpecies extends LiveObject {
         this.species_id = species_id;
     }
 
-    public PlantSpecies(Integer species_id, String name, String lifespan_type, Integer harvest_quantity, Integer days_to_harvest, String plant_image_url, Integer pointsForEating) {
-        this.species_id = species_id;
-        this.name = name;
-        this.lifespan_type = lifespan_type;
-        this.harvest_quantity = harvest_quantity;
-        this.days_to_harvest = days_to_harvest;
-        this.plant_image_url = plant_image_url;
-        this.pointsForEating = pointsForEating;
-    }
-
     public static PlantSpecies getPlantSpeciesByID(Integer plantid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<PlantSpecies, Integer> plantSpeciesDao = new PlantSpecies().getDao(cs);
