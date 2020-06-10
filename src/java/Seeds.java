@@ -38,10 +38,6 @@ public class Seeds extends Harvestable implements Serializable {
         return listSeeds;
     }
 
-    public String showSeedInventory() {
-        return "showSeedInventory";
-    }
-
     public String toString() {
         return String.valueOf(quantity) + " " + "of  " + plantSpecies.toString();
     }

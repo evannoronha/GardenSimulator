@@ -52,10 +52,6 @@ public class Garden implements Serializable {
         return result;
     }
 
-    public String viewGarden() {
-        return "ViewGarden";
-    }
-
     private int updateLocation;
     private int updateSeedId;
 

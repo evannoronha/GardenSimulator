@@ -57,10 +57,6 @@ public class Crops extends Harvestable implements Serializable {
         return result;
     }
 
-    public String showCropInventory() {
-        return "showCropInventory";
-    }
-
     public String sell() throws SQLException, IOException {
         if (!this.userHasQuantity()) {
             return "fail";
