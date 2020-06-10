@@ -59,7 +59,7 @@ public class Seeds extends Harvestable implements Serializable {
         PlantSpecies saleSpecies = plantSpeciesDao.queryForId(saleSpeciesId);
 
         MarketListing listing = new MarketListing();
-        listing.setSeller_id(User.getByUserid(userid));
+        listing.setSeller_id(user);
         listing.setPlant_id(saleSpecies);
         listing.setPrice(salePrice);
         listing.setQuantity(saleQuantity);

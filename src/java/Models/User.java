@@ -1,6 +1,5 @@
 package Models;
 
-
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
@@ -34,14 +33,6 @@ public class User extends LiveObject {
     protected int score;
 
     public User() {
-    }
-
-    public static User getByUserid(Integer userid) throws SQLException, IOException {
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = new User().getDao(cs);
-        User tmpUser = userDao.queryForId(userid);
-        cs.close();
-        return tmpUser;
     }
 
     public String advanceTime() throws SQLException, IOException {

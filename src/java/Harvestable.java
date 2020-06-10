@@ -1,5 +1,6 @@
 
 import Models.PlantSpecies;
+import Models.User;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -7,6 +8,7 @@ public abstract class Harvestable {
 
     public static String typeName;
 
+    protected User user = Util.getInstance().getLoggedInUser();
     protected int userid = Util.getInstance().getIDFromLogin();
 
     protected PlantSpecies plantSpecies;
