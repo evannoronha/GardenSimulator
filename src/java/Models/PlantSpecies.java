@@ -1,12 +1,7 @@
 package Models;
 
-
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
-import java.io.IOException;
-import java.sql.SQLException;
 
 @DatabaseTable(tableName = "plant_species")
 public class PlantSpecies extends LiveObject {
@@ -31,16 +26,6 @@ public class PlantSpecies extends LiveObject {
 
     public PlantSpecies(Integer species_id) {
         this.species_id = species_id;
-    }
-
-    public static PlantSpecies getPlantSpeciesByID(Integer plantid) throws SQLException, IOException {
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<PlantSpecies, Integer> plantSpeciesDao = new PlantSpecies().getDao(cs);
-
-        PlantSpecies tmpUser = plantSpeciesDao.queryForId(plantid);
-
-        cs.close();
-        return tmpUser;
     }
 
     public Integer getSpecies_id() {
