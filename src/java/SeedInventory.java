@@ -26,12 +26,6 @@ public class SeedInventory extends LiveObject {
     public SeedInventory() {
     }
 
-    public SeedInventory(Integer user_id, PlantSpecies seed_id, Integer quantity) {
-        this.user_id = user_id;
-        this.seed_id = seed_id;
-        this.quantity = quantity;
-    }
-
     public Integer getUser_id() {
         return user_id;
     }
