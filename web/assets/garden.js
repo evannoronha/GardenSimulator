@@ -1,6 +1,8 @@
 document.body.onload = addElement;
 function addElement() {
     document.querySelector("input.plantButton").disabled = true;
+    document.querySelector("input.harvestButton").disabled = true;
+
     //Set # of columns
     const gridContainer = document.querySelector(".grid-container");
     const GRID_COLUMNS = gridContainer.dataset.gridcolumns;
@@ -48,7 +50,8 @@ function addElement() {
                 document.getElementById("harvestForm:harvestLocation").value = newDiv.dataset.id;
                 var i = newDiv.getElementsByTagName('img')[0];
                 i.parentNode.removeChild(i);
-                document.getElementById("harvestForm").submit();
+                document.querySelector(".harvestButton").disabled = false;
+                document.querySelector(".harvestButton").click();
             }
         }
 

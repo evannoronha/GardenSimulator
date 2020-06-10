@@ -45,8 +45,11 @@ and open the template in the editor.
                              action="#{garden.plantSeed()}" />
         </h:form>
 
-        <h:form id="harvestForm" onsubmit="#{garden.harvestPlant()}">
+        <h:form id="harvestForm">
             <h:inputHidden id="harvestLocation" value="#{garden.harvestLocation}" />
+            <h:commandButton value = "Confirm Harvest"
+                             styleClass ="harvestButton"
+                             action="#{garden.harvestPlant()}" />
         </h:form>
 
         <ezcomp:footer></ezcomp:footer>
