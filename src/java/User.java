@@ -75,9 +75,7 @@ public class User implements Serializable {
     public static User getByUserid(Integer userid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<User, Integer> userDao = getDao(cs);
-
         User tmpUser = userDao.queryForId(userid);
-
         cs.close();
         return tmpUser;
     }
