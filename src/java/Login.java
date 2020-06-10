@@ -1,4 +1,5 @@
 
+import Models.User;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;

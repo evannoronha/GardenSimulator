@@ -1,3 +1,5 @@
+package Models;
+
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;

@@ -1,4 +1,5 @@
 
+import Models.PlantSpecies;
 import java.io.IOException;
 import java.sql.SQLException;
 
