@@ -18,12 +18,6 @@ public class CropInventory extends LiveObject {
     public CropInventory() {
     }
 
-    public CropInventory(Integer user_id, PlantSpecies crop_id, Integer quantity) {
-        this.user_id = user_id;
-        this.crop_id = crop_id;
-        this.quantity = quantity;
-    }
-
     public Integer getUser_id() {
         return user_id;
     }
