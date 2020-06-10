@@ -12,22 +12,21 @@
 
         <h:form>
             <div class="loginForm">
-                Login: <h:inputText value="#{user.login}" required ="true"
+                Login: <h:inputText value="#{login.login}" required ="true"
                                     requiredMessage="Your must enter User login"
                                     validatorMessage="Login already exists. Pick a unique one"
-                                    validator="#{user.validateUniqueLogin}"
+                                    validator="#{login.validateUniqueLogin}"
                                     class="inputTextField"
                                     id="login"/>
                 <h:message for="login" style="color:red;margin:8px;"/>
 
-                Password: <h:inputSecret value="#{user.password}" required ="true"
+                Password: <h:inputSecret value="#{login.password}" required ="true"
                                          requiredMessage="Your must enter a password"
                                          class="inputTextField"
-                                         type="password"
                                          id="userPassword"/>
                 <h:message for="userPassword" style="color:red;margin:8px;"/>
                 <br/>
-                <h:commandButton value="Go" action="#{user.create}" styleClass="loginButton"/>
+                <h:commandButton value="Go" action="#{login.createUser}" styleClass="loginButton"/>
             </div>
         </h:form>
     </h:body>

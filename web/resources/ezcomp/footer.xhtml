@@ -14,8 +14,8 @@
             <h:form><h:commandButton
                     value="Advance One Day (-#{user.PENALTY_FOR_ADVANCING_DAYS} point)"
                     styleClass="greenButton"
-                    disabled="#{user.getLoggedIn().canNotAdvance()}"
-                    action="#{user.getLoggedIn().advanceTime()}"/>
+                    disabled="#{util.loggedInUser.canNotAdvance()}"
+                    action="#{util.loggedInUser.advanceTime()}"/>
             </h:form>
         </div>
 

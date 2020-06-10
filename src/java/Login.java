@@ -67,6 +67,38 @@ public class Login implements Serializable {
         }
     }
 
+    public void validateUniqueLogin(FacesContext context, UIComponent componentToValidate, Object value)
+            throws ValidatorException, SQLException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = new User().getDao(cs);
+
+        if (userDao.queryForEq("login", value).size() > 0) {
+            FacesMessage errorMessage = new FacesMessage("Login is not unique");
+            cs.close();
+            throw new ValidatorException(errorMessage);
+        } else {
+            cs.close();
+        }
+    }
+
+    public String createUser() throws SQLException, ParseException, IOException {
+        ConnectionSource cs = DBConnect.getConnectionSource();
+        Dao<User, Integer> userDao = new User().getDao(cs);
+
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setCash(User.STARTING_CASH);
+        user.setFarmAge(User.STARTING_FARM_AGE);
+        user.setGardenSize(User.STARTING_GARDEN_SIZE);
+        user.setScore(User.STARTING_SCORE);
+
+        userDao.create(user);
+        cs.close();
+        Garden.initalizeGarden(user);
+        return "createUser";
+    }
+
     public String go() throws SQLException {
         return "success";
     }

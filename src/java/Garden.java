@@ -22,11 +22,11 @@ public class Garden implements Serializable {
 
     private static ArrayList<GrowBox> growBoxList;
 
-    public static void initalizeGarden(User userid, int startingGardenSize) throws SQLException, IOException {
+    public static void initalizeGarden(User userid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = new GrowBox().getDao(cs);
         Dao<PlantSpecies, Integer> plantSpeciesDao = new PlantSpecies().getDao(cs);
-
+        int startingGardenSize = User.STARTING_GARDEN_SIZE;
         for (int i = 1; i <= startingGardenSize * startingGardenSize; i++) {
             GrowBox box = new GrowBox();
             box.setUserid(userid);

@@ -19,11 +19,11 @@ and open the template in the editor.
     <ezcomp:header></ezcomp:header>
     <body class="home-page">
         <h1>
-            Welcome #{user.getLoggedIn().login}!
+            Welcome #{util.loggedInUser.login}!
             <br/>
-            You have #{user.getLoggedIn().score} points and $#{user.getLoggedIn().getCashAsDecimal()}
+            You have #{util.loggedInUser.score} points and $#{util.loggedInUser.getCashAsDecimal()}
             <br/>
-            Your garden is #{user.getLoggedIn().farmAge} days old!
+            Your garden is #{util.loggedInUser.farmAge} days old!
         </h1>
         <img id="change" src="../assets/seeds_bag.jpg" draggable="false" ondragstart="drag(event)" width="80" height="80"></img>
 
@@ -31,7 +31,7 @@ and open the template in the editor.
             <option value="select">select seed type</option>
         </select>
 
-        <div id="grid" class="grid-container" data-gridcolumns="#{user.getLoggedIn().gardenSize}" data-imgjson="#{util.getBoxesJson()}">
+        <div id="grid" class="grid-container" data-gridcolumns="#{util.loggedInUser.gardenSize}" data-imgjson="#{util.getBoxesJson()}">
         </div>
         <ezcomp:footer></ezcomp:footer>
 
