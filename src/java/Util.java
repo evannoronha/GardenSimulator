@@ -95,15 +95,15 @@ public class Util implements Serializable {
         for (GrowBox box : growBoxList) {
             JSONObject item = new JSONObject();
 
-            item.put("plant_id", box.plantid);
-            item.put("day_planted", box.day_planted);
+            item.put("plant_id", box.getPlantid().getSpecies_id());
+            item.put("day_planted", box.getDay_planted());
 
-            if (box.plantid != null) {
-                PlantSpecies species = plantSpeciesDao.queryForId(box.plantid.species_id);
+            if (box.getPlantid() != null) {
+                PlantSpecies species = plantSpeciesDao.queryForId(box.getPlantid().getSpecies_id());
                 item.put("plant_url", species.getPlant_image_url());
                 item.put("daysToHarvest", species.getDays_to_harvest());
             }
-            json.put(Integer.toString(box.location), item);
+            json.put(Integer.toString(box.getLocation()), item);
         }
         cs.close();
         return json.toString();
@@ -120,11 +120,11 @@ public class Util implements Serializable {
         for (SeedInventory seed : inventoryList) {
             JSONObject item = new JSONObject();
 
-            PlantSpecies species = plantSpeciesDao.queryForId(seed.getSeed_id().species_id);
+            PlantSpecies species = plantSpeciesDao.queryForId(seed.getSeed_id().getSpecies_id());
             item.put("name", species.getName());
             item.put("quantity", seed.getQuantity());
             item.put("image_url", species.getPlant_image_url());
-            json.put(Integer.toString(species.species_id), item);
+            json.put(Integer.toString(species.getSpecies_id()), item);
         }
         cs.close();
         return json.toString();
