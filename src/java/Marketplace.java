@@ -41,20 +41,20 @@ public class Marketplace {
     public List<MarketListing> getListings() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
 
-        QueryBuilder<MarketListing, Integer> listingQb = MarketListing.getDao(cs).queryBuilder();
-        QueryBuilder<PlantSpecies, Integer> plantQb = PlantSpecies.getDao(cs).queryBuilder();
-        QueryBuilder<User, Integer> userQb = User.getDao(cs).queryBuilder();
+        QueryBuilder<MarketListing, Integer> listingQb = new MarketListing().getDao(cs).queryBuilder();
+        QueryBuilder<PlantSpecies, Integer> plantQb = new PlantSpecies().getDao(cs).queryBuilder();
+        QueryBuilder<User, Integer> userQb = new User().getDao(cs).queryBuilder();
         userQb.where().ne("user_id", userid);
 
         List<MarketListing> listings = listingQb.join(plantQb).join(userQb).query();
         cs.close();
-        return listings;
+        return new MarketListing().getDao(cs).queryForAll();
     }
 
     public String purchaseListing() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
 
-        Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
+        Dao<MarketListing, Integer> listingDao = new MarketListing().getDao(cs);
         MarketListing thisListing = listingDao.queryForId(purchaseListingId);
 
         Double salePrice = thisListing.getPrice();
@@ -74,7 +74,7 @@ public class Marketplace {
         }
 
         //pay the seller
-        Dao<User, Integer> userDao = User.getDao(cs);
+        Dao<User, Integer> userDao = new User().getDao(cs);
         User seller = userDao.queryForId(sellerId);
         seller.setCash(seller.getCash() + salePrice);
         userDao.update(seller);

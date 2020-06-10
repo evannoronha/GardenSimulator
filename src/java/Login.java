@@ -54,7 +54,7 @@ public class Login implements Serializable {
         this.password = value.toString();
 
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = User.getDao(cs);
+        Dao<User, Integer> userDao = new User().getDao(cs);
 
         List<User> user = userDao.queryForEq("login", this.login);
         cs.close();

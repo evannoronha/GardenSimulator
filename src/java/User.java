@@ -1,6 +1,5 @@
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
@@ -20,7 +19,7 @@ import javax.inject.Named;
 @SessionScoped
 @ManagedBean
 @DatabaseTable(tableName = "users")
-public class User implements Serializable {
+public class User extends LiveObject implements Serializable {
 
     private final static Double STARTING_CASH = 1000.00;
     public final static Integer PENALTY_FOR_ADVANCING_DAYS = 1;
@@ -46,10 +45,6 @@ public class User implements Serializable {
     @DatabaseField
     protected int score;
 
-    public static Dao<User, Integer> getDao(ConnectionSource cs) throws SQLException {
-        return DaoManager.createDao(cs, User.class);
-    }
-
     public String create() throws SQLException, ParseException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<User, Integer> userDao = getDao(cs);
@@ -74,7 +69,7 @@ public class User implements Serializable {
 
     public static User getByUserid(Integer userid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = getDao(cs);
+        Dao<User, Integer> userDao = new User().getDao(cs);
         User tmpUser = userDao.queryForId(userid);
         cs.close();
         return tmpUser;

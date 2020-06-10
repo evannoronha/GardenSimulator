@@ -1,6 +1,5 @@
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
@@ -8,7 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 @DatabaseTable(tableName = "plant_species")
-public class PlantSpecies {
+public class PlantSpecies extends LiveObject {
 
     @DatabaseField(generatedId = true, columnName = "species_id", readOnly = true)
     protected Integer species_id;
@@ -42,13 +41,9 @@ public class PlantSpecies {
         this.pointsForEating = pointsForEating;
     }
 
-    public static Dao<PlantSpecies, Integer> getDao(ConnectionSource cs) throws SQLException {
-        return DaoManager.createDao(cs, PlantSpecies.class);
-    }
-
     public static PlantSpecies getPlantSpeciesByID(Integer plantid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<PlantSpecies, Integer> plantSpeciesDao = getDao(cs);
+        Dao<PlantSpecies, Integer> plantSpeciesDao = new PlantSpecies().getDao(cs);
 
         PlantSpecies tmpUser = plantSpeciesDao.queryForId(plantid);
 

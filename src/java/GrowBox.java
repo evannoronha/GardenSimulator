@@ -4,7 +4,6 @@
  * @author robert
  */
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
@@ -20,7 +19,7 @@ import javax.inject.Named;
 @SessionScoped
 @ManagedBean
 @DatabaseTable(tableName = "grow_boxes")
-public class GrowBox implements Serializable {
+public class GrowBox extends LiveObject implements Serializable {
 
     @DatabaseField(id = true, columnName = "box_uuid", canBeNull = true, readOnly = true)
     protected String boxid;
@@ -42,10 +41,6 @@ public class GrowBox implements Serializable {
         this.plantid = plantid;
         this.location = location;
         this.day_planted = day_planted;
-    }
-
-    public static Dao<GrowBox, String> getDao(ConnectionSource cs) throws SQLException {
-        return DaoManager.createDao(cs, GrowBox.class);
     }
 
     public String create() throws SQLException, ParseException, IOException {
