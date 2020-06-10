@@ -65,7 +65,7 @@ public class Marketplace {
         PlantSpecies species = thisListing.getPlant_id();
         Integer speciesId = species.getSpecies_id();
         Integer quantity = thisListing.getQuantity();
-        Integer sellerId = thisListing.getSeller_id().user_id;
+        Integer sellerId = thisListing.getSeller_id().getUser_id();
 
         //add to the current user's seed or crops
         if (type.equals("seeds")) {
