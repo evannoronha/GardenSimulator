@@ -55,7 +55,7 @@ public class Garden implements Serializable {
     private int updateLocation;
     private int updateSeedId;
 
-    public void updatePlant() throws SQLException, IOException {
+    public void plantSeed() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = new GrowBox().getDao(cs);
         Dao<SeedInventory, Integer> seedInventoryDao = new SeedInventory().getDao(cs);

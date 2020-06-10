@@ -91,9 +91,9 @@ function drop(ev) {
     ev.target.appendChild(clone);
     document.getElementById("formId:loc").value = curId;
     document.getElementById("formId:seedid").value = clone.getAttribute("seedid");
-    document.getElementById("formId").submit();
-    
-    
+
+
+
     // decrease seed count by one
 }
 
