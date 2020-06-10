@@ -22,7 +22,7 @@ CREATE SEQUENCE public.crops_inventory_crops_inventory_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-    
+
     drop table if exists watering_events;
 CREATE TABLE public.watering_events (
     event_id integer NOT NULL,
