@@ -14,8 +14,8 @@
             <h:form><h:commandButton
                     value="Advance One Day (-#{garden.PENALTY_FOR_ADVANCING_DAYS} point)"
                     styleClass="greenButton"
-                    disabled="#{util.loggedInUser.canNotAdvance()}"
-                    action="#{util.loggedInUser.advanceTime()}"/>
+                    disabled="#{garden.canNotAdvance()}"
+                    action="#{garden.advanceTime()}"/>
             </h:form>
         </div>
 

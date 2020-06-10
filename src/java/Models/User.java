@@ -1,13 +1,7 @@
 package Models;
 
-import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
-import java.io.IOException;
-import java.sql.SQLException;
-import javax.faces.application.FacesMessage;
-import javax.faces.validator.ValidatorException;
 
 @DatabaseTable(tableName = "users")
 public class User extends LiveObject {
@@ -33,25 +27,6 @@ public class User extends LiveObject {
     protected int score;
 
     public User() {
-    }
-
-    public String advanceTime() throws SQLException, IOException {
-        if (this.score == 0) {
-            FacesMessage errorMessage = new FacesMessage("You do not have any points. Eat something.");
-            throw new ValidatorException(errorMessage);
-        } else {
-            this.score -= Garden.PENALTY_FOR_ADVANCING_DAYS;
-            this.farmAge += 1;
-            ConnectionSource cs = DBConnect.getConnectionSource();
-            Dao<User, Integer> userDao = getDao(cs);
-            userDao.update(this);
-            cs.close();
-            return "ViewGarden";
-        }
-    }
-
-    public boolean canNotAdvance() {
-        return this.score < Garden.PENALTY_FOR_ADVANCING_DAYS;
     }
 
     public String getCashAsDecimal() {

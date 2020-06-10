@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.ManagedBean;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
 /**
@@ -25,6 +27,7 @@ import javax.inject.Named;
 public class Garden implements Serializable {
 
     public final static Integer PENALTY_FOR_ADVANCING_DAYS = 1;
+    private User user = Util.getInstance().getLoggedInUser();
 
     public Integer getPENALTY_FOR_ADVANCING_DAYS() {
         return PENALTY_FOR_ADVANCING_DAYS;
@@ -46,6 +49,24 @@ public class Garden implements Serializable {
         cs.close();
     }
 
+    public String advanceTime() throws SQLException, IOException {
+        if (user.getScore() == 0) {
+            FacesMessage errorMessage = new FacesMessage("You do not have any points. Eat something.");
+            throw new ValidatorException(errorMessage);
+        } else {
+            user.setScore(user.getScore() - Garden.PENALTY_FOR_ADVANCING_DAYS);
+            user.setFarmAge(user.getFarmAge() + 1);
+            ConnectionSource cs = DBConnect.getConnectionSource();
+            Dao<User, Integer> userDao = new User().getDao(cs);
+            userDao.update(user);
+            cs.close();
+            return "ViewGarden";
+        }
+    }
+
+    public boolean canNotAdvance() {
+        return user.getScore() < Garden.PENALTY_FOR_ADVANCING_DAYS;
+    }
     private int userid = Util.getInstance().getIDFromLogin();
 
     public List<GrowBox> getBoxes() throws SQLException, IOException {
