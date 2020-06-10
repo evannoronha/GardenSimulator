@@ -1,9 +1,9 @@
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -24,6 +24,7 @@ import javax.inject.Named;
 public class Marketplace {
 
     public Integer purchaseListingId;
+    private int userid = Util.getInstance().getIDFromLogin();
 
     public void setPurchaseListingId(Integer i) {
         purchaseListingId = i;
@@ -38,27 +39,20 @@ public class Marketplace {
     }
 
     public List<MarketListing> getListings() throws SQLException, IOException {
-        int userid = Util.getIDFromLogin();
         ConnectionSource cs = DBConnect.getConnectionSource();
 
-        Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
+        QueryBuilder<MarketListing, Integer> listingQb = MarketListing.getDao(cs).queryBuilder();
+        QueryBuilder<PlantSpecies, Integer> plantQb = PlantSpecies.getDao(cs).queryBuilder();
+        QueryBuilder<User, Integer> userQb = User.getDao(cs).queryBuilder();
+        userQb.where().ne("user_id", userid);
 
-        List<MarketListing> allListings = listingDao.queryForAll();
-        List<MarketListing> otherUserListings = new ArrayList<>();
-        for (MarketListing ml : allListings) {
-            if (ml.getSeller_id().user_id != userid) {
-                otherUserListings.add(ml);
-            }
-        }
+        List<MarketListing> listings = listingQb.join(plantQb).join(userQb).query();
         cs.close();
-        return otherUserListings;
+        return listings;
     }
 
     public String purchaseListing() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-
-        int userid = Util.getIDFromLogin();
-        System.out.println(purchaseListingId);
 
         Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
         MarketListing thisListing = listingDao.queryForId(purchaseListingId);
@@ -84,7 +78,7 @@ public class Marketplace {
         User seller = userDao.queryForId(sellerId);
         seller.setCash(seller.getCash() + salePrice);
         userDao.update(seller);
-        User buyer = userDao.queryForId(userid);
+        User buyer = Util.getInstance().getLoggedInUser();
         buyer.setCash(buyer.getCash() - salePrice);
         userDao.update(buyer);
 
@@ -94,5 +88,4 @@ public class Marketplace {
 
         return "success";
     }
-
 }

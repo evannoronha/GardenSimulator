@@ -21,6 +21,7 @@ public class Crops extends Harvestable implements Serializable {
 
     public static String typeName = "crops";
     public static String plantIdColumn = "crop_id";
+    private int userid = Util.getInstance().getIDFromLogin();
 
     private Integer eatSpeciesId;
     private Integer eatQuantity;
@@ -52,7 +53,6 @@ public class Crops extends Harvestable implements Serializable {
     public List<CropInventory> getCrops() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
-        int userid = Util.getIDFromLogin();
         List<CropInventory> result = inventoryDao.queryForEq("user_id", userid);
         cs.close();
         return result;
@@ -66,8 +66,6 @@ public class Crops extends Harvestable implements Serializable {
         if (!this.userHasQuantity()) {
             return "fail";
         }
-
-        int userid = Util.getIDFromLogin();
 
         ConnectionSource cs = DBConnect.getConnectionSource();
 
@@ -99,7 +97,6 @@ public class Crops extends Harvestable implements Serializable {
     }
 
     public void userOwnsCrops(FacesContext context, UIComponent componentToValidate, Object value) throws SQLException, ValidatorException, IOException {
-        int userid = Util.getIDFromLogin();
         int seedId = (Integer) (value);
 
         ConnectionSource cs = DBConnect.getConnectionSource();
@@ -119,8 +116,6 @@ public class Crops extends Harvestable implements Serializable {
     }
 
     public boolean userHasQuantity() throws SQLException, IOException {
-        int userid = Util.getIDFromLogin();
-
         ConnectionSource cs = DBConnect.getConnectionSource();
         HashMap<String, Object> params = new HashMap();
 
@@ -142,7 +137,6 @@ public class Crops extends Harvestable implements Serializable {
     public void addToInventory() throws SQLException, IOException {
         //do I do quantity here? or pass in quantity as a variable
         ConnectionSource cs = DBConnect.getConnectionSource();
-        int userid = Util.getIDFromLogin();
         Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
@@ -165,7 +159,6 @@ public class Crops extends Harvestable implements Serializable {
 
     public String eatCrops() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
-        int userid = Util.getIDFromLogin();
         Dao<CropInventory, Integer> inventoryDao = CropInventory.getDao(cs);
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
@@ -177,7 +170,7 @@ public class Crops extends Harvestable implements Serializable {
         inventoryDao.update(inv);
 
         Dao<User, Integer> userDao = User.getDao(cs);
-        User thisUser = userDao.queryForId(userid);
+        User thisUser = Util.getInstance().getLoggedInUser();
         thisUser.setScore(thisUser.getScore() + pointsForEating);
         userDao.update(thisUser);
         cs.close();

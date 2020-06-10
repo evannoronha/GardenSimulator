@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.el.ELContext;
 import javax.faces.bean.SessionScoped;
@@ -20,7 +22,19 @@ import org.json.JSONObject;
 @ManagedBean
 public class Util implements Serializable {
 
-    public static String invalidateUserSession() {
+    private static Util instance;
+
+    private User loggedInUser;
+
+    public static Util getInstance() {
+        if (instance == null) {
+            instance = new Util();
+        }
+
+        return instance;
+    }
+
+    public String invalidateUserSession() {
         //invalidate user session
         FacesContext context = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
@@ -28,16 +42,39 @@ public class Util implements Serializable {
         return "Logout";
     }
 
-    public static int getIDFromLogin() throws SQLException, IOException {
-        ELContext elContext = FacesContext.getCurrentInstance().getELContext();
-        Login elLogin = (Login) elContext.getELResolver().getValue(elContext, null, "login");
+    public User getLoggedInUser() {
+        if (this.loggedInUser != null) {
+            return this.loggedInUser;
+        }
 
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = User.getDao(cs);
+        try {
+            ELContext elContext = FacesContext.getCurrentInstance().getELContext();
+            Login elLogin = (Login) elContext.getELResolver().getValue(elContext, null, "login");
 
-        List<User> users = userDao.queryForEq("login", elLogin.getLogin());
-        cs.close();
-        return users.get(0).user_id;
+            ConnectionSource cs = DBConnect.getConnectionSource();
+            Dao<User, Integer> userDao = User.getDao(cs);
+
+            List<User> users = userDao.queryForEq("login", elLogin.getLogin());
+            try {
+                cs.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+            this.loggedInUser = users.get(0);
+            return users.get(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public int getIDFromLogin() {
+        if (this.loggedInUser != null) {
+            return this.loggedInUser.user_id;
+        }
+
+        return this.getLoggedInUser().getUser_id();
     }
 
     public static String getBoxesJson() throws JSONException, SQLException, IOException {
@@ -48,8 +85,9 @@ public class Util implements Serializable {
         Dao<User, Integer> userDao = User.getDao(cs);
         Dao<PlantSpecies, Integer> plantSpeciesDao = PlantSpecies.getDao(cs);
 
-        json.put("farm_age", userDao.queryForId(Util.getIDFromLogin()).getFarmAge());
-        List<GrowBox> growBoxList = Garden.getBoxes();
+        json.put("farm_age", userDao.queryForId(Util.getInstance().getIDFromLogin()).getFarmAge());
+        Garden garden = new Garden();
+        List<GrowBox> growBoxList = garden.getBoxes();
         for (GrowBox box : growBoxList) {
             JSONObject item = new JSONObject();
 
