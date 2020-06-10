@@ -69,11 +69,7 @@ public class User implements Serializable {
     }
 
     public User getLoggedIn() throws SQLException, IOException {
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<User, Integer> userDao = getDao(cs);
-        User user = userDao.queryForId(Util.getIDFromLogin());
-        cs.close();
-        return user;
+        return Util.getInstance().getLoggedInUser();
     }
 
     public static User getByUserid(Integer userid) throws SQLException, IOException {

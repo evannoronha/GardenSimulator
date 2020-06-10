@@ -38,8 +38,9 @@ public class Garden implements Serializable {
         cs.close();
     }
 
-    public static List<GrowBox> getBoxes() throws SQLException, IOException {
-        int userid = Util.getIDFromLogin();
+    private int userid = Util.getInstance().getIDFromLogin();
+
+    public List<GrowBox> getBoxes() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
 
@@ -59,7 +60,6 @@ public class Garden implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
         Dao<SeedInventory, Integer> seedInventoryDao = SeedInventory.getDao(cs);
-        Integer userid = Util.getIDFromLogin();
 
         HashMap<String, Object> boxParams = new HashMap();
         boxParams.put("user_id", userid);
@@ -79,7 +79,7 @@ public class Garden implements Serializable {
         } else {
             GrowBox box = boxResult.get(0);
             box.setPlantid(PlantSpecies.getPlantSpeciesByID(updateSeedId));
-            box.setDay_planted(userDao.queryForId(userid).farmAge);
+            box.setDay_planted(Util.getInstance().getLoggedInUser().getFarmAge());
             growBoxDao.update(box);
 
             SeedInventory inv = seedResult.get(0);
@@ -108,7 +108,6 @@ public class Garden implements Serializable {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<GrowBox, String> growBoxDao = GrowBox.getDao(cs);
         Dao<CropInventory, Integer> cropInventoryDao = CropInventory.getDao(cs);
-        Integer userid = Util.getIDFromLogin();
 
         HashMap<String, Object> boxParams = new HashMap();
         boxParams.put("user_id", userid);

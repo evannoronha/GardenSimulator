@@ -24,6 +24,7 @@ import javax.inject.Named;
 public class Marketplace {
 
     public Integer purchaseListingId;
+    private int userid = Util.getInstance().getIDFromLogin();
 
     public void setPurchaseListingId(Integer i) {
         purchaseListingId = i;
@@ -57,9 +58,6 @@ public class Marketplace {
     public String purchaseListing() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
 
-        int userid = Util.getIDFromLogin();
-        System.out.println(purchaseListingId);
-
         Dao<MarketListing, Integer> listingDao = MarketListing.getDao(cs);
         MarketListing thisListing = listingDao.queryForId(purchaseListingId);
 
@@ -84,7 +82,7 @@ public class Marketplace {
         User seller = userDao.queryForId(sellerId);
         seller.setCash(seller.getCash() + salePrice);
         userDao.update(seller);
-        User buyer = userDao.queryForId(userid);
+        User buyer = Util.getInstance().getLoggedInUser();
         buyer.setCash(buyer.getCash() - salePrice);
         userDao.update(buyer);
 

@@ -22,6 +22,7 @@ public class Seeds extends Harvestable implements Serializable {
 
     public static String typeName = "seeds";
     public static String plantIdColumn = "seed_id";
+    private int userid = Util.getInstance().getIDFromLogin();
 
     public Seeds() {
         super();
@@ -34,8 +35,6 @@ public class Seeds extends Harvestable implements Serializable {
     public List<SeedInventory> getSeeds() throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();
         Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
-        int userid = Util.getIDFromLogin();
-
         List<SeedInventory> listSeeds = inventoryDao.queryForEq("user_id", userid);
         cs.close();
         return listSeeds;
@@ -59,8 +58,6 @@ public class Seeds extends Harvestable implements Serializable {
         if (!this.userHasQuantity()) {
             return "fail";
         }
-
-        int userid = Util.getIDFromLogin();
 
         ConnectionSource cs = DBConnect.getConnectionSource();
 
@@ -95,7 +92,6 @@ public class Seeds extends Harvestable implements Serializable {
     }
 
     public void userOwnsSeeds(FacesContext context, UIComponent componentToValidate, Object value) throws SQLException, ValidatorException, IOException {
-        int userid = Util.getIDFromLogin();
         int seedId = (Integer) (value);
 
         ConnectionSource cs = DBConnect.getConnectionSource();
@@ -115,7 +111,6 @@ public class Seeds extends Harvestable implements Serializable {
 
     //validate that the user can sell this many seeds
     public boolean userHasQuantity() throws SQLException, IOException {
-        int userid = Util.getIDFromLogin();
         ConnectionSource cs = DBConnect.getConnectionSource();
         HashMap<String, Object> params = new HashMap();
         Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
@@ -136,7 +131,6 @@ public class Seeds extends Harvestable implements Serializable {
     public void addToInventory() throws SQLException, IOException {
         //do I do quantity here? or pass in quantity as a variable
         ConnectionSource cs = DBConnect.getConnectionSource();
-        int userid = Util.getIDFromLogin();
         Dao<SeedInventory, Integer> inventoryDao = getDao(cs);
         HashMap<String, Object> params = new HashMap();
         params.put("user_id", userid);
