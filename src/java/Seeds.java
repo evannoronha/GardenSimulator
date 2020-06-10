@@ -21,7 +21,6 @@ public class Seeds extends Harvestable implements Serializable {
 
     public static String typeName = "seeds";
     public static String plantIdColumn = "seed_id";
-    private int userid = Util.getInstance().getIDFromLogin();
 
     public Seeds() {
         super();

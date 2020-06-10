@@ -21,7 +21,6 @@ public class Crops extends Harvestable implements Serializable {
 
     public static String typeName = "crops";
     public static String plantIdColumn = "crop_id";
-    private int userid = Util.getInstance().getIDFromLogin();
 
     private Integer eatSpeciesId;
     private Integer eatQuantity;
