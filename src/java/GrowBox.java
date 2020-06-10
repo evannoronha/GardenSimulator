@@ -10,7 +10,6 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.text.ParseException;
 import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
@@ -34,28 +33,6 @@ public class GrowBox extends LiveObject implements Serializable {
 
     public GrowBox() {
 
-    }
-
-    public GrowBox(User userid, PlantSpecies plantid, int location, int day_planted) {
-        this.userid = userid;
-        this.plantid = plantid;
-        this.location = location;
-        this.day_planted = day_planted;
-    }
-
-    public String create() throws SQLException, ParseException, IOException {
-        ConnectionSource cs = DBConnect.getConnectionSource();
-        Dao<GrowBox, String> growBoxDao = getDao(cs);
-
-        GrowBox box = new GrowBox();
-        box.setUserid(userid);
-        box.setPlantid(plantid);
-        box.setLocation(location);
-        box.setDay_planted(userid.farmAge);
-
-        growBoxDao.create(box);
-        cs.close();
-        return "createGardenBox";
     }
 
     public String getBoxid() {
