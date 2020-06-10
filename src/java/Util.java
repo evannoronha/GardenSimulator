@@ -75,7 +75,7 @@ public class Util implements Serializable {
 
     public int getIDFromLogin() {
         if (this.loggedInUser != null) {
-            return this.loggedInUser.user_id;
+            return this.loggedInUser.getUser_id();
         }
 
         return this.getLoggedInUser().getUser_id();
