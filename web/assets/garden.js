@@ -1,6 +1,6 @@
 document.body.onload = addElement;
 function addElement() {
-
+    document.querySelector("input.plantButton").disabled = true;
     //Set # of columns
     const gridContainer = document.querySelector(".grid-container");
     const GRID_COLUMNS = gridContainer.dataset.gridcolumns;
@@ -87,18 +87,17 @@ function drop(ev) {
     clone.removeAttribute('ondragstart');
     console.log(ev.target.dataset.id + "   " + clone.getAttribute("seedid"));
     let curId = ev.target.dataset.id;
-    
+
     ev.target.appendChild(clone);
-    document.getElementById("formId:loc").value = curId;
-    document.getElementById("formId:seedid").value = clone.getAttribute("seedid");
+    document.getElementById("plantForm:loc").value = curId;
+    document.getElementById("plantForm:seedid").value = clone.getAttribute("seedid");
+    document.querySelector(".plantButton").disabled = false;
+    document.querySelector(".plantButton").click();
 
-
-
-    // decrease seed count by one
 }
 
 function changeimage(seedName) {
-    
+
     var selectMenu = document.getElementById("seedSelect");
     const plantJson = JSON.parse(selectMenu.dataset.seedjson);
     Object.keys(plantJson).forEach(function (key) {

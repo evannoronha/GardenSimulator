@@ -36,11 +36,12 @@ and open the template in the editor.
 
         <script src="assets/garden.js"></script>
 
-        <h:form id="formId">
+        <h:form id="plantForm">
             <h:inputHidden id="loc" value="#{garden.updateLocation}" />
             <h:inputHidden id="seedid" value="#{garden.updateSeedId}" />
 
             <h:commandButton value = "Confirm Planting"
+                             styleClass ="plantButton"
                              action="#{garden.plantSeed()}" />
         </h:form>
 

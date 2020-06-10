@@ -10,3 +10,11 @@
     padding: 10px;
     border: 1px solid #aaaaaa;
 }
+
+.plantButton {
+    opacity: 0%;
+}
+
+.harvestButton {
+    opacity: 0%;
+}
