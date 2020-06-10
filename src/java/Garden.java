@@ -4,7 +4,6 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -20,7 +19,11 @@ import javax.inject.Named;
 @ManagedBean
 public class Garden implements Serializable {
 
-    private static ArrayList<GrowBox> growBoxList;
+    public final static Integer PENALTY_FOR_ADVANCING_DAYS = 1;
+
+    public Integer getPENALTY_FOR_ADVANCING_DAYS() {
+        return PENALTY_FOR_ADVANCING_DAYS;
+    }
 
     public static void initalizeGarden(User userid) throws SQLException, IOException {
         ConnectionSource cs = DBConnect.getConnectionSource();

@@ -12,7 +12,7 @@
     <cc:implementation>
         <div id="footer">
             <h:form><h:commandButton
-                    value="Advance One Day (-#{user.PENALTY_FOR_ADVANCING_DAYS} point)"
+                    value="Advance One Day (-#{garden.PENALTY_FOR_ADVANCING_DAYS} point)"
                     styleClass="greenButton"
                     disabled="#{util.loggedInUser.canNotAdvance()}"
                     action="#{util.loggedInUser.advanceTime()}"/>

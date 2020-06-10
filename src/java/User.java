@@ -5,27 +5,16 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 import java.io.IOException;
 import java.sql.SQLException;
-import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.validator.ValidatorException;
-import javax.inject.Named;
 
-@Named(value = "user")
-@SessionScoped
-@ManagedBean
 @DatabaseTable(tableName = "users")
 public class User extends LiveObject {
 
     public final static Double STARTING_CASH = 1000.00;
-    public final static Integer PENALTY_FOR_ADVANCING_DAYS = 1;
     public final static Integer STARTING_FARM_AGE = 0;
     public final static int STARTING_GARDEN_SIZE = 5;
     public final static int STARTING_SCORE = 5;
-
-    public Integer getPENALTY_FOR_ADVANCING_DAYS() {
-        return PENALTY_FOR_ADVANCING_DAYS;
-    }
 
     @DatabaseField(generatedId = true, readOnly = true)
     protected int user_id;
@@ -58,7 +47,7 @@ public class User extends LiveObject {
             FacesMessage errorMessage = new FacesMessage("You do not have any points. Eat something.");
             throw new ValidatorException(errorMessage);
         } else {
-            this.score -= this.PENALTY_FOR_ADVANCING_DAYS;
+            this.score -= Garden.PENALTY_FOR_ADVANCING_DAYS;
             this.farmAge += 1;
             ConnectionSource cs = DBConnect.getConnectionSource();
             Dao<User, Integer> userDao = getDao(cs);
@@ -69,7 +58,7 @@ public class User extends LiveObject {
     }
 
     public boolean canNotAdvance() {
-        return this.score < this.PENALTY_FOR_ADVANCING_DAYS;
+        return this.score < Garden.PENALTY_FOR_ADVANCING_DAYS;
     }
 
     public String getCashAsDecimal() {
